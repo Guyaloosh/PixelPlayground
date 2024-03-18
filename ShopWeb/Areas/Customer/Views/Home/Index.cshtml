@@ -113,39 +113,54 @@
             $("#sortByPriceHigh").click(function () {
                 // Sort products by price (high to low)
                 fetchSortedProducts("PriceHighToLow");
-                resetButtonStyles(); // Reset button styles
-                document.getElementById("sortByPriceHigh").style.backgroundColor = "black";
-                isClicked = "sortByPriceHigh"; // Update the clicked button
+                if (isClicked === "sortByPriceHigh") {
+                    resetButtonStyles(); // Reset button styles if already clicked
+                    isClicked = ""; // Unset the clicked button
+                    fetchSortedProducts("")
+                } else {
+                    resetButtonStyles(); // Reset button styles
+                    document.getElementById("sortByPriceHigh").style.backgroundColor = "black";
+                    isClicked = "sortByPriceHigh"; // Update the clicked button
+                    fetchSortedProducts("")
+                }
             });
 
             $("#sortByPriceLow").click(function () {
                 // Sort products by price (low to high)
                 fetchSortedProducts("PriceLowToHigh");
-                resetButtonStyles(); // Reset button styles
-                document.getElementById("sortByPriceLow").style.backgroundColor = "black";
-                isClicked = "sortByPriceLow"; // Update the clicked button
+                if (isClicked === "sortByPriceLow") {
+                    resetButtonStyles(); // Reset button styles if already clicked
+                    isClicked = ""; // Unset the clicked button
+                    fetchSortedProducts("")
+                } else {
+                    resetButtonStyles(); // Reset button styles
+                    document.getElementById("sortByPriceLow").style.backgroundColor = "black";
+                    isClicked = "sortByPriceLow"; // Update the clicked button
+                   
+                }
             });
 
             $("#sortByTrending").click(function () {
                 // Sort products by trending
                 fetchSortedProducts("Trending");
-                resetButtonStyles(); // Reset button styles
-                document.getElementById("sortByTrending").style.backgroundColor = "black";
-                isClicked = "sortByTrending"; // Update the clicked button
+                if (isClicked === "sortByTrending") {
+                    resetButtonStyles(); // Reset button styles if already clicked
+                    isClicked = ""; // Unset the clicked button
+                    fetchSortedProducts("")
+                } else {
+                    resetButtonStyles(); // Reset button styles
+                    document.getElementById("sortByTrending").style.backgroundColor = "black";
+                    isClicked = "sortByTrending"; // Update the clicked button
+                }
             });
+
             function resetButtonStyles() {
                 // Reset button styles for all buttons
                 document.getElementById("sortByPriceHigh").style.backgroundColor = "";
                 document.getElementById("sortByPriceLow").style.backgroundColor = "";
                 document.getElementById("sortByTrending").style.backgroundColor = "";
             }
-            if (isClicked) {
-                resetButtonStyles();
-                fetchSortedProducts("");
-            } else {
-                // Button is not clicked
-                // Perform actions accordingly
-            }
+
             // Function to filter products based on search text, selected categories, and price range
             function filterProducts() {
                 // Get search text
