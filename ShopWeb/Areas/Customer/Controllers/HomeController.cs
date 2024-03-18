@@ -22,6 +22,10 @@ namespace ShopWeb.Areas.Customer.Controllers
         public IActionResult Index()
         {
             IEnumerable<Product> productList = _unitOfWork.Product.GetAll(includeProperties: "Category");
+
+            // Ensure ViewBag.Categories is populated
+            ViewBag.Categories = _unitOfWork.Category.GetAll().ToList();
+
             return View(productList);
         }
         public IActionResult Details(int productId)
@@ -70,6 +74,27 @@ namespace ShopWeb.Areas.Customer.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+        [HttpPost]
+        public IActionResult Filter(string[] selectedCategories, decimal? minPrice, decimal? maxPrice)
+        {
+            IEnumerable<Product> filteredProducts = _unitOfWork.Product.GetAll(includeProperties: "Category");
+
+            if (selectedCategories.Any())
+            {
+                filteredProducts = filteredProducts.Where(p => selectedCategories.Contains(p.CategoryId.ToString()));
+            }
+            if (minPrice.HasValue)
+            {
+                filteredProducts = filteredProducts.Where(p => p.Price >= minPrice.Value);
+            }
+            if (maxPrice.HasValue)
+            {
+                filteredProducts = filteredProducts.Where(p => p.Price <= maxPrice.Value);
+            }
+
+            // Assuming "_ProductListPartial" is your partial view to display the product list.
+            return PartialView("_ProductListPartial", filteredProducts);
         }
     }
 }
