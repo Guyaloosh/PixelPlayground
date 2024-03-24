@@ -1,0 +1,29 @@
+﻿@model IEnumerable<ShopWeb.Models.Product>
+
+    @foreach (var product in Model)
+    {
+        <div class="col-lg-3 col-md-6 col-sm-12 product" data-category-name="@product.Category.Name" data-price="@product.Price">
+            <div class="row p-2">
+                <div class="col-12 p-1">
+                    <div class="card border-0 p-3 shadow border-top border-5 rounded" style="height: 400px;">
+                        <img src="@product.ImageUrl" class="card-img-top rounded" style="height: 200px;" />
+                        <div class="card-body" style="height: 200px;">
+                            <div class="pl-1">
+                                <p class="card-title h5 text-dark opacity-75 text-center">@product.Title</p>
+                                <p class="card-title text-warning text-center"><b>@product.Maker</b></p>
+                                <p class="card-title text-warning text-center"><b>@product.Category.Name</b></p>
+                            </div>
+                            <div class="pl-1">
+                                <p class="text-dark h5 text-dark opacity-75 text-center">As low as: <span>@product.Price.ToString("c")</span></p>
+                            </div>
+                        </div>
+                        <div>
+                            <a asp-action="Details" asp-route-productId="@product.Id" class="btn btn-primary bg-gradient border-0 form-control">
+                                Details
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
