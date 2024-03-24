@@ -55,19 +55,39 @@
                     <div class="row pl-2 mb-3">
                         <div class="col-md-4">
                             <div class="input-group mb-3">
-                                    <span class="input-group-text bg-primary text-white border-0 fw-semibold" id="inputGroup-sizing-default" asp-for="Count">Count</span>
-                                    <input type="number" asp-for="Count" value="1" class="form-control text-end" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" />
+                                    <span class="input-group-text bg-primary text-white border-0 fw-semibold"  asp-for="Count">Count</span>
+                                    <input type="number" asp-for="Count" value="0" class="form-control text-end" id="countInput" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" />
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-12 col-md-6 pb-1">
-                            <button type="submit" class="btn btn-primary bg-gradient  w-100 py-2 text-uppercase fw-semibold">Add to Cart</button>
-                        </div>
+                                <button type="submit" class="btn btn-primary bg-gradient  w-100 py-2 text-uppercase fw-semibold">Add to Cart</button>
+                            </div>
                     </div>
                 </div>
                 </div>
             </div>
         </div>
     </div>
+    
 </form>
+
+<button onclick="checkQuantity(@Model.product.Quantity)">check</button>
+
+<script>
+    function checkQuantity(productQuantity) {
+        var countInput = document.getElementById("countInput");
+        var countValue = countInput.value;
+        
+        if (productQuantity - countValue < 0) {
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                    text: "Sorry, there are not enough items available. Please try later.",
+                footer: '<a href="#">Why do I have this issue?</a>',
+                timer: 10000 // 10 seconds in milliseconds
+            });
+        }
+    }
+</script>
