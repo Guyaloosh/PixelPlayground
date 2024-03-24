@@ -1,121 +1,81 @@
 ﻿@model IEnumerable<Product>
-
-<div class="container">
-    <div class="row">
-        <!-- Sidebar -->
-        <div class="col-md-3">
-            <div class="card mb-3">
-                <div class="card-body">
-                    <!-- Search bar -->
-                    <div class="mb-3">
-                        <input type="text" class="form-control" id="searchInput" placeholder="Search products">
-                    </div>
-                    <!-- Category filter -->
-                    <h5>Categories</h5>
-                    @foreach (var category in ViewBag.Categories)
-                    {
-                        <div class="form-check">
-                            <input class="form-check-input categoryCheckbox" type="checkbox" value="@category.Name" id="category-@category.Id">
-                            <label class="form-check-label" for="category-@category.Id">
-                                @category.Name
-                            </label>
-                        </div>
-                    }
-                    <hr>
-                    <!-- Price range filter -->
-                    <h5>Price Range</h5>
-                    <div class="mb-3">
-                        <label for="minPrice">Min Price</label>
-                        <input type="number" class="form-control" id="minPrice" placeholder="Min Price">
-                    </div>
-                    <div class="mb-3">
-                        <label for="maxPrice">Max Price</label>
-                        <input type="number" class="form-control" id="maxPrice" placeholder="Max Price">
-                    </div>
+<div class="d-flex p-2">
+    <div class="card mb-12">
+        <div class="card-body rounded" style="color:#325D88; " ;>
+            <!-- Search bar -->
+            <div class="mb-3">
+                <input type="text" class="form-control" id="searchInput" placeholder="Search products">
+            </div>
+            <!-- Category filter -->
+            <h5>Categories</h5>
+            @foreach (var category in ViewBag.Categories)
+            {
+                <div class="form-check">
+                    <input class="form-check-input categoryCheckbox" type="checkbox" value="@category.Name" id="category-@category.Id">
+                    <label class="form-check-label" for="category-@category.Id">
+                        @category.Name
+                    </label>
                 </div>
+            }
+            <hr>
+            <!-- Price range filter -->
+            <h5>Price Range</h5>
+            <div class="mb-3">
+                <label for="minPrice">Min Price</label>
+                <input type="number" class="form-control" id="minPrice" placeholder="Min Price">
+            </div>
+            <div class="mb-3">
+                <label for="maxPrice">Max Price</label>
+                <input type="number" class="form-control" id="maxPrice" placeholder="Max Price">
             </div>
         </div>
+    </div>
 
-        <!-- Product List -->
-        <div class="col-md-9">
-            <div class="main">
-                <div class="row pb-3" id="productList">
-                    @foreach (var product in Model)
-                    {
-                        <div class="col-lg-3 col-md-6 col-sm-12 product" data-category-name="@product.Category.Name" data-price="@product.Price">
-                            <div class="row p-2">
-                                <div class="col-12 p-1">
-                                    <div class="card border-0 p-3 shadow border-top border-5 rounded" style="height: 400px;">
-                                        <img src="@product.ImageUrl" class="card-img-top rounded" style="height: 200px;" />
-                                        <div class="card-body" style="height: 200px;">
-                                            <div class="pl-1">
-                                                <p class="card-title h5 text-dark opacity-75 text-center">@product.Title</p>
-                                                <p class="card-title text-warning text-center"><b>@product.Maker</b></p>
-                                                <p class="card-title text-warning text-center"><b>@product.Category.Name</b></p>
+
+    <div class="container .d-inline-flex">
+        <div class="row">
+            <!-- Sidebar -->
+            @* <div class="col-md-3"> *@
+            
+
+            <!-- Product List -->
+            <div class="col-md-12">
+                <div class="main">
+                    <div class="row pb-3" id="productList">
+                        @foreach (var product in Model)
+                        {
+                            <div class="col-lg-3 col-md-6 col-sm-12 product pb-4" data-category-name="@product.Category.Name" data-price="@product.Price">
+                                <div class="row justify-content-between">
+                                    <div class="col-12">
+                                        <div class="card border-0 p-3 shadow border-top border-5 rounded" style="height: 400px;">
+                                            <img src="@product.ImageUrl" alt="@product.Title" class="mx-auto rounded" style="width: 100%; height: 200px; object-fit:contain" />
+                                            <div class="" style="height: auto;">
+                                                <div class="pl-1">
+                                                    <p class="card-title h5 text-dark opacity-75 text-center">@product.Title</p>
+                                                    <p class="card-title text-warning text-center"><b>@product.Maker</b></p>
+                                                    <p class="card-title text-warning text-center"><b>@product.Category.Name</b></p>
+                                                </div>
+                                                <div class="pl-1">
+                                                    <p class="text-dark h5 text-dark opacity-75 text-center">As low as: <span>@product.Price.ToString("c")</span></p>
+                                                </div>
                                             </div>
-                                            <div class="pl-1">
-                                                <p class="text-dark h5 text-dark opacity-75 text-center">As low as: <span>@product.Price.ToString("c")</span></p>
+                                            <div>
+                                                <a asp-action="Details" asp-route-productId="@product.Id" class="btn btn-primary bg-gradient border-0 form-control">
+                                                    Details
+                                                </a>
+                                               
                                             </div>
-                                        </div>
-                                        <div>
-                                            <a asp-action="Details" asp-route-productId="@product.Id" class="btn btn-primary bg-gradient border-0 form-control">
-                                                Details
-                                            </a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    }
+                        }
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 @section Scripts {
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            // Function to filter products based on search text, selected categories, and price range
-            function filterProducts() {
-                // Get search text
-                var searchText = $("#searchInput").val().toLowerCase();
-                // Collect selected categories
-                var selectedCategories = $(".categoryCheckbox:checked").map(function () {
-                    return $(this).val().toLowerCase();
-                }).get();
-                // Parse price range inputs
-                var minPrice = parseFloat($("#minPrice").val()) || 0;
-                var maxPrice = parseFloat($("#maxPrice").val()) || Number.MAX_VALUE;
-
-                // Iterate over each product and show/hide based on matching criteria
-                $(".product").each(function () {
-                    var product = $(this);
-                    var title = product.find(".card-title").text().toLowerCase();
-                    var category = product.data('category-name').toLowerCase();
-                    var price = parseFloat(product.data('price'));
-
-                    var isCategoryMatch = selectedCategories.length === 0 || selectedCategories.includes(category);
-                    var isTitleMatch = title.includes(searchText);
-                    var isPriceMatch = (price >= minPrice && price <= maxPrice);
-
-                    // Show product if it matches all criteria
-                    if (isCategoryMatch && isTitleMatch && isPriceMatch) {
-                        product.show();
-                    } else {
-                        product.hide();
-                    }
-                });
-            }
-
-            // Bind keyup event to search input for live search filtering
-            $("#searchInput").on("keyup", filterProducts);
-            // Bind change event to category checkboxes to filter products on selection
-            $(".categoryCheckbox").on("change", filterProducts);
-            // Bind input event to price range inputs for live price filtering
-            $("#minPrice, #maxPrice").on("input", filterProducts);
-            // Optional: bind click event to an apply filter button if you want to apply filters only on button click
-            //$("#applyFilter").click(filterProducts);
-        });
-    </script>
+    <script src="~/js/SideBar.js"></script>
 }
