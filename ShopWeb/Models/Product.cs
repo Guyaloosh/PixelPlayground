@@ -23,7 +23,25 @@ namespace ShopWeb.Models
         [Range(1, 1000)]
         public decimal Price { get; set; }
 
+        public decimal PublishPrice { get; set; }
+
+        public int Sold { get; set; }  //number of copy solds
+
+        public int Popularity { get; set; }
+
+
         public int Quantity { get; set; }
+
+
+        public int MinAge { get; set; }
+
+        
+        public bool onSale { get; set; }
+
+        
+        public DateTime RealishDate { get; set; }
+
+        //public bool isDigital {  get; set; }
 
 
         public int CategoryId { get; set; }

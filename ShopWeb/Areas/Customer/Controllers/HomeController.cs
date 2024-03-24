@@ -96,5 +96,37 @@ namespace ShopWeb.Areas.Customer.Controllers
             // Assuming "_ProductListPartial" is your partial view to display the product list.
             return PartialView("_ProductListPartial", filteredProducts);
         }
+        [HttpGet]
+        public IActionResult SortProducts(string sortType)
+        {
+            IEnumerable<Product> sortedProducts = null;
+
+            switch (sortType)
+            {
+                case "PriceHighToLow":
+                    sortedProducts = _unitOfWork.Product.GetAll(includeProperties: "Category")
+                        .OrderByDescending(p => p.Price);
+                    break;
+                case "PriceLowToHigh":
+                    sortedProducts = _unitOfWork.Product.GetAll(includeProperties: "Category")
+                        .OrderBy(p => p.Price);
+                    break;
+                case "Trending":
+                    // Implement your trending sorting logic here
+                    // Example: sorting by product name alphabetically
+                    sortedProducts = _unitOfWork.Product.GetAll(includeProperties: "Category")
+                        .OrderBy(p => p.Title);
+                    break;
+                default:
+                    // Default sorting if sortType is not recognized
+                    sortedProducts = _unitOfWork.Product.GetAll(includeProperties: "Category");
+                    break;
+            }
+
+            // Render the sorted products as a partial view
+            return PartialView("_ProductListPartial", sortedProducts);
+        }
+
+
     }
 }

@@ -1,90 +1,5 @@
-﻿@model IEnumerable<Product>
-<img src="~/Images/mainindexwallpaper.jpg" alt="GamingWallpaper" class="mx-auto" style="width: 100%;position:relative;margin-top:-2px; ;height: 220px; object-fit:cover"/>
-<div class="d-flex mt-[-12] p-2 mx-2 mt-4">
-    <div class="card mb-12" style="border-right: 1px solid grey; margin-right:32px">
-        <div class="card-body rounded" style="color:#325D88; " ;>
-            <!-- Search bar -->
-            <div class="mb-3">
-                <input type="text" class="form-control" id="searchInput" placeholder="Search products">
-            </div>
-            <!-- Category filter -->
-            <h5>Categories</h5>
-            @foreach (var category in ViewBag.Categories)
-            {
-                <div class="form-check">
-                    <input class="form-check-input categoryCheckbox" type="checkbox" value="@category.Name" id="category-@category.Id">
-                    <label class="form-check-label" for="category-@category.Id">
-                        @category.Name
-                    </label>
-                </div>
-            }
-            <hr>
-            <!-- Price range filter -->
-            <h5>Price Range</h5>
-            <div class="mb-3">
-                <label for="minPrice">Min Price</label>
-                <input type="number" class="form-control" id="minPrice" placeholder="Min Price">
-            </div>
-            <div class="mb-3">
-                <label for="maxPrice">Max Price</label>
-                <input type="number" class="form-control" id="maxPrice" placeholder="Max Price">
-            </div>
-        </div>
-    </div>
-
-
-    <div class="container .d-inline-flex">
-        <div class="row">
-            <!-- Product List -->
-            <!-- Sort Bar -->
-            <div class="col-sm-6">
-                <div class="btn-group float-right" role="group">
-                    <button id="sortByPriceHigh" type="button" class="btn btn-secondary">Price High to Low</button>
-                    <button id="sortByPriceLow" type="button" class="btn btn-secondary">Price Low to High</button>
-                    <button id="sortByTrending" type="button" class="btn btn-secondary">Trending</button>
-                </div>
-            </div>
-            <div class="col-md-12">
-                <div class="main">
-                    <div class="row pb-3" id="productList">
-                        @foreach (var product in Model)
-                        {
-                            <div class="col-lg-3 col-md-6 col-sm-12 product pb-4" data-category-name="@product.Category.Name" data-price="@product.Price">
-                                <div class="row justify-content-between">
-                                    <div class="col-12">
-                                        <div class="card p-3 my-shadow-md rounded-2" style="height: 400px;">
-                                            <img src="@product.ImageUrl" alt="@product.Title" class="mx-auto rounded my-shadow-sm" style="width: 100%; height: 200px; object-fit:fill" />
-                                            <div class="" style="height: auto;">
-                                                <div class="mt-2 pl-1">
-                                                    <p class="card-title h5 text-dark opacity-75 text-center">@product.Title</p>
-                                                    <p class="card-title text-warning text-center"><b>@product.Maker</b></p>
-                                                    <p class="card-title text-warning text-center"><b>@product.Category.Name</b></p>
-                                                </div>
-                                                <div class="pl-1">
-                                                    <p class="text-dark h5 text-dark opacity-75 text-center">As low as: <span>@product.Price.ToString("c")</span></p>
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <a asp-action="Details" asp-route-productId="@product.Id" class="btn btn-primary bg-gradient border-0 form-control">
-                                                    Details
-                                                </a>
-                                               
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        }
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-@section Scripts {
-    <script> 
-        //NEED TO GO TO JS FILE
-        $(document).ready(function () {
+﻿
+    $(document).ready(function () {
             // Function to fetch sorted products using AJAX
             function fetchSortedProducts(sortType) {
                 $.ajax({
@@ -127,7 +42,7 @@
                     resetButtonStyles(); // Reset button styles
                     document.getElementById("sortByPriceLow").style.backgroundColor = "black";
                     isClicked = "sortByPriceLow"; // Update the clicked button
-
+                   
                 }
             });
 
@@ -192,6 +107,4 @@
             $("#minPrice, #maxPrice").on("input", filterProducts);
             // Optional: bind click event to an apply filter button if you want to apply filters only on button click
             //$("#applyFilter").click(filterProducts);
-        });
-    </script>
-}
+});

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ShopWeb.Data;
 
@@ -11,9 +12,11 @@ using ShopWeb.Data;
 namespace ShopWeb.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240319164154_addSessionIdToOrderHeader")]
+    partial class addSessionIdToOrderHeader
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -397,33 +400,15 @@ namespace ShopWeb.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("MinAge")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Popularity")
-                        .HasColumnType("int");
-
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<decimal>("PublishPrice")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("RealishDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Sold")
-                        .HasColumnType("int");
-
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("onSale")
-                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -439,15 +424,9 @@ namespace ShopWeb.Migrations
                             Description = "Great Game",
                             ImageUrl = "",
                             Maker = "Electronic Arts",
-                            MinAge = 0,
-                            Popularity = 0,
                             Price = 50m,
-                            PublishPrice = 0m,
                             Quantity = 0,
-                            RealishDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Sold = 0,
-                            Title = "Apex",
-                            onSale = false
+                            Title = "Apex"
                         },
                         new
                         {
@@ -456,15 +435,9 @@ namespace ShopWeb.Migrations
                             Description = "ok Game",
                             ImageUrl = "",
                             Maker = "Nexon",
-                            MinAge = 0,
-                            Popularity = 0,
                             Price = 20m,
-                            PublishPrice = 0m,
                             Quantity = 0,
-                            RealishDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Sold = 0,
-                            Title = "MapleStory",
-                            onSale = false
+                            Title = "MapleStory"
                         },
                         new
                         {
@@ -473,15 +446,9 @@ namespace ShopWeb.Migrations
                             Description = "Amazing Game",
                             ImageUrl = "",
                             Maker = "Riot Games",
-                            MinAge = 0,
-                            Popularity = 0,
                             Price = 70m,
-                            PublishPrice = 0m,
                             Quantity = 0,
-                            RealishDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Sold = 0,
-                            Title = "LeugeOfLeguent",
-                            onSale = false
+                            Title = "LeugeOfLeguent"
                         });
                 });
 
