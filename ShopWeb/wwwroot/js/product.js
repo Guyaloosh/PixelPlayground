@@ -16,23 +16,22 @@ function loadDataTable() {
             { data: 'category.name', "width": "13%" },
             {
                 data: 'id',
-
-                "render": function (data,type,row) {
+                render: function (data, type, row) {
                     return `<div class="w-75 btn-group" role="group">
-                    <a href="/admin/product/upsert?id=${data}" class="btn btn-primary mx-2"><i class="bi bi-pencil-square"></i>Edit</a>
-                    <a onClick=Delete('/admin/product/delete/${data}') class="btn btn-danger mx-2"><i class="bi bi-trash-fill"></i>Delete</a>
-                    <a onClick=OrderMore('${row.title}','${row.maker}') class="btn btn-primary mx-2"><i ></i>Order more</a>
-                     </div>`;
+                                <a href="/admin/product/upsert?id=${data}" class="btn btn-primary mx-2"><i class="bi bi-pencil-square"></i>Edit</a>
+                                <a onClick="Delete('/admin/product/delete/${data}')" class="btn btn-danger mx-2"><i class="bi bi-trash-fill"></i>Delete</a>
+                                <a onClick="OrderMore('${row.title}','${row.maker}')" class="btn btn-primary mx-2"><i ></i>Order more</a>
+                           </div>`;
                 },
-
                 "width": "15%"
             },
+
 
         ]
     });
 
 }
-
+s
 
 function Delete(url) {
     Swal.fire({
