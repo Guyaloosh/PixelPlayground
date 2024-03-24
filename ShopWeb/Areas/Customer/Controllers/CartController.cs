@@ -107,9 +107,10 @@ namespace ShopWeb.Areas.Customer.Controllers
                 {
                     ProductId = cart.ProductId,
                     OrderHeaderId = ShoppingCartVM.OrderHeader.Id,
-                    Price = cart.Price,
-                    Count = cart.Count
+                    Price = cart.Price*cart.Count,
+                    Count = cart.Count,
                 };
+                //orderDetail.Product.Quantity -= orderDetail.Count;
                 _unitOfWork.OrderDetail.Add(orderDetail);   
                 _unitOfWork.Save();
             }
@@ -141,9 +142,23 @@ namespace ShopWeb.Areas.Customer.Controllers
                             Name = item.product.Title
                         }
                     },
-                    Quantity = item.Count
+                    Quantity = item.Count,
                 };
-                options.LineItems.Add(sessionLineItem);
+
+            options.LineItems.Add(sessionLineItem);
+            }
+
+            foreach(var item in ShoppingCartVM.ShoppingCartList)
+            {
+                if (item.product.Quantity - item.Count > 0 )
+                {
+                    item.product.Quantity -= item.Count;
+                }
+                else
+                {
+                    TempData["error"] = "There is Not enough please try later";
+                    return RedirectToAction("Index");
+                }
             }
 
             var service = new Stripe.Checkout.SessionService();
@@ -169,9 +184,19 @@ namespace ShopWeb.Areas.Customer.Controllers
 		public IActionResult Plus(int cartId) 
         {
             var cartFromDb = _unitOfWork.ShoppingCart.Get(u => u.Id == cartId);
-            cartFromDb.Count += 1;
-            _unitOfWork.ShoppingCart.Update(cartFromDb);
-            _unitOfWork.Save();
+         
+             cartFromDb.Count += 1;
+             _unitOfWork.ShoppingCart.Update(cartFromDb);
+             _unitOfWork.Save();
+                
+            
+            //foreach (var item in ShoppingCartVM.ShoppingCartList)
+            //{
+              //  item.product.Quantity -= item.Count;
+
+           // }
+
+           
             return RedirectToAction(nameof(Index));
         }
 
