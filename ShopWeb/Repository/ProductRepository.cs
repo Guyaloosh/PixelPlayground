@@ -18,11 +18,15 @@ namespace ShopWeb.Repository
         {
            var objFormDB=_db.Products.FirstOrDefault(u=>u.Id == Obj.Id);
             if (objFormDB != null)
-            {
+            {//update existing product
+
                 objFormDB.Title = Obj.Title;
                 objFormDB.Description = Obj.Description;
                 objFormDB.Price = Obj.Price;
+                objFormDB.PublishPrice = Obj.PublishPrice;
                 objFormDB.Maker = Obj.Maker;
+                objFormDB.MinAge = Obj.MinAge;
+                objFormDB.RealishDate = Obj.RealishDate;
                 objFormDB.CategoryId = Obj.CategoryId;
                 objFormDB.Quantity = Obj.Quantity;
                 if(Obj.ImageUrl != null)
