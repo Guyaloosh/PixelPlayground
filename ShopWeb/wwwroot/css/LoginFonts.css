@@ -2299,15 +2299,15 @@
     content: '\f30d'
 }
 
-.zmdi-trending-down:before {
+.zmdi--down:before {
     content: '\f30e'
 }
 
-.zmdi-trending-flat:before {
+.zmdi--flat:before {
     content: '\f30f'
 }
 
-.zmdi-trending-up:before {
+.zmdi--up:before {
     content: '\f310'
 }
 
@@ -5407,15 +5407,15 @@
     content: '\f30d'
 }
 
-.zmdi-trending-down:before {
+.zmdi--down:before {
     content: '\f30e'
 }
 
-.zmdi-trending-flat:before {
+.zmdi--flat:before {
     content: '\f30f'
 }
 
-.zmdi-trending-up:before {
+.zmdi--up:before {
     content: '\f310'
 }
 

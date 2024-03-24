@@ -46,17 +46,17 @@
                 }
             });
 
-            $("#sortByTrending").click(function () {
-                // Sort products by trending
-                fetchSortedProducts("Trending");
-                if (isClicked === "sortByTrending") {
+        $("#sortByPopularity").click(function () {
+            // Sort products by Popularity
+            fetchSortedProducts("Popularity");
+            if (isClicked === "sortByPopularity") {
                     resetButtonStyles(); // Reset button styles if already clicked
                     isClicked = ""; // Unset the clicked button
                     fetchSortedProducts("")
                 } else {
                     resetButtonStyles(); // Reset button styles
-                    document.getElementById("sortByTrending").style.backgroundColor = "black";
-                    isClicked = "sortByTrending"; // Update the clicked button
+                document.getElementById("sortByPopularity").style.backgroundColor = "black";
+                isClicked = "sortByPopularity"; // Update the clicked button
                 }
             });
 
@@ -64,7 +64,7 @@
                 // Reset button styles for all buttons
                 document.getElementById("sortByPriceHigh").style.backgroundColor = "";
                 document.getElementById("sortByPriceLow").style.backgroundColor = "";
-                document.getElementById("sortByTrending").style.backgroundColor = "";
+                document.getElementById("sortByPopularity").style.backgroundColor = "";
             }
 
             // Function to filter products based on search text, selected categories, and price range

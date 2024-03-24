@@ -128,12 +128,13 @@ body {
 }
 
 .containerLogin {
+    margin: 0 auto; /* Center horizontally */
     margin-top: 120px;
     margin-bottom: 70px;
-    width: 1123px;
+    width: 1123px; /* You might want to adjust this width or use max-width */
     padding-top: 135px;
     padding-bottom: 115px;
-    background-image: url("../images//newBatmanBlue.png");
+    background-image: url("../images/newBatmanBlue.png");
     background-repeat: no-repeat;
     background-size: cover;
     -moz-background-size: cover;
@@ -337,4 +338,4 @@ input[type=checkbox]:not(old) {
     }
 }
 
-/*# sourceMappingURL=style.css.map */
+/*# source  MappingURL=style.css.map */

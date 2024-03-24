@@ -111,12 +111,23 @@ namespace ShopWeb.Areas.Customer.Controllers
                     sortedProducts = _unitOfWork.Product.GetAll(includeProperties: "Category")
                         .OrderBy(p => p.Price);
                     break;
-                case "Trending":
-                    // Implement your trending sorting logic here
-                    // Example: sorting by product name alphabetically
+                case "Popularity":
                     sortedProducts = _unitOfWork.Product.GetAll(includeProperties: "Category")
-                        .OrderBy(p => p.Title);
+                        .OrderBy(p => p.Popularity);
                     break;
+                case "onsale":
+                    sortedProducts = _unitOfWork.Product.GetAll(includeProperties: "Category")
+                        .Where(p => p.onSale == true);
+                    break;
+                case "MostSold":
+                    sortedProducts = _unitOfWork.Product.GetAll(includeProperties: "Category")
+                        .OrderByDescending(p => p.Sold);
+                    break;
+                case "Category":
+                    sortedProducts = _unitOfWork.Product.GetAll(includeProperties: "Category")
+                        .OrderBy(p => p.Category.Name);
+                    break;
+
                 default:
                     // Default sorting if sortType is not recognized
                     sortedProducts = _unitOfWork.Product.GetAll(includeProperties: "Category");
