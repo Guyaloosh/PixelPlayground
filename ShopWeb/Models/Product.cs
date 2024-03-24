@@ -36,6 +36,9 @@ namespace ShopWeb.Models
         public int MinAge { get; set; }
 
         
+        public bool onSale { get; set; }
+
+        
         public DateTime RealishDate { get; set; }
 
         //public bool isDigital {  get; set; }

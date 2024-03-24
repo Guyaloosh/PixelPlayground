@@ -28,6 +28,7 @@ namespace ShopWeb.Repository
                 objFormDB.MinAge = Obj.MinAge;
                 objFormDB.RealishDate = Obj.RealishDate;
                 objFormDB.CategoryId = Obj.CategoryId;
+                objFormDB.onSale = Obj.onSale;
                 objFormDB.Quantity = Obj.Quantity;
                 if(Obj.ImageUrl != null)
                 {
