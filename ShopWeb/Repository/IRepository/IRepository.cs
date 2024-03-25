@@ -1,4 +1,5 @@
-﻿using System.Linq.Expressions;
+﻿using ShopWeb.Models;
+using System.Linq.Expressions;
 
 namespace ShopWeb.Repository.IRepository
 {
@@ -9,6 +10,7 @@ namespace ShopWeb.Repository.IRepository
 
         IEnumerable<T> GetAll(Expression<Func<T, bool>>? filter=null, string? includeProperties = null);
         T Get(Expression<Func<T, bool>> filter, string? includeProperties = null);
+       
         void Add(T entity);
         void Remove(T entity);
         void RemoveRange(IEnumerable<T> entities);

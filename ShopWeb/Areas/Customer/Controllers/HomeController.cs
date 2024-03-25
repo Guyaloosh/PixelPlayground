@@ -48,11 +48,27 @@ namespace ShopWeb.Areas.Customer.Controllers
             var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
             shoppingCart.ApplicationUserId = userId;
 
+            var product = _unitOfWork.Product.Get(u => u.Id == shoppingCart.ProductId);
+           
+            if (product == null)
+            {
+                // Product not found, handle this situation (e.g., display an error)
+
+                return RedirectToAction(nameof(Index));
+            }
+
+            // Check if there is enough quantity available
+            if (product.Quantity < shoppingCart.Count)
+            {
+                TempData["error"] = "There is Not enough from this product please try later";
+                return RedirectToAction(nameof(Index));
+            }
+
             ShoppingCart cartFromDb = _unitOfWork.ShoppingCart.Get(u => u.ApplicationUserId == userId &&
             u.ProductId == shoppingCart.ProductId);
 
-            if(cartFromDb != null)
-            {
+            if (cartFromDb != null)
+            { 
                 //shoppingCart Exists.
                 cartFromDb.Count += shoppingCart.Count;
                 _unitOfWork.ShoppingCart.Update(cartFromDb);
@@ -61,8 +77,10 @@ namespace ShopWeb.Areas.Customer.Controllers
             {
                 _unitOfWork.ShoppingCart.Add(shoppingCart);
             }
-
+            
             _unitOfWork.Save();
+
+            TempData["success"] = "product added to the cart successfully";
 
             return RedirectToAction(nameof(Index));
         }
