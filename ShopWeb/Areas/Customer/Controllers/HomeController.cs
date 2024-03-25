@@ -63,6 +63,11 @@ namespace ShopWeb.Areas.Customer.Controllers
                 TempData["error"] = "There is Not enough from this product please try later";
                 return RedirectToAction(nameof(Index));
             }
+            if (shoppingCart.Count == 0)
+            {
+                TempData["error"] = "you cant add 0 items to the cart";
+                return RedirectToAction(nameof(Index));
+            }
 
             ShoppingCart cartFromDb = _unitOfWork.ShoppingCart.Get(u => u.ApplicationUserId == userId &&
             u.ProductId == shoppingCart.ProductId);
