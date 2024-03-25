@@ -15,7 +15,7 @@
                     else if (product.Quantity == 0)
                     {
                         <div class="text-center text-danger">
-                            <p>Out of stock</p>
+                            <p>Out of stock</p>w
                         </div>
                     }
                         <img src="@product.ImageUrl" alt="@product.Title" class="mx-auto rounded my-shadow-sm" style="width: 100%; height: 200px; object-fit:fill" />
@@ -27,23 +27,31 @@
                                 <p class="card-title text-warning text-center"><b> @product.RealishDate.Month/@product.RealishDate.Year</b></p>
                             </div>
                             <div class="pl-1">
-                                <p class="text-dark h5 text-dark opacity-75 text-center">As low as: <span>@product.Price.ToString("c")</span></p>
+                            @if (product.PublishPrice > product.Price)
+                            {
+                                <p class="text-dark h5 text-dark opacity-75 text-center">Price: <del>@product.PublishPrice.ToString("c")</del></p>
+                                <p class="text-dark h5 text-dark opacity-75 text-center">NOW only!: <span>@product.Price.ToString("c")</span></p>
+                            }
+                            else
+                            {
+                                <p class="text-dark h5 text-dark opacity-75 text-center">Price:<span>@product.Price.ToString("c")</span></p>
+                            }
                             </div>
                         </div>
                     @if (product.RealishDate > DateTime.Now)
                     {
-                        /*   <a asp-action="AddToWishList" asp-route-productId="@product.Id" class="btn btn-primary">
-                        Add to Wish List
-                        </a>*/
+                        <button onclick="addToWishList('@product.Title')" class="btn btn-danger form-control">
+                            Notify when in stock
+                        </button>
 
                     }
                     else
                     {
                         @if (product.Quantity == 0)
-                        {/*
-                    <a asp-action="AddToWishList" asp-route-productId="@product.Id" class="btn btn-danger form-control">
-                    Add to Wish List
-                    </a>*/
+                        {
+                            <button onclick="addToWishList('@product.Title')" class="btn btn-danger form-control">
+                                Notify when in stock
+                            </button>
                             <a id="detailsBtn" asp-action="Details" asp-route-productId="@product.Id" class="btn btn-primary bg-gradient border-0">
                                 Show More Details
                             </a>

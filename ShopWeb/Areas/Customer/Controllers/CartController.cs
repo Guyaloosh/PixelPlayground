@@ -207,6 +207,7 @@ namespace ShopWeb.Areas.Customer.Controllers
             foreach (var cart in ShoppingCartVM.ShoppingCartList)
             {
                 cart.product.Quantity -= cart.Count;
+                cart.product.Sold += cart.Count;
             }
 
             _unitOfWork.ShoppingCart.RemoveRange(shoppingCarts);
