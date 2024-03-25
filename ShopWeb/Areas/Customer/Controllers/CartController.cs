@@ -116,7 +116,7 @@ namespace ShopWeb.Areas.Customer.Controllers
             }
             
             //from here to start the if condition for customer role.
-
+            
             // if(claimsIdentity.N)
             //put here your local host when you run the website.
             var domain = "https://localhost:7034/";
@@ -191,10 +191,9 @@ namespace ShopWeb.Areas.Customer.Controllers
                     _unitOfWork.Save();
                 }
             }
-            //_emailSender.SendEmailAsync(orderHeader.ApplicationUser.Email, "New Order - Bulky Book", "<p>New Order Created</p>");
+            //payment was successeful - remove the cart from data base
             List<ShoppingCart> shoppingCarts = _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId ==
             orderHeader.ApplicationUserId).ToList();
-            //HttpContext.Session.Clear();
             _unitOfWork.ShoppingCart.RemoveRange(shoppingCarts);
             _unitOfWork.Save();
             return View(id);
@@ -245,8 +244,8 @@ namespace ShopWeb.Areas.Customer.Controllers
         }
 
         private decimal GetPriceBasedOnQuantity(ShoppingCart shoppingCart)
-        {
-            return shoppingCart.product.Price;
+        { 
+           return shoppingCart.product.Price;
         }
     }
 }

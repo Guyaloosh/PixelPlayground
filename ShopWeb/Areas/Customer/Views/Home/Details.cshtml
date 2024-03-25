@@ -1,5 +1,23 @@
 ﻿@model ShoppingCart
 <form method="post">
+    <head>
+        <script>
+            function checkQuantity(productQuantity) {
+                var countInput = document.getElementById("countInput");
+                var countValue = countInput.value;
+
+                if (productQuantity - countValue < 0) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops..." + productQuantity + "  " + countValue,
+                        text: "Sorry, there are not enough items available. Please try later.",
+                        footer: '<a href="#">Why do I have this issue?</a>',
+                        timer: 10000000000// 10 seconds in milliseconds
+                    });
+                }
+            }
+        </script>
+    </head>
     <input hidden asp-formaction="productId" />
     <div class="card shadow border-0 mt-4">
         <div class="card-header bg-secondary bg-gradient text-light py-4">
@@ -63,6 +81,7 @@
                     <div class="row">
                         <div class="col-12 col-md-6 pb-1">
                                 <button type="submit" class="btn btn-primary bg-gradient  w-100 py-2 text-uppercase fw-semibold">Add to Cart</button>
+                                <button onclick="checkQuantity(@Model.product.Quantity)">check</button>
                             </div>
                     </div>
                 </div>
@@ -83,7 +102,7 @@
         if (productQuantity - countValue < 0) {
             Swal.fire({
                 icon: "error",
-                title: "Oops...",
+                title: "Oops..."+productQuantity + "  "+ countValue,
                     text: "Sorry, there are not enough items available. Please try later.",
                 footer: '<a href="#">Why do I have this issue?</a>',
                 timer: 10000 // 10 seconds in milliseconds
