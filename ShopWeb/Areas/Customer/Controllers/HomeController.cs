@@ -56,7 +56,11 @@ namespace ShopWeb.Areas.Customer.Controllers
 
                 return RedirectToAction(nameof(Index));
             }
-
+            if (shoppingCart.Count <= 0)
+            {
+                TempData["error"] = "you cannot add "+ shoppingCart.Count + " items to the cart";
+                return RedirectToAction(nameof(Index));
+            }
             // Check if there is enough quantity available
             if (product.Quantity < shoppingCart.Count)
             {

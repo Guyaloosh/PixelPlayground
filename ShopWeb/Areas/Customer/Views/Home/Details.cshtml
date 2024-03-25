@@ -49,10 +49,22 @@
                         <div class="p-1 col-3 col-lg-2 bg-white border-bottom">
                             <div class="text-dark text-opacity-50 fw-semibold">Quantity</div>
                         </div>
-                            <h6 class="text-dark text-opacity-50  pb-2">
-                                @Model.product.Quantity
-                                <span class="text-decoration-line-through"></span>
-                            </h6>
+                            @if (Model.product.Quantity == 0)
+                            {
+                                <h6 class="text-dark text-opacity-50  pb-2">
+                                    OUT OF STOCK!
+                                    <span class="text-decoration-line-through"></span>
+                                </h6>
+
+                            }
+                            else
+                            {
+                                <h6 class="text-dark text-opacity-50  pb-2">
+                                    @Model.product.Quantity
+                                    <span class="text-decoration-line-through"></span>
+                                </h6>
+                            }
+                          
                     </div>
                     
                     <div class="row pl-2 mb-3">

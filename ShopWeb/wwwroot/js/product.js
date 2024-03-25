@@ -31,7 +31,7 @@ function loadDataTable() {
     });
 
 }
-s
+
 
 function Delete(url) {
     Swal.fire({
