@@ -41,6 +41,7 @@ namespace ShopWeb.Areas.Customer.Controllers
         [HttpPost]
         [Authorize]
         public IActionResult Details(ShoppingCart shoppingCart)
+
         {
             var claimsIdentity = (ClaimsIdentity)User.Identity;
             var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;

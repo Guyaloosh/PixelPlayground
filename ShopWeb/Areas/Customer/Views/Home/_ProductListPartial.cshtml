@@ -6,6 +6,18 @@
             <div class="row justify-content-between">
                 <div class="col-12">
                     <div class="card p-3 my-shadow-md rounded-2" style="height: 400px;">
+                    @if (product.RealishDate > DateTime.Now)
+                    {
+                        <div class="text-center text-primary">
+                            <p>Coming Soon</p>
+                        </div>
+                    }
+                    else if (product.Quantity == 0)
+                    {
+                        <div class="text-center text-danger">
+                            <p>Out of stock</p>
+                        </div>
+                    }
                         <img src="@product.ImageUrl" alt="@product.Title" class="mx-auto rounded my-shadow-sm" style="width: 100%; height: 200px; object-fit:fill" />
                         <div class="" style="height: auto;">
                             <div class="mt-2 pl-1">
@@ -18,12 +30,38 @@
                                 <p class="text-dark h5 text-dark opacity-75 text-center">As low as: <span>@product.Price.ToString("c")</span></p>
                             </div>
                         </div>
-                        <div>
-                            <a asp-action="Details" asp-route-productId="@product.Id" class="btn btn-primary bg-gradient border-0 form-control">
-                                Details
-                            </a>
+                    @if (product.RealishDate > DateTime.Now)
+                    {
+                        /*   <a asp-action="AddToWishList" asp-route-productId="@product.Id" class="btn btn-primary">
+                        Add to Wish List
+                        </a>*/
 
-                        </div>
+                    }
+                    else
+                    {
+                        @if (product.Quantity == 0)
+                        {/*
+                    <a asp-action="AddToWishList" asp-route-productId="@product.Id" class="btn btn-danger form-control">
+                    Add to Wish List
+                    </a>*/
+                            <a id="detailsBtn" asp-action="Details" asp-route-productId="@product.Id" class="btn btn-primary bg-gradient border-0">
+                                Show More Details
+                            </a>
+                        }
+                        else
+                        {
+                            <a asp-action="AddToCart" asp-route-productId="@product.Id" class="btn btn-success">
+                                Add to Cart
+                            </a>
+                            <a asp-action="Details" asp-route-productId="@product.Id" class="btn btn-primary bg-gradient border-0">
+                                Show More Details
+                            </a>
+                        }}
+
+
+                        <div>
+                       
+                    </div>
                     </div>
                 </div>
             </div>
