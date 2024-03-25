@@ -107,15 +107,16 @@ namespace ShopWeb.Areas.Customer.Controllers
                 {
                     ProductId = cart.ProductId,
                     OrderHeaderId = ShoppingCartVM.OrderHeader.Id,
-                    Price = cart.Price,
-                    Count = cart.Count
+                    Price = cart.Price*cart.Count,
+                    Count = cart.Count,
                 };
+                //orderDetail.Product.Quantity -= orderDetail.Count;
                 _unitOfWork.OrderDetail.Add(orderDetail);   
                 _unitOfWork.Save();
             }
             
             //from here to start the if condition for customer role.
-
+            
             // if(claimsIdentity.N)
             //put here your local host when you run the website.
             var domain = "https://localhost:7034/";
@@ -141,9 +142,23 @@ namespace ShopWeb.Areas.Customer.Controllers
                             Name = item.product.Title
                         }
                     },
-                    Quantity = item.Count
+                    Quantity = item.Count,
                 };
-                options.LineItems.Add(sessionLineItem);
+
+            options.LineItems.Add(sessionLineItem);
+            }
+
+            foreach(var item in ShoppingCartVM.ShoppingCartList)
+            {
+                if (item.product.Quantity - item.Count > 0 )
+                {
+                    item.product.Quantity -= item.Count;
+                }
+                else
+                {
+                    TempData["error"] = "There is Not enough please try later";
+                    return RedirectToAction("Index");
+                }
             }
 
             var service = new Stripe.Checkout.SessionService();
@@ -163,15 +178,43 @@ namespace ShopWeb.Areas.Customer.Controllers
 
         public IActionResult OrderConfirmation(int id)
         {
+            OrderHeader orderHeader = _unitOfWork.OrderHeader.GetFirstOrDefault(u => u.Id == id, includeProperties: "ApplicationUser");
+            if (orderHeader.PaymentStatus != SD.PaymentStatusDelayedPayment)
+            {
+                var service = new SessionService();
+                Session session = service.Get(orderHeader.SessionId);
+                //check the stripe status
+                if (session.PaymentStatus.ToLower() == "paid")
+                {
+                    _unitOfWork.OrderHeader.UpdateStripePaymentID(id, orderHeader.SessionId, session.PaymentIntentId);
+                    _unitOfWork.OrderHeader.UpdateStatus(id, SD.StatusApproved, SD.PaymentStatusApproved);
+                    _unitOfWork.Save();
+                }
+            }
+            //payment was successeful - remove the cart from data base
+            List<ShoppingCart> shoppingCarts = _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId ==
+            orderHeader.ApplicationUserId).ToList();
+            _unitOfWork.ShoppingCart.RemoveRange(shoppingCarts);
+            _unitOfWork.Save();
             return View(id);
         }
 
 		public IActionResult Plus(int cartId) 
         {
             var cartFromDb = _unitOfWork.ShoppingCart.Get(u => u.Id == cartId);
-            cartFromDb.Count += 1;
-            _unitOfWork.ShoppingCart.Update(cartFromDb);
-            _unitOfWork.Save();
+         
+             cartFromDb.Count += 1;
+             _unitOfWork.ShoppingCart.Update(cartFromDb);
+             _unitOfWork.Save();
+                
+            
+            //foreach (var item in ShoppingCartVM.ShoppingCartList)
+            //{
+              //  item.product.Quantity -= item.Count;
+
+           // }
+
+           
             return RedirectToAction(nameof(Index));
         }
 
@@ -201,8 +244,8 @@ namespace ShopWeb.Areas.Customer.Controllers
         }
 
         private decimal GetPriceBasedOnQuantity(ShoppingCart shoppingCart)
-        {
-            return shoppingCart.product.Price;
+        { 
+           return shoppingCart.product.Price;
         }
     }
 }
