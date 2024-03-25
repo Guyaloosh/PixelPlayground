@@ -1,4 +1,9 @@
 ﻿@model IEnumerable<Product>
+
+@{
+    var sorterdProducts = Model.OrderBy(p => p.Position);
+}
+
 <img src="~/Images/mainindexwallpaper.jpg" alt="GamingWallpaper" class="mx-auto" style="width: 100%;position:relative;margin-top:-2px; ;height: 220px; object-fit:cover"/>
 <div class="d-flex mt-[-12] p-2 mx-2 mt-4">
     <div class="card mb-12" style="border-right: 1px solid grey; margin-right:32px">
@@ -41,23 +46,24 @@
 
 
     <div class="container .d-inline-flex">
-        <div class="row">
-            <!-- Product List -->
-            <!-- Sort Bar -->
-            <div class="col-sm-6">
-                <div class="btn-group float-right" role="group">
-                    <button id="sortByPriceHigh" type="button" class="btn" style="color:#89D">Price High to Low</button>
-                    <button id="sortByPriceLow" type="button" class="btn" style="color:#89D">Price Low to High</button>
-                    <button id="sortByPopularity" type="button" class="btn" style="color:#89D">Popularity</button>
-                    <button id="sortBySold" type="button" class="btn" style="color:#89D">Best Sellers</button>
-                    <button id="sortByCategory" type="button" class="btn" style="color:#89D">Category</button>
-                   
-                </div>
+        <!-- Product List -->
+        <!-- Sort Bar -->
+        <div class="col-sm-6 mb-2">
+            <div class="btn-group float-right" role="group">
+                <button id="sortByPriceHigh" type="button" class="btn" style="color:#89D">Price High to Low</button>
+                <button id="sortByPriceLow" type="button" class="btn" style="color:#89D">Price Low to High</button>
+                <button id="sortByPopularity" type="button" class="btn" style="color:#89D">Popularity</button>
+                <button id="sortBySold" type="button" class="btn" style="color:#89D">Best Sellers</button>
+                <button id="sortByCategory" type="button" class="btn" style="color:#89D">Category</button>
+
             </div>
+        </div>
+        <div class="row">
+            
             <div class="col-md-12">
                 <div class="main">
                     <div class="row pb-3" id="productList">
-                        @foreach (var product in Model)
+                        @foreach (var product in sorterdProducts)
                         {
  
                             <div class="col-lg-3 col-md-6 col-sm-12 product pb-4" data-category-name="@product.Category.Name" data-price="@product.Price">

@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using ShopWeb.Models;
 using ShopWeb.Repository.IRepository;
 using System.Diagnostics;
@@ -131,7 +132,8 @@ namespace ShopWeb.Areas.Customer.Controllers
 
                 default:
                     // Default sorting if sortType is not recognized
-                    sortedProducts = _unitOfWork.Product.GetAll(includeProperties: "Category");
+                    sortedProducts = _unitOfWork.Product.GetAll(includeProperties: "Category")
+                    .OrderBy(p => p.Position);
                     break;
             }
 

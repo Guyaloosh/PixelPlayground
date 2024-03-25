@@ -30,6 +30,7 @@ namespace ShopWeb.Repository
                 objFormDB.CategoryId = Obj.CategoryId;
                 objFormDB.onSale = Obj.onSale;
                 objFormDB.Quantity = Obj.Quantity;
+                objFormDB.Position = Obj.Position;
                 if(Obj.ImageUrl != null)
                 {
                     objFormDB.ImageUrl = Obj.ImageUrl;

@@ -84,6 +84,13 @@
                             <input type="file" name="file" class="form-control" />
 
                         </div>
+                        @* Position *@
+                        <div class="mb-3 row p-1 text-muted">
+                            <label asp-for="Product.Position" class="p-0"></label>
+                            <input asp-for="Product.Position" class="form-control" />
+                            <span asp-validation-for="Product.Position" class="text-danger"></span>
+
+                        </div>
                         @*category *@
                         <div class="mb-3 row p-1 text-muted">
                             <label asp-for="Product.CategoryId" class="p-0"></label>
