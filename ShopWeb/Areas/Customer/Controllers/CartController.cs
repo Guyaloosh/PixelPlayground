@@ -89,11 +89,18 @@ namespace ShopWeb.Areas.Customer.Controllers
 
 			ShoppingCartVM.OrderHeader.ApplicationUser = _unitOfWork.ApplicationUser.Get(u => u.Id == userId);
 
-			foreach (var cart in ShoppingCartVM.ShoppingCartList)
-			{
-				cart.Price = GetPriceBasedOnQuantity(cart);
-				ShoppingCartVM.OrderHeader.OrderTotal += (cart.Price * cart.Count);
-			}
+            foreach (var cart in ShoppingCartVM.ShoppingCartList)
+            {
+                cart.Price = GetPriceBasedOnQuantity(cart);
+                ShoppingCartVM.OrderHeader.OrderTotal += (cart.Price * cart.Count);
+
+                // Check if the quantity of the product is sufficient
+                if (cart.product.Quantity < cart.Count)
+                {
+                    TempData["error"] = "There is not enough of " + cart.product.Title + " available. Please try again later.";
+                    return RedirectToAction(nameof(Index));
+                }
+            }
 
             ShoppingCartVM.OrderHeader.PaymentStatus = SD.PaymentStatusPending;
             ShoppingCartVM.OrderHeader.OrderStatus = SD.StatusPending;
@@ -107,17 +114,18 @@ namespace ShopWeb.Areas.Customer.Controllers
                 {
                     ProductId = cart.ProductId,
                     OrderHeaderId = ShoppingCartVM.OrderHeader.Id,
-                    Price = cart.Price,
-                    Count = cart.Count
+                    Price = cart.Price * cart.Count,
+                    Count = cart.Count,
                 };
+                //cart.product.Quantity -= cart.Count;
                 _unitOfWork.OrderDetail.Add(orderDetail);   
                 _unitOfWork.Save();
             }
-            
-            //from here to start the if condition for customer role.
 
-            // if(claimsIdentity.N)
-            //put here your local host when you run the website.
+                //from here to start the if condition for customer role.
+
+                // if(claimsIdentity.N)
+                //put here your local host when you run the website.
             var domain = "https://localhost:7034/";
 
             var options = new Stripe.Checkout.SessionCreateOptions
@@ -141,9 +149,10 @@ namespace ShopWeb.Areas.Customer.Controllers
                             Name = item.product.Title
                         }
                     },
-                    Quantity = item.Count
+                    Quantity = item.Count,
                 };
-                options.LineItems.Add(sessionLineItem);
+
+            options.LineItems.Add(sessionLineItem);
             }
 
             var service = new Stripe.Checkout.SessionService();
@@ -163,17 +172,59 @@ namespace ShopWeb.Areas.Customer.Controllers
 
         public IActionResult OrderConfirmation(int id)
         {
+            OrderHeader orderHeader = _unitOfWork.OrderHeader.GetFirstOrDefault(u => u.Id == id, includeProperties: "ApplicationUser");
+            if (orderHeader.PaymentStatus != SD.PaymentStatusDelayedPayment)
+            {
+                var service = new SessionService();
+                Session session = service.Get(orderHeader.SessionId);
+                //check the stripe status
+                if (session.PaymentStatus.ToLower() == "paid")
+                {
+                    _unitOfWork.OrderHeader.UpdateStripePaymentID(id, orderHeader.SessionId, session.PaymentIntentId);
+                    _unitOfWork.OrderHeader.UpdateStatus(id, SD.StatusApproved, SD.PaymentStatusApproved);
+                    _unitOfWork.Save();
+                }
+            }
+            
+            //payment was successeful - remove the cart from data base
+            List<ShoppingCart> shoppingCarts = _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId ==
+            orderHeader.ApplicationUserId).ToList();
+
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            //update the quantity in the database.
+
+            ShoppingCartVM = new()
+            {
+                ShoppingCartList = _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == userId,
+                includeProperties: "product")
+            };
+
+            ShoppingCartVM.ShoppingCartList = _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == userId,
+                includeProperties: "product");
+
+            foreach (var cart in ShoppingCartVM.ShoppingCartList)
+            {
+                cart.product.Quantity -= cart.Count;
+            }
+
+            _unitOfWork.ShoppingCart.RemoveRange(shoppingCarts);
+            _unitOfWork.Save();
             return View(id);
         }
 
-		public IActionResult Plus(int cartId) 
+        public IActionResult Plus(int cartId,ShoppingCart shoppingCart)
         {
             var cartFromDb = _unitOfWork.ShoppingCart.Get(u => u.Id == cartId);
             cartFromDb.Count += 1;
             _unitOfWork.ShoppingCart.Update(cartFromDb);
             _unitOfWork.Save();
+
             return RedirectToAction(nameof(Index));
+       
         }
+
 
         public IActionResult Minus(int cartId)
         {
@@ -201,8 +252,8 @@ namespace ShopWeb.Areas.Customer.Controllers
         }
 
         private decimal GetPriceBasedOnQuantity(ShoppingCart shoppingCart)
-        {
-            return shoppingCart.product.Price;
+        { 
+           return shoppingCart.product.Price;
         }
     }
 }
