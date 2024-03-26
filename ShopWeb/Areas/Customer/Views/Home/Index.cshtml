@@ -115,24 +115,25 @@
                                                 {
                                                     <div class="d-flex justify-content-center">
                                                         <button onclick="addToWishList('@product.Title')" class="btn btn-danger mx-1" style="font-size:11px;">
-                                                        Notify restock
-                                                    </button>
+                                                            Notify restock
+                                                        </button>
                                                         <a id="detailsBtn" asp-action="Details" asp-route-productId="@product.Id" class="btn btn-primary bg-gradient border-0 mx-1" style="font-size:11px;">
-                                                        Show More Details
-                                                    </a>
+                                                            Show More Details
+                                                        </a>
                                                     </div>
                                                 }
                                                 else
                                                 {
                                                     <div class="d-flex justify-content-center">
                                                         <a asp-action="AddToCart" asp-route-productId="@product.Id" class="btn btn-success mx-1" style="font-size:11px;">
-                                                        Add to Cart
-                                                    </a>
+                                                            Add to Cart
+                                                        </a>
                                                         <a asp-action="Details" asp-route-productId="@product.Id" class="btn btn-primary bg-gradient border-0 mx-1" style="font-size:11px;">
-                                                        Show More Details
-                                                    </a>
+                                                            Show More Details
+                                                        </a>
                                                     </div>
-                                                }}
+                                                }
+                                            }
 
                                         </div>
                                     </div>
