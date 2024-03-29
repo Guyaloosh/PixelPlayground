@@ -13,18 +13,17 @@
             </div>
         </div>
 
-    <table class="PandCTable">
+    <table id="tblData" class="PandCTable">
     <thead>
-    <tr>
-        <th>
-            Category Name
-        </th>
-        <th>
-            Display Order
-        </th>
-        <th></th>
-    </tr>
+        <tr>
+          <th>Category Name</th>
+          <th>Display Order </th>
+          <th></th>
+        </tr>
     </thead>
+
+      
+    
     <tbody>
         @foreach (var obj in Model.OrderBy(u=>u.DisplayOrder))
         {
