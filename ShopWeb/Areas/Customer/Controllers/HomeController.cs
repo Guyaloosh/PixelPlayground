@@ -142,7 +142,7 @@ namespace ShopWeb.Areas.Customer.Controllers
                     break;
                 case "Popularity":
                     sortedProducts = _unitOfWork.Product.GetAll(includeProperties: "Category")
-                        .OrderBy(p => p.Popularity);
+                        .OrderByDescending(p => p.Popularity);
                     break;
                 case "onsale":
                     sortedProducts = _unitOfWork.Product.GetAll(includeProperties: "Category")
