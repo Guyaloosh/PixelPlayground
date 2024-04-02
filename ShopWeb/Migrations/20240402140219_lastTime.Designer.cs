@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ShopWeb.Data;
 
@@ -11,9 +12,11 @@ using ShopWeb.Data;
 namespace ShopWeb.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240402140219_lastTime")]
+    partial class lastTime
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -493,44 +496,98 @@ namespace ShopWeb.Migrations
                         {
                             Id = 1,
                             CategoryId = 1,
-                            Description = "Action RPG set in a fantasy world.",
-                            ImageUrl = "/Images/DefGameImages/1.jpg",
-                            Maker = "CD Projekt Red",
-                            MinAge = 17,
-                            Popularity = 95,
-                            Position = 1,
-                            Price = 29.99m,
-                            PublishPrice = 49.99m,
-                            Quantity = 80,
-                            RealishDate = new DateTime(2015, 5, 19, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Sold = 152,
-                            Title = "The Witcher 3: Wild Hunt",
-                            onSale = true
+                            Description = "Great Game",
+                            ImageUrl = "",
+                            Maker = "Electronic Arts",
+                            MinAge = 0,
+                            Popularity = 0,
+                            Position = 0,
+                            Price = 50m,
+                            PublishPrice = 0m,
+                            Quantity = 0,
+                            RealishDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Sold = 0,
+                            Title = "Apex",
+                            onSale = false
                         },
                         new
                         {
                             Id = 2,
+                            CategoryId = 2,
+                            Description = "ok Game",
+                            ImageUrl = "",
+                            Maker = "Nexon",
+                            MinAge = 0,
+                            Popularity = 0,
+                            Position = 0,
+                            Price = 20m,
+                            PublishPrice = 0m,
+                            Quantity = 0,
+                            RealishDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Sold = 0,
+                            Title = "MapleStory",
+                            onSale = false
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CategoryId = 3,
+                            Description = "Amazing Game",
+                            ImageUrl = "",
+                            Maker = "Riot Games",
+                            MinAge = 0,
+                            Popularity = 0,
+                            Position = 0,
+                            Price = 70m,
+                            PublishPrice = 0m,
+                            Quantity = 0,
+                            RealishDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Sold = 0,
+                            Title = "LeugeOfLeguent",
+                            onSale = false
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CategoryId = 1,
+                            Description = "Action RPG set in a fantasy world.",
+                            ImageUrl = "Images/DefGameImages/1.jpg",
+                            Maker = "CD Projekt Red",
+                            MinAge = 17,
+                            Popularity = 50,
+                            Position = 0,
+                            Price = 29.99m,
+                            PublishPrice = 0m,
+                            Quantity = 0,
+                            RealishDate = new DateTime(2018, 10, 26, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Sold = 0,
+                            Title = "The Witcher 3: Wild Hunt",
+                            onSale = false
+                        },
+                        new
+                        {
+                            Id = 5,
                             CategoryId = 9,
                             Description = "Open-world action-adventure game.",
-                            ImageUrl = "/Images/DefGameImages/2.jpg",
+                            ImageUrl = "Images/DefGameImages/2.jpg",
                             Maker = "Rockstar Games",
                             MinAge = 17,
-                            Popularity = 96,
-                            Position = 2,
+                            Popularity = 95,
+                            Position = 1,
                             Price = 39.99m,
-                            PublishPrice = 59.99m,
-                            Quantity = 45,
-                            RealishDate = new DateTime(2018, 10, 26, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Sold = 287,
+                            PublishPrice = 49.99m,
+                            Quantity = 80,
+                            RealishDate = new DateTime(2015, 5, 19, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Sold = 152,
                             Title = "Red Dead Redemption 2",
                             onSale = true
                         },
                         new
                         {
-                            Id = 3,
+                            Id = 6,
                             CategoryId = 1,
                             Description = "Open-world action RPG set in a dystopian future.",
-                            ImageUrl = "/Images/DefGameImages/3.jpg",
+                            ImageUrl = "~/Images/DefGameImages/3.jpg",
                             Maker = "CD Projekt Red",
                             MinAge = 18,
                             Popularity = 90,
@@ -545,7 +602,7 @@ namespace ShopWeb.Migrations
                         },
                         new
                         {
-                            Id = 4,
+                            Id = 7,
                             CategoryId = 1,
                             Description = "Action-adventure game set in a fictional version of Southern California.",
                             ImageUrl = "/Images/DefGameImages/4.jpg",
@@ -563,7 +620,7 @@ namespace ShopWeb.Migrations
                         },
                         new
                         {
-                            Id = 5,
+                            Id = 8,
                             CategoryId = 8,
                             Description = "Battle Royale game with building mechanics.",
                             ImageUrl = "/Images/DefGameImages/5.jpg",
@@ -581,7 +638,7 @@ namespace ShopWeb.Migrations
                         },
                         new
                         {
-                            Id = 6,
+                            Id = 9,
                             CategoryId = 8,
                             Description = "Multiplayer online battle royale game.",
                             ImageUrl = "/Images/DefGameImages/6.jpg",
@@ -599,7 +656,7 @@ namespace ShopWeb.Migrations
                         },
                         new
                         {
-                            Id = 7,
+                            Id = 10,
                             CategoryId = 7,
                             Description = "First-person shooter video game set in the modern world.",
                             ImageUrl = "/Images/DefGameImages/7.jpg",
@@ -617,7 +674,7 @@ namespace ShopWeb.Migrations
                         },
                         new
                         {
-                            Id = 8,
+                            Id = 11,
                             CategoryId = 8,
                             Description = "Battle Royale game mode within the Call of Duty: Modern Warfare universe.",
                             ImageUrl = "/Images/DefGameImages/8.jpg",
@@ -635,7 +692,7 @@ namespace ShopWeb.Migrations
                         },
                         new
                         {
-                            Id = 9,
+                            Id = 12,
                             CategoryId = 7,
                             Description = "Free-to-play battle royale game set in the Titanfall universe.",
                             ImageUrl = "/Images/DefGameImages/9.jpg",
@@ -653,7 +710,7 @@ namespace ShopWeb.Migrations
                         },
                         new
                         {
-                            Id = 10,
+                            Id = 13,
                             CategoryId = 4,
                             Description = "Team-based multiplayer first-person shooter game.",
                             ImageUrl = "/Images/DefGameImages/10.jpg",
@@ -671,7 +728,7 @@ namespace ShopWeb.Migrations
                         },
                         new
                         {
-                            Id = 11,
+                            Id = 14,
                             CategoryId = 9,
                             Description = "Sandbox video game where players build with various cubes in a 3D procedurally generated world.",
                             ImageUrl = "/Images/DefGameImages/11.jpg",
@@ -689,7 +746,7 @@ namespace ShopWeb.Migrations
                         },
                         new
                         {
-                            Id = 12,
+                            Id = 15,
                             CategoryId = 7,
                             Description = "Free-to-play multiplayer tactical first-person shooter.",
                             ImageUrl = "/Images/DefGameImages/12.jpg",
@@ -707,7 +764,7 @@ namespace ShopWeb.Migrations
                         },
                         new
                         {
-                            Id = 13,
+                            Id = 16,
                             CategoryId = 5,
                             Description = "Online multiplayer social deduction game.",
                             ImageUrl = "/Images/DefGameImages/13.jpg",
@@ -725,7 +782,7 @@ namespace ShopWeb.Migrations
                         },
                         new
                         {
-                            Id = 14,
+                            Id = 17,
                             CategoryId = 5,
                             Description = "Multiplayer party game with up to 60 players online.",
                             ImageUrl = "/Images/DefGameImages/14.jpg",
@@ -743,7 +800,7 @@ namespace ShopWeb.Migrations
                         },
                         new
                         {
-                            Id = 15,
+                            Id = 18,
                             CategoryId = 1,
                             Description = "Action role-playing game set in the fictional province of Skyrim.",
                             ImageUrl = "/Images/DefGameImages/15.jpg",
@@ -761,7 +818,7 @@ namespace ShopWeb.Migrations
                         },
                         new
                         {
-                            Id = 16,
+                            Id = 19,
                             CategoryId = 2,
                             Description = "Vehicular soccer video game.",
                             ImageUrl = "/Images/DefGameImages/16.jpg",
@@ -779,7 +836,7 @@ namespace ShopWeb.Migrations
                         },
                         new
                         {
-                            Id = 17,
+                            Id = 20,
                             CategoryId = 9,
                             Description = "Action role-playing video game set in ancient Greece.",
                             ImageUrl = "/Images/DefGameImages/17.jpg",
@@ -797,7 +854,7 @@ namespace ShopWeb.Migrations
                         },
                         new
                         {
-                            Id = 18,
+                            Id = 21,
                             CategoryId = 12,
                             Description = "First-person shooter video game developed by id Software.",
                             ImageUrl = "/Images/DefGameImages/18.jpg",
@@ -815,7 +872,7 @@ namespace ShopWeb.Migrations
                         },
                         new
                         {
-                            Id = 19,
+                            Id = 22,
                             CategoryId = 8,
                             Description = "Action role-playing game set in an open world environment.",
                             ImageUrl = "/Images/DefGameImages/19.jpg",
@@ -833,7 +890,7 @@ namespace ShopWeb.Migrations
                         },
                         new
                         {
-                            Id = 20,
+                            Id = 23,
                             CategoryId = 1,
                             Description = "Tactical shooter video game developed by Ubisoft Montreal.",
                             ImageUrl = "/Images/DefGameImages/20.jpg",
@@ -851,7 +908,7 @@ namespace ShopWeb.Migrations
                         },
                         new
                         {
-                            Id = 21,
+                            Id = 24,
                             CategoryId = 8,
                             Description = "Action role-playing game set in an open world environment.",
                             ImageUrl = "/Images/DefGameImages/21.jpg",
@@ -869,7 +926,7 @@ namespace ShopWeb.Migrations
                         },
                         new
                         {
-                            Id = 22,
+                            Id = 25,
                             CategoryId = 3,
                             Description = "Action game developed by Kojima Productions.",
                             ImageUrl = "/Images/DefGameImages/22.jpg",
@@ -887,7 +944,7 @@ namespace ShopWeb.Migrations
                         },
                         new
                         {
-                            Id = 23,
+                            Id = 26,
                             CategoryId = 12,
                             Description = "Survival horror video game developed by Capcom.",
                             ImageUrl = "/Images/DefGameImages/23.jpg",
@@ -905,7 +962,7 @@ namespace ShopWeb.Migrations
                         },
                         new
                         {
-                            Id = 24,
+                            Id = 27,
                             CategoryId = 1,
                             Description = "Action-adventure video game developed by FromSoftware.",
                             ImageUrl = "/Images/DefGameImages/24.jpg",
@@ -923,7 +980,7 @@ namespace ShopWeb.Migrations
                         },
                         new
                         {
-                            Id = 25,
+                            Id = 28,
                             CategoryId = 10,
                             Description = "Action-adventure video game developed by Remedy Entertainment.",
                             ImageUrl = "/Images/DefGameImages/25.jpg",
@@ -941,7 +998,7 @@ namespace ShopWeb.Migrations
                         },
                         new
                         {
-                            Id = 26,
+                            Id = 29,
                             CategoryId = 5,
                             Description = "Open-world action role-playing game.",
                             ImageUrl = "/Images/DefGameImages/26.jpg",
@@ -959,7 +1016,7 @@ namespace ShopWeb.Migrations
                         },
                         new
                         {
-                            Id = 27,
+                            Id = 30,
                             CategoryId = 3,
                             Description = "Action-adventure game developed and published by Nintendo.",
                             ImageUrl = "/Images/DefGameImages/27.jpg",
@@ -977,7 +1034,7 @@ namespace ShopWeb.Migrations
                         },
                         new
                         {
-                            Id = 28,
+                            Id = 31,
                             CategoryId = 3,
                             Description = "Action-adventure game developed by Respawn Entertainment.",
                             ImageUrl = "/Images/DefGameImages/28.jpg",
@@ -995,7 +1052,7 @@ namespace ShopWeb.Migrations
                         },
                         new
                         {
-                            Id = 29,
+                            Id = 32,
                             CategoryId = 1,
                             Description = "Virtual reality first-person shooter game developed and published by Valve.",
                             ImageUrl = "/Images/DefGameImages/29.jpg",
@@ -1013,7 +1070,7 @@ namespace ShopWeb.Migrations
                         },
                         new
                         {
-                            Id = 30,
+                            Id = 33,
                             CategoryId = 6,
                             Description = "Dance with your swords! VR special!",
                             ImageUrl = "/Images/DefGameImages/30.jpg",
@@ -1031,7 +1088,7 @@ namespace ShopWeb.Migrations
                         },
                         new
                         {
-                            Id = 31,
+                            Id = 34,
                             CategoryId = 1,
                             Description = "Action-adventure game ,More details SOON!.",
                             ImageUrl = "/Images/DefGameImages/31.jpg",
