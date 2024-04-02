@@ -1,0 +1,82 @@
+﻿@model ShopWeb.Models.ViewModels.OrderViewModel
+
+@{
+    ViewData["Title"] = "Order Details";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+        .table {
+            width: 100%;        }
+
+            .table, .table th, .table td {
+                border: 1px solid #ddd;
+            }
+
+                .table th, .table td {
+                    text-align: left;
+                }
+
+                .table th {
+                    background-color: #f2f2f2;
+                }
+
+                .table tbody tr:nth-child(odd) {
+                    background-color: #fbfbfb;
+                }
+
+                .table tbody tr:hover {
+                    background-color: #f1f1f1;
+                }
+
+        div {
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div>
+        <h3>Order Details</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Order Detail ID</th>
+                    <th>Product ID</th>
+                    <th>Count</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.OrderDetails)
+                {
+                    <tr>
+                        <td>@item.Id</td>
+                        <td>@item.ProductId</td>
+                        <td>@item.Count</td>
+                        <td>@item.Price</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div>
+        <h3>Order Summary</h3>
+        <p><strong>Address:</strong> @Model.OrderHeader.StreetAddress, @Model.OrderHeader.City, @Model.OrderHeader.State, @Model.OrderHeader.PostalCode</p>
+        <p><strong>Total Price:</strong> $@Model.OrderHeader.OrderTotal</p>
+    </div>
+</body>
+</html>
