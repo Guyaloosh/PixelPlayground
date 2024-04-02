@@ -38,10 +38,46 @@ namespace ShopWeb.Areas.Customer.Controllers
             {
                 cart.Price = GetPriceBasedOnQuantity(cart);
                 ShoppingCartVM.OrderHeader.OrderTotal += (cart.Price * cart.Count);
+                //cart.product.tempQuantity = cart.product.Quantity;
             }
 
             return View(ShoppingCartVM);
         }
+
+        [HttpPost]
+        [HttpPost]
+        public IActionResult AddToCart(int productId, int quantity)
+        {
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+            var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            // Check if the product already exists in the user's cart
+            var existingCartItem = _unitOfWork.ShoppingCart.GetFirstOrDefault(
+                cart => cart.ApplicationUserId == userId && cart.ProductId == productId);
+
+            if (existingCartItem != null)
+            {
+                // Product already in cart, update the count
+                existingCartItem.Count += quantity;
+                _unitOfWork.ShoppingCart.Update(existingCartItem);
+            }
+            else
+            {
+                // Product not in cart, add it
+                var cartItem = new ShoppingCart
+                {
+                    ApplicationUserId = userId,
+                    ProductId = productId,
+                    Count = quantity
+                };
+                _unitOfWork.ShoppingCart.Add(cartItem);
+            }
+
+            _unitOfWork.Save();
+
+            return RedirectToAction("Index", "Cart"); // Redirect to cart page
+        }
+
 
         public IActionResult Summary()
         {
@@ -117,7 +153,6 @@ namespace ShopWeb.Areas.Customer.Controllers
                     Price = cart.Price * cart.Count,
                     Count = cart.Count,
                 };
-                //cart.product.Quantity -= cart.Count;
                 _unitOfWork.OrderDetail.Add(orderDetail);   
                 _unitOfWork.Save();
             }
@@ -219,6 +254,7 @@ namespace ShopWeb.Areas.Customer.Controllers
         {
             var cartFromDb = _unitOfWork.ShoppingCart.Get(u => u.Id == cartId);
             cartFromDb.Count += 1;
+            //cartFromDb.product.tempQuantity -= 1;
             _unitOfWork.ShoppingCart.Update(cartFromDb);
             _unitOfWork.Save();
 

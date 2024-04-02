@@ -54,6 +54,9 @@ namespace ShopWeb.Models
 
         public int Position {  get; set; }
 
-
+        //public int tempQuantity { get; set; }
     }
+
+
 }
+

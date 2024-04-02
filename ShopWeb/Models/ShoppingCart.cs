@@ -19,5 +19,6 @@ namespace ShopWeb.Models
         public ApplicationUser applicationUser { get; set; }
         [NotMapped]
         public decimal Price { get; set; }
+        
     }
 }
