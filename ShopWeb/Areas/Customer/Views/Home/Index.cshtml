@@ -4,6 +4,8 @@
     var sorterdProducts = Model.OrderBy(p => p.Position);
 }
 
+
+
 <img src="~/Images/mainindexwallpaper.jpg" alt="GamingWallpaper" class="mx-auto" style="width: 100%;position:relative;margin-top:-2px; ;height: 220px; object-fit:cover" />
 <div class="d-flex mt-[-12] p-2 mx-2 mt-4">
     <div class="card mb-12" style="border-right: 1px solid grey; margin-right:32px">
@@ -24,23 +26,39 @@
                 </div>
             }
             <hr>
-            <!-- Price range filter -->
-            <h5>Price Range</h5>
+          
+            <!-- Date range filter -->
+            <h5>Date Range</h5>
             <div class="mb-3">
-                <label for="minPrice">Min Price</label>
-                <input type="number" class="form-control" id="minPrice" placeholder="Min Price">
+                <label for="startMonthYear">Start Month/Year</label>
+                <input type="month" class="form-control" id="startDate" placeholder="Start Month/Year" value="2010-01">
             </div>
             <div class="mb-3">
-                <label for="maxPrice">Max Price</label>
-                <input type="number" class="form-control" id="maxPrice" placeholder="Max Price">
+                <label for="endMonthYear">End Month/Year</label>
+                <input type="month" class="form-control" id="endDate" placeholder="End Month/Year" value="2028-01">
             </div>
-            <!-- On Sale filter -->
+
+
+
+
+            <!-- Price range slider -->
+            <div class="slidecontainer">
+                <label for="myRange">Max price: <span id="maxrangeValue">250</span></label>
+                <input type="range" min="0" max="250" value="250" class="slider" id="mymaxRange">
+            </div>
+            <div class="slidecontainer">
+                <label for="myRange">Min Price: <span id="minrangeValue">0</span></label>
+                <input type="range" min="0" max="250" value="0" class="slider" id="myminRange">
+            </div>
+
+            <!-- on sale filter -->
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="onSaleCheckbox">
+                <input class="form-check-input onSaleCheckbox" type="checkbox" value="" id="onSaleCheckbox">
                 <label class="form-check-label" for="onSaleCheckbox">
                     ON SALE
                 </label>
             </div>
+            
         </div>
     </div>
 
@@ -55,7 +73,7 @@
                 <button id="sortByPopularity" type="button" class="btn" style="color:#89D">Popularity</button>
                 <button id="sortBySold" type="button" class="btn" style="color:#89D">Best Sellers</button>
                 <button id="sortByCategory" type="button" class="btn" style="color:#89D">Category</button>
-
+                
             </div>
         </div>
         <div class="row">
@@ -66,7 +84,7 @@
                         @foreach (var product in sorterdProducts)
                         {
 
-                            <div class="col-lg-3 col-md-6 col-sm-12 product pb-4" data-category-name="@product.Category.Name" data-price="@product.Price">
+                            <div class="col-lg-3 col-md-6 col-sm-12 product pb-4" data-category-name="@product.Category.Name" data-price="@product.Price" data-onsale="@product.onSale" data-date="@product.RealishDate">
                                 <div class="row justify-content-between">
                                     <div class="col-12">
                                         <div class="card p-2 my-shadow-md rounded-2" style="height: 450px;">
@@ -80,10 +98,12 @@
                                                 <div class="mt-2 pl-1">
                                                     <p class="card-title h5 text-dark opacity-75 text-center">@product.Title</p>
                                                     <p class="card-title text-warning text-center"><b>@product.Maker</b></p>
-                                                    <p class="card-title text-warning text-center"><b>@product.Category.Name</b></p>
-                                                    <p class="card-title text-warning text-center"><b>@product.RealishDate.Month/@product.RealishDate.Year</b></p>
+                                                    <p class="text-warning text-center"><b>@product.Category.Name</b></p>
+                                                    <p class="text-warning text-center"><b>@product.RealishDate.Month/@product.RealishDate.Year</b></p>
                                                 </div>
+                                                
                                                 <div class="pl-1">
+                                                    
                                                    
                                                     @if (product.RealishDate > DateTime.Now)
                                                     {
@@ -266,7 +286,8 @@
                     isClicked = "sortBySold"; // Update the clicked button
                 }
             });
-
+          
+            
             function resetButtonStyles() {
                 // Reset button styles for all buttons
                 document.getElementById("sortByPriceHigh").style.backgroundColor = "";
@@ -274,6 +295,17 @@
                 document.getElementById("sortByPopularity").style.backgroundColor = "";
                 document.getElementById("sortByCategory").style.backgroundColor = "";
                 document.getElementById("sortBySold").style.backgroundColor = "";
+                $("#searchInput").val("");
+                $("#onSaleCheckbox").prop("checked", false);
+                $(".categoryCheckbox:checked").prop("checked", false);
+
+                $("#mymaxRange").val(1000);
+                $("#maxrangeValue").text('250');
+                $("#myminRange").val(0);
+                $("#minrangeValue").text('0');
+
+                document.getElementById("startDate").value = "2010-01";
+                document.getElementById("endDate").value = "2028-01";
 
             }
 
@@ -281,33 +313,32 @@
 
             $("#onSaleCheckbox").click(function () {
                 // Check if the checkbox is checked
+
                 isMostSoldClicked = $(this).is(":checked");
-
+                filterProducts();
                 // Sort products by popularity if checkbox is checked
-                if (isMostSoldClicked) {
-                    fetchSortedProducts("onsale");
-                } else {
-                    fetchSortedProducts(""); // Fetch products without sorting by most sold
-                }
+                
             });
-
-
 
 
             // Function to filter products based on search text, selected categories, and price range
             function filterProducts() {
+
+                var startDate = new Date($("#startDate").val());
+                var endDate = new Date($("#endDate").val());
+
+                // Get the selected price range value
+                var selectedmaxPrice = parseFloat($("#mymaxRange").val());
+                var selectedminPrice = parseFloat($("#myminRange").val());
+
                 // Get search text
                 var searchText = $("#searchInput").val().toLowerCase();
                 // Collect selected categories
                 var selectedCategories = $(".categoryCheckbox:checked").map(function () {
                     return $(this).val().toLowerCase();
                 }).get();
-                // Parse price range inputs
-                var minPrice = parseFloat($("#minPrice").val()) || 0;
-                var maxPrice = parseFloat($("#maxPrice").val()) || Number.MAX_VALUE;
 
-
-
+               
 
                 // Iterate over each product and show/hide based on matching criteria
                 $(".product").each(function () {
@@ -316,18 +347,46 @@
                     var category = product.data('category-name').toLowerCase();
                     var price = parseFloat(product.data('price'));
 
+                    //
+                    var isonsale = product.data('onsale');
 
+                    var dateString = $(this).data('date');
+                    var releaseDate;
 
+                    if (dateString) {
+                        // Attempt to create a Date object
+                        releaseDate = new Date(dateString);
+                        // Check if the Date object is valid
+                        if (isNaN(releaseDate.getTime())) {
+                            var parts = dateString.split(/[\/ :]/);
+                            releaseDate = new Date(parts[2], parts[1] - 1, parts[0], parts[3], parts[4], parts[5]);
+                            // Handle the invalid date here
+                        }
+                    } 
+
+                    var isDateMatch = releaseDate >= startDate && releaseDate <= endDate;
                     var isCategoryMatch = selectedCategories.length === 0 || selectedCategories.includes(category);
                     var isTitleMatch = title.includes(searchText);
-                    var isPriceMatch = (price >= minPrice && price <= maxPrice);
+                    var isPriceMatch = (price >= selectedminPrice && price <= selectedmaxPrice);
 
 
                     // Show product if it matches all criteria
-                    if (isCategoryMatch && isTitleMatch && isPriceMatch) {
-                        product.show();
+                    if (!isMostSoldClicked) {
+                        if (isCategoryMatch && isTitleMatch && isPriceMatch && isDateMatch) {
+                            product.show();
+                        }
+                        else {
+                            product.hide();
+                        }
                     } else {
-                        product.hide();
+                        console.log("else");
+                        if (isCategoryMatch && isTitleMatch && isPriceMatch && isonsale != 'False' && isDateMatch) {
+                            console.log("if");
+                            product.show();
+                        } else {
+                            product.hide();
+                        }
+
                     }
                 });
 
@@ -337,8 +396,24 @@
             $("#searchInput").on("keyup", filterProducts);
             // Bind change event to category checkboxes to filter products on selection
             $(".categoryCheckbox").on("change", filterProducts);
-            // Bind input event to price range inputs for live price filtering
-            $("#minPrice, #maxPrice").on("input", filterProducts);
+
+            $("#startDate, #endDate").on("change", filterProducts);
+
+            $("#mymaxRange").on("input", function () {
+                // Update displayed range value
+                $("#maxrangeValue").text($(this).val());
+                // Reapply filters
+                filterProducts();
+            });
+            $("#myminRange").on("input", function () {
+                // Update displayed range value
+                $("#minrangeValue").text($(this).val());
+                // Reapply filters
+                filterProducts();
+            });
+
+        
+
             // Optional: bind click event to an apply filter button if you want to apply filters only on button click
             //$("#applyFilter").click(filterProducts);
         });

@@ -2,7 +2,7 @@
 
     @foreach (var product in Model)
     {
-    <div class="col-lg-3 col-md-6 col-sm-12 product pb-4" data-category-name="@product.Category.Name" data-price="@product.Price">
+    <div class="col-lg-3 col-md-6 col-sm-12 product pb-4" data-category-name="@product.Category.Name" data-price="@product.Price" data-onsale="@product.onSale" data-date="@product.RealishDate">
         <div class="row justify-content-between">
             <div class="col-12">
                 <div class="card p-2 my-shadow-md rounded-2" style="height: 450px;">
@@ -15,8 +15,8 @@
                         <div class="mt-2 pl-1">
                             <p class="card-title h5 text-dark opacity-75 text-center">@product.Title</p>
                             <p class="card-title text-warning text-center"><b>@product.Maker</b></p>
-                            <p class="card-title text-warning text-center"><b>@product.Category.Name</b></p>
-                            <p class="card-title text-warning text-center"><b>@product.RealishDate.Month/@product.RealishDate.Year</b></p>
+                            <p class="text-warning text-center"><b>@product.Category.Name</b></p>
+                            <p class="text-warning text-center"><b>@product.RealishDate.Month/@product.RealishDate.Year</b></p>
                         </div>
                         <div class="pl-1">
                            
