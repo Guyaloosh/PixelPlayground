@@ -208,18 +208,27 @@ namespace ShopWeb.Areas.Customer.Controllers
         public IActionResult OrderConfirmation(int id)
         {
             OrderHeader orderHeader = _unitOfWork.OrderHeader.GetFirstOrDefault(u => u.Id == id, includeProperties: "ApplicationUser");
-            if (orderHeader.PaymentStatus != SD.PaymentStatusDelayedPayment)
+            if(orderHeader == null)
             {
-                var service = new SessionService();
-                Session session = service.Get(orderHeader.SessionId);
-                //check the stripe status
-                if (session.PaymentStatus.ToLower() == "paid")
-                {
-                    _unitOfWork.OrderHeader.UpdateStripePaymentID(id, orderHeader.SessionId, session.PaymentIntentId);
-                    _unitOfWork.OrderHeader.UpdateStatus(id, SD.StatusApproved, SD.PaymentStatusApproved);
-                    _unitOfWork.Save();
-                }
-            }
+				return View(id);
+
+			}
+            else
+            {
+				if (orderHeader.PaymentStatus != SD.PaymentStatusDelayedPayment)
+				{
+					var service = new SessionService();
+					Session session = service.Get(orderHeader.SessionId);
+					//check the stripe status
+					if (session.PaymentStatus.ToLower() == "paid")
+					{
+						_unitOfWork.OrderHeader.UpdateStripePaymentID(id, orderHeader.SessionId, session.PaymentIntentId);
+						_unitOfWork.OrderHeader.UpdateStatus(id, SD.StatusApproved, SD.PaymentStatusApproved);
+						_unitOfWork.Save();
+					}
+				}
+			}
+            
             
             //payment was successeful - remove the cart from data base
             List<ShoppingCart> shoppingCarts = _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId ==
