@@ -126,15 +126,30 @@ body {
 .main {
     position: relative;
 }
-
+/*margin: 0 auto;*/ /* Center horizontally */
+/*margin-top: 120px;
+    margin-bottom: 70px;
+    width: 700px;*/ /* You might want to adjust this width or use max-width */
+/*padding-top: 135px;
+    padding-bottom: 115px;
+    background-image: url("../images/NewSuperMan.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+    -moz-background-size: cover;
+    -webkit-background-size: cover;
+    -o-background-size: cover;
+    -ms-background-size: cover;
+    background-position: center center;
+    overflow: hidden;*/
 .containerLogin {
+    position: relative; /* Position relative to contain pseudo-element */
     margin: 0 auto; /* Center horizontally */
     margin-top: 120px;
     margin-bottom: 70px;
-    width: 1123px; /* You might want to adjust this width or use max-width */
+    width: 700px; /* You might want to adjust this width or use max-width */
     padding-top: 135px;
     padding-bottom: 115px;
-    background-image: url("../images/newBatmanBlue.png");
+    background-image: url("../images/NewSuperMan.png");
     background-repeat: no-repeat;
     background-size: cover;
     -moz-background-size: cover;
@@ -144,6 +159,17 @@ body {
     background-position: center center;
     overflow: hidden;
 }
+
+    .containerLogin::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 15%; /* Adjust this percentage to control the height of the gradient */
+        background-image: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0.5));
+    }
+
 
 .signup-content {
     width: 562px;
@@ -155,8 +181,9 @@ body {
 }
 
 
+
 .signup-form {
-    padding: 54px 54px 54px 54px;
+    padding: 54px 54px 54px 120px;
 }
 
 .form-group {
@@ -333,7 +360,7 @@ input[type=checkbox]:not(old) {
     }
 
     .signup-form {
-        padding: 54px 54px 54px 54px;
+        padding: 54px 30px 36px 30px;
     }
 }
 

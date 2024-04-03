@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ShopWeb.Data;
 
@@ -11,9 +12,11 @@ using ShopWeb.Data;
 namespace ShopWeb.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240402135849_newdb")]
+    partial class newdb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -494,7 +497,7 @@ namespace ShopWeb.Migrations
                             Id = 1,
                             CategoryId = 1,
                             Description = "Action RPG set in a fantasy world.",
-                            ImageUrl = "/Images/DefGameImages/1.jpg",
+                            ImageUrl = "Images/DefGameImages/1.jpg",
                             Maker = "CD Projekt Red",
                             MinAge = 17,
                             Popularity = 95,
@@ -512,7 +515,7 @@ namespace ShopWeb.Migrations
                             Id = 2,
                             CategoryId = 9,
                             Description = "Open-world action-adventure game.",
-                            ImageUrl = "/Images/DefGameImages/2.jpg",
+                            ImageUrl = "Images/DefGameImages/2.jpg",
                             Maker = "Rockstar Games",
                             MinAge = 17,
                             Popularity = 96,
@@ -530,7 +533,7 @@ namespace ShopWeb.Migrations
                             Id = 3,
                             CategoryId = 1,
                             Description = "Open-world action RPG set in a dystopian future.",
-                            ImageUrl = "/Images/DefGameImages/3.jpg",
+                            ImageUrl = "~/Images/DefGameImages/3.jpg",
                             Maker = "CD Projekt Red",
                             MinAge = 18,
                             Popularity = 90,
