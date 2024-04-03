@@ -126,13 +126,11 @@ body {
 .main {
     position: relative;
 }
-
-.containerLogin {
-    /*margin: 0 auto;*/ /* Center horizontally */
-    /*margin-top: 120px;
+/*margin: 0 auto;*/ /* Center horizontally */
+/*margin-top: 120px;
     margin-bottom: 70px;
     width: 700px;*/ /* You might want to adjust this width or use max-width */
-    /*padding-top: 135px;
+/*padding-top: 135px;
     padding-bottom: 115px;
     background-image: url("../images/NewSuperMan.png");
     background-repeat: no-repeat;
@@ -143,13 +141,15 @@ body {
     -ms-background-size: cover;
     background-position: center center;
     overflow: hidden;*/
+.containerLogin {
+    position: relative; /* Position relative to contain pseudo-element */
     margin: 0 auto; /* Center horizontally */
     margin-top: 120px;
     margin-bottom: 70px;
-    width: 1123px; /* You might want to adjust this width or use max-width */
+    width: 700px; /* You might want to adjust this width or use max-width */
     padding-top: 135px;
     padding-bottom: 115px;
-    background-image: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,1)), url("../images/NewSuperMan.png");
+    background-image: url("../images/NewSuperMan.png");
     background-repeat: no-repeat;
     background-size: cover;
     -moz-background-size: cover;
@@ -159,6 +159,17 @@ body {
     background-position: center center;
     overflow: hidden;
 }
+
+    .containerLogin::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 15%; /* Adjust this percentage to control the height of the gradient */
+        background-image: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0.5));
+    }
+
 
 .signup-content {
     width: 562px;
