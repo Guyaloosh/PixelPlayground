@@ -155,9 +155,8 @@ body {
 }
 
 
-
 .signup-form {
-    padding: 54px 80px 36px 55px;
+    padding: 54px 54px 54px 54px;
 }
 
 .form-group {
@@ -334,7 +333,7 @@ input[type=checkbox]:not(old) {
     }
 
     .signup-form {
-        padding: 54px 30px 36px 30px;
+        padding: 54px 54px 54px 54px;
     }
 }
 
