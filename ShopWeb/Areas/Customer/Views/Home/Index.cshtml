@@ -26,7 +26,7 @@
                 </div>
             }
             <hr>
-          
+
             <!-- Date range filter -->
             <h5>Date Range</h5>
             <div class="mb-3">
@@ -58,7 +58,7 @@
                     ON SALE
                 </label>
             </div>
-            
+
         </div>
     </div>
 
@@ -73,7 +73,7 @@
                 <button id="sortByPopularity" type="button" class="btn" style="color:#89D">Popularity</button>
                 <button id="sortBySold" type="button" class="btn" style="color:#89D">Best Sellers</button>
                 <button id="sortByCategory" type="button" class="btn" style="color:#89D">Category</button>
-                
+
             </div>
         </div>
         <div class="row">
@@ -88,7 +88,7 @@
                                 <div class="row justify-content-between">
                                     <div class="col-12">
                                         <div class="card p-2 my-shadow-md rounded-2" style="height: 450px;">
-                                           
+
                                             @if (product.onSale)
                                             {
                                                 <img src="~/Images/onsale.png" alt="On sale" style="position: absolute; top: 0; right:0; width: 150px; height: 80px;">
@@ -101,10 +101,10 @@
                                                     <p class="text-warning text-center"><b>@product.Category.Name</b></p>
                                                     <p class="text-warning text-center"><b>@product.RealishDate.Month/@product.RealishDate.Year</b></p>
                                                 </div>
-                                                
+
                                                 <div class="pl-1">
-                                                    
-                                                   
+
+
                                                     @if (product.RealishDate > DateTime.Now)
                                                     {
                                                         <div class="text-center text-primary">
@@ -117,7 +117,7 @@
                                                             <p>Out of stock</p>
                                                         </div>
                                                     }
-                                                     else if (product.PublishPrice > product.Price)
+                                                    else if (product.PublishPrice > product.Price)
                                                     {
                                                         <p class="text-dark h5 text-dark opacity-75 text-center">Price: <del>@product.PublishPrice.ToString("c")</del></p>
                                                         <p class="text-dark h5 text-dark opacity-75 text-center">NOW only!: <span>@product.Price.ToString("c")</span></p>
@@ -125,7 +125,7 @@
                                                     else
                                                     {
                                                         <p class="text-dark h5 text-dark opacity-75 text-center">Price:<span>@product.Price.ToString("c")</span></p>
-                                                        <p ><br /></p>
+                                                        <p><br /></p>
                                                     }
                                                 </div>
                                             </div>
@@ -152,16 +152,17 @@
                                                 else
                                                 {
                                                     <div class="d-flex justify-content-center">
-                                                        <a asp-action="AddToCart" asp-route-productId="@product.Id" class="btn btn-success mx-1" style="font-size:11px;">
-                                                            Add to Cart
-                                                        </a>
+                                                        <form method="post" asp-controller="Cart" asp-action="AddToCart">
+                                                            <input type="hidden" name="productId" value="@product.Id" />
+                                                            <input type="hidden" name="quantity" value="1" />
+                                                            <button type="submit" class="btn btn-success">Add to Cart</button>
+                                                        </form>
                                                         <a asp-action="Details" asp-route-productId="@product.Id" class="btn btn-primary bg-gradient border-0 mx-1" style="font-size:11px;">
                                                             Show More Details
                                                         </a>
                                                     </div>
                                                 }
                                             }
-
                                         </div>
                                     </div>
                                 </div>
@@ -285,8 +286,8 @@
                     isClicked = "sortBySold"; // Update the clicked button
                 }
             });
-          
-            
+
+
             function resetButtonStyles() {
                 // Reset button styles for all buttons
                 document.getElementById("sortByPriceHigh").style.backgroundColor = "";
@@ -316,7 +317,7 @@
                 isMostSoldClicked = $(this).is(":checked");
                 filterProducts();
                 // Sort products by popularity if checkbox is checked
-                
+
             });
 
 
@@ -337,7 +338,7 @@
                     return $(this).val().toLowerCase();
                 }).get();
 
-               
+
 
                 // Iterate over each product and show/hide based on matching criteria
                 $(".product").each(function () {
@@ -361,7 +362,7 @@
                             releaseDate = new Date(parts[2], parts[1] - 1, parts[0], parts[3], parts[4], parts[5]);
                             // Handle the invalid date here
                         }
-                    } 
+                    }
 
                     var isDateMatch = releaseDate >= startDate && releaseDate <= endDate;
                     var isCategoryMatch = selectedCategories.length === 0 || selectedCategories.includes(category);
@@ -411,7 +412,7 @@
                 filterProducts();
             });
 
-        
+
 
             // Optional: bind click event to an apply filter button if you want to apply filters only on button click
             //$("#applyFilter").click(filterProducts);
@@ -421,3 +422,4 @@
 
     </script>
 }
+
