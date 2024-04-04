@@ -33,7 +33,7 @@ namespace ShopWeb.Areas.Customer.Controllers
                 userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
 
             }
-            else { userId = "guest"; }
+            else { userId = "c5150bf2-5f3b-4e97-8344-ca3119606183"; }
 
             ShoppingCartVM = new()
             {
@@ -68,7 +68,7 @@ namespace ShopWeb.Areas.Customer.Controllers
 
             }
             else { 
-                userId = "guest";
+                userId = "c5150bf2-5f3b-4e97-8344-ca3119606183";
                 
             }
             // Check if the product already exists in the user's cart
@@ -127,7 +127,7 @@ namespace ShopWeb.Areas.Customer.Controllers
                 ShoppingCartVM.OrderHeader.PostalCode = ShoppingCartVM.OrderHeader.ApplicationUser.PostalCode;
 
             }
-            else { userId = "guest";
+            else { userId = "c5150bf2-5f3b-4e97-8344-ca3119606183";
                 ShoppingCartVM = new()
                 {
                     ShoppingCartList = _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == userId,
@@ -160,7 +160,7 @@ namespace ShopWeb.Areas.Customer.Controllers
                 userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
 
             }
-            else { userId = "guest"; }
+            else { userId = "c5150bf2-5f3b-4e97-8344-ca3119606183"; }
 
 
             ShoppingCartVM.ShoppingCartList = _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == userId,

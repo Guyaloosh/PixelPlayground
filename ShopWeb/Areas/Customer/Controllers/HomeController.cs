@@ -60,7 +60,7 @@ namespace ShopWeb.Areas.Customer.Controllers
               userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
 
             }
-            else {  userId = "guest"; }
+            else {  userId = "c5150bf2-5f3b-4e97-8344-ca3119606183"; }
             
             
             shoppingCart.ApplicationUserId = userId;
