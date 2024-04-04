@@ -16,7 +16,11 @@
                     }
 
 
-                    @if (product.onSale)
+                    @if (product.onSale && product.Quantity==0)
+                    {
+                        <img src="~/Images/outOfStock.png" alt="Out of Stock" style="position: absolute; top: 0; right:0; width: 150px; height: 80px;">
+                    }
+                    else if (product.onSale)
                     {
                         <img src="~/Images/onsale.png" alt="On sale" style="position: absolute; top: 0; right:0; width: 150px; height: 80px;">
                     }
