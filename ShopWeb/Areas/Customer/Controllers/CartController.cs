@@ -289,8 +289,7 @@ namespace ShopWeb.Areas.Customer.Controllers
 			ShoppingCartVM.OrderHeader.OrderDate = System.DateTime.Now;
 			ShoppingCartVM.OrderHeader.ApplicationUserId = userId;
 
-			ShoppingCartVM.OrderHeader.PaymentStatus = SD.PaymentStatusPending;
-			ShoppingCartVM.OrderHeader.OrderStatus = SD.StatusPending;
+			
             //
 			_unitOfWork.OrderHeader.Add(ShoppingCartVM.OrderHeader);
 			_unitOfWork.Save();
@@ -307,22 +306,18 @@ namespace ShopWeb.Areas.Customer.Controllers
 				_unitOfWork.OrderDetail.Add(orderDetail);
 				_unitOfWork.Save();
 			}
-            //
-
-
-			if (ShoppingCartVM.OrderHeader.PaymentStatus != SD.PaymentStatusDelayedPayment)
-			{
-			
-					_unitOfWork.OrderHeader.UpdateStatus(id, SD.StatusApproved, SD.PaymentStatusApproved);
-					_unitOfWork.Save();
-			}
-
+            
 			//payment was successeful - remove the cart from data base
 			List<ShoppingCart> shoppingCarts = _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId ==
 			ShoppingCartVM.OrderHeader.ApplicationUserId).ToList();
-			//update the quantity in the database.
 
-			ShoppingCartVM.ShoppingCartList = _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == userId,
+            //update payment status
+            ShoppingCartVM.OrderHeader.PaymentStatus = SD.PaymentStatusApproved;
+            ShoppingCartVM.OrderHeader.OrderStatus = SD.StatusApproved;
+
+
+            //update the quantity in the database.
+            ShoppingCartVM.ShoppingCartList = _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == userId,
 				includeProperties: "product");
 
 			foreach (var cart in ShoppingCartVM.ShoppingCartList)
