@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using ShopWeb.Models;
 using ShopWeb.Repository.IRepository;
-using System;
 using System.Diagnostics;
 using System.Security.Claims;
 
@@ -15,7 +14,7 @@ namespace ShopWeb.Areas.Customer.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly IUnitOfWork _unitOfWork;
 
-        public HomeController(ILogger<HomeController> logger,IUnitOfWork unitOfWork)
+        public HomeController(ILogger<HomeController> logger, IUnitOfWork unitOfWork)
         {
             _logger = logger;
             _unitOfWork = unitOfWork;
@@ -32,16 +31,14 @@ namespace ShopWeb.Areas.Customer.Controllers
         }
         public IActionResult Details(int productId)
         {
-
             ShoppingCart cart = new()
             {
                 product = _unitOfWork.Product.Get(u => u.Id == productId, includeProperties: "Category"),
                 Count = 1,
-                ProductId = productId,
-               
-                
-            }; 
-            Console.WriteLine("clicked");
+                ProductId = productId
+            };
+            cart.product.Popularity++;
+            _unitOfWork.Save();
             return View(cart);
         }
         [HttpPost]
@@ -54,8 +51,6 @@ namespace ShopWeb.Areas.Customer.Controllers
             shoppingCart.ApplicationUserId = userId;
 
             var product = _unitOfWork.Product.Get(u => u.Id == shoppingCart.ProductId);
-            
-
 
             if (product == null)
             {
@@ -65,9 +60,7 @@ namespace ShopWeb.Areas.Customer.Controllers
             }
             if (shoppingCart.Count <= 0)
             {
-              
-                TempData["error"] = "you cannot add "+ shoppingCart.Count + " items to the cart";
-                
+                TempData["error"] = "you cannot add " + shoppingCart.Count + " items to the cart";
                 return RedirectToAction(nameof(Index));
             }
             // Check if there is enough quantity available
@@ -86,7 +79,7 @@ namespace ShopWeb.Areas.Customer.Controllers
             u.ProductId == shoppingCart.ProductId);
 
             if (cartFromDb != null)
-            { 
+            {
                 //shoppingCart Exists.
                 cartFromDb.Count += shoppingCart.Count;
                 _unitOfWork.ShoppingCart.Update(cartFromDb);
@@ -95,7 +88,7 @@ namespace ShopWeb.Areas.Customer.Controllers
             {
                 _unitOfWork.ShoppingCart.Add(shoppingCart);
             }
-            
+
             _unitOfWork.Save();
 
             TempData["success"] = "product added to the cart successfully";
