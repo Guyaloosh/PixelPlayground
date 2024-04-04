@@ -37,6 +37,8 @@ namespace ShopWeb.Areas.Customer.Controllers
                 Count = 1,
                 ProductId = productId
             };
+            cart.product.Popularity++;
+            _unitOfWork.Save();
             return View(cart);
         }
         [HttpPost]

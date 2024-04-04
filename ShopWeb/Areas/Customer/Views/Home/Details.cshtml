@@ -13,7 +13,7 @@
                 </div>
             </div>
         </div>
-        <div class="card-body">
+        <div class="container">
             <div class="py-3">
                 <div class="row">
                     <div class="col-6 col-md-2 offset-lg-1 pb-1">
@@ -22,13 +22,13 @@
                         </a>
                     </div>
                 </div>
-                <div class="mx-auto">
-                    <div class="col-12 col-md-6 offset-lg-1 pb-1 mx-auto">
-                        <img src="@Model.product.ImageUrl" width="50%" class="rounded mx-auto" />
-                        <p class="text-secondary lh-sm my-3 mx-auto">@Model.product.Description</p>
-                    </div>
-                    <div class="row pl-2 my-3">
+                <div class="row align-items-center">
+                    <div class="col-6 ">
+                        <img src="@Model.product.ImageUrl" width="50%" class="rounded mx-auto"  />
                         
+                    </div>
+                    <div class="col-6">
+                        <p class="text-secondary lh-sm my-3 mx-auto">@Model.product.Description</p>
                     </div>
                 </div>
                 <div class="row">

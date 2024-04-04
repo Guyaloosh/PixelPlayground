@@ -278,19 +278,23 @@ namespace ShopWeb.Areas.Customer.Controllers
 			ShoppingCartVM.OrderHeader.State = ShoppingCartVM.OrderHeader.ApplicationUser.State;
 			ShoppingCartVM.OrderHeader.PostalCode = ShoppingCartVM.OrderHeader.ApplicationUser.PostalCode;
 
-
-			foreach (var cart in ShoppingCartVM.ShoppingCartList)
+            foreach (var cart in ShoppingCartVM.ShoppingCartList)
 			{
 				cart.Price = GetPriceBasedOnQuantity(cart);
 				ShoppingCartVM.OrderHeader.OrderTotal += (cart.Price * cart.Count);
-			}
+                if (cart.product.Quantity < cart.Count)
+                {
+                    TempData["error"] = "There is not enough of " + cart.product.Title + " available. Please try again later.";
+                    return RedirectToAction(nameof(Index));
+                }
+            }
 
 
 			ShoppingCartVM.OrderHeader.OrderDate = System.DateTime.Now;
 			ShoppingCartVM.OrderHeader.ApplicationUserId = userId;
 
-			ShoppingCartVM.OrderHeader.PaymentStatus = SD.PaymentStatusPending;
-			ShoppingCartVM.OrderHeader.OrderStatus = SD.StatusPending;
+			ShoppingCartVM.OrderHeader.PaymentStatus = SD.PaymentStatusApproved;
+			ShoppingCartVM.OrderHeader.OrderStatus = SD.StatusApproved;
             //
 			_unitOfWork.OrderHeader.Add(ShoppingCartVM.OrderHeader);
 			_unitOfWork.Save();
@@ -307,15 +311,8 @@ namespace ShopWeb.Areas.Customer.Controllers
 				_unitOfWork.OrderDetail.Add(orderDetail);
 				_unitOfWork.Save();
 			}
-            //
 
-
-			if (ShoppingCartVM.OrderHeader.PaymentStatus != SD.PaymentStatusDelayedPayment)
-			{
 			
-					_unitOfWork.OrderHeader.UpdateStatus(id, SD.StatusApproved, SD.PaymentStatusApproved);
-					_unitOfWork.Save();
-			}
 
 			//payment was successeful - remove the cart from data base
 			List<ShoppingCart> shoppingCarts = _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId ==
