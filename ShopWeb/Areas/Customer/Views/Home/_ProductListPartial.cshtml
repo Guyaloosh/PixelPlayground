@@ -34,21 +34,8 @@
                         </div>
                         <div class="pl-1">
                            
-                            @if (product.RealishDate > DateTime.Now)
-                            {
-                               
-                                <div class="text-center text-primary">
-                                    <p>Coming Soon</p>
-                                </div>
-                                <p><br /></p>
-                            }
-                            else if (product.Quantity == 0)
-                            {
-                                <div class="text-center text-danger">
-                                    <p>Out of stock</p>
-                                </div>
-                            }
-                            else if (product.PublishPrice > product.Price)
+                            
+                             @if (product.PublishPrice > product.Price)
                             {
                                 <p class="text-dark h5 text-dark opacity-75 text-center">Price: <del>@product.PublishPrice.ToString("c")</del></p>
                                 <p class="text-dark h5 text-dark opacity-75 text-center">NOW only!: <span>@product.Price.ToString("c")</span></p>

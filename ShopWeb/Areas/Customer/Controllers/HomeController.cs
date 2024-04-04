@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using ShopWeb.Models;
 using ShopWeb.Repository.IRepository;
+using System;
 using System.Diagnostics;
 using System.Security.Claims;
 
@@ -31,12 +32,16 @@ namespace ShopWeb.Areas.Customer.Controllers
         }
         public IActionResult Details(int productId)
         {
+
             ShoppingCart cart = new()
             {
                 product = _unitOfWork.Product.Get(u => u.Id == productId, includeProperties: "Category"),
                 Count = 1,
-                ProductId = productId
-            };
+                ProductId = productId,
+               
+                
+            }; 
+            Console.WriteLine("clicked");
             return View(cart);
         }
         [HttpPost]
@@ -49,7 +54,9 @@ namespace ShopWeb.Areas.Customer.Controllers
             shoppingCart.ApplicationUserId = userId;
 
             var product = _unitOfWork.Product.Get(u => u.Id == shoppingCart.ProductId);
-           
+            
+
+
             if (product == null)
             {
                 // Product not found, handle this situation (e.g., display an error)
@@ -58,7 +65,9 @@ namespace ShopWeb.Areas.Customer.Controllers
             }
             if (shoppingCart.Count <= 0)
             {
+              
                 TempData["error"] = "you cannot add "+ shoppingCart.Count + " items to the cart";
+                
                 return RedirectToAction(nameof(Index));
             }
             // Check if there is enough quantity available
