@@ -11,7 +11,7 @@ using static System.Net.WebRequestMethods;
 namespace ShopWeb.Areas.Customer.Controllers
 {
     [Area("customer")]
-    [Authorize]
+   
     public class CartController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
@@ -25,8 +25,15 @@ namespace ShopWeb.Areas.Customer.Controllers
 
         public IActionResult Index()
         {
+            var userId = "";
             var claimsIdentity = (ClaimsIdentity)User.Identity;
-            var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            if (claimsIdentity.IsAuthenticated)
+            {
+                userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            }
+            else { userId = "guest"; }
 
             ShoppingCartVM = new()
             {
@@ -35,6 +42,8 @@ namespace ShopWeb.Areas.Customer.Controllers
                 ,
                 OrderHeader = new()
             };
+
+
             foreach (var cart in ShoppingCartVM.ShoppingCartList)
             {
                 cart.Price = GetPriceBasedOnQuantity(cart);
@@ -48,9 +57,20 @@ namespace ShopWeb.Areas.Customer.Controllers
         [HttpPost]
         public IActionResult AddToCart(int productId, int quantity)
         {
-            var claimsIdentity = (ClaimsIdentity)User.Identity;
-            var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
 
+
+            var userId = "";
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+
+            if (claimsIdentity.IsAuthenticated)
+            {
+                userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            }
+            else { 
+                userId = "guest";
+                
+            }
             // Check if the product already exists in the user's cart
             var existingCartItem = _unitOfWork.ShoppingCart.GetFirstOrDefault(
                 cart => cart.ApplicationUserId == userId && cart.ProductId == productId);
@@ -81,26 +101,42 @@ namespace ShopWeb.Areas.Customer.Controllers
 
         public IActionResult Summary()
         {
+
+            var userId = "";
             var claimsIdentity = (ClaimsIdentity)User.Identity;
-            var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
 
-            ShoppingCartVM = new()
+            if (claimsIdentity.IsAuthenticated)
             {
-                ShoppingCartList = _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == userId,
-                includeProperties: "product")
-                ,
-                OrderHeader = new()
-            };
+                userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
 
-            ShoppingCartVM.OrderHeader.ApplicationUser = _unitOfWork.ApplicationUser.Get(u => u.Id == userId);
+                ShoppingCartVM = new()
+                {
+                    ShoppingCartList = _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == userId,
+                    includeProperties: "product")
+                    ,
+                    OrderHeader = new()
+                };
 
-            ShoppingCartVM.OrderHeader.Name = ShoppingCartVM.OrderHeader.ApplicationUser.Name;
-            ShoppingCartVM.OrderHeader.PhoneNumber = ShoppingCartVM.OrderHeader.ApplicationUser.PhoneNumber;
-            ShoppingCartVM.OrderHeader.StreetAddress = ShoppingCartVM.OrderHeader.ApplicationUser.StreetAdress;
-            ShoppingCartVM.OrderHeader.City = ShoppingCartVM.OrderHeader.ApplicationUser.City;
-            ShoppingCartVM.OrderHeader.State = ShoppingCartVM.OrderHeader.ApplicationUser.State;
-            ShoppingCartVM.OrderHeader.PostalCode = ShoppingCartVM.OrderHeader.ApplicationUser.PostalCode;
+                ShoppingCartVM.OrderHeader.ApplicationUser = _unitOfWork.ApplicationUser.Get(u => u.Id == userId);
 
+                ShoppingCartVM.OrderHeader.Name = ShoppingCartVM.OrderHeader.ApplicationUser.Name;
+                ShoppingCartVM.OrderHeader.PhoneNumber = ShoppingCartVM.OrderHeader.ApplicationUser.PhoneNumber;
+                ShoppingCartVM.OrderHeader.StreetAddress = ShoppingCartVM.OrderHeader.ApplicationUser.StreetAdress;
+                ShoppingCartVM.OrderHeader.City = ShoppingCartVM.OrderHeader.ApplicationUser.City;
+                ShoppingCartVM.OrderHeader.State = ShoppingCartVM.OrderHeader.ApplicationUser.State;
+                ShoppingCartVM.OrderHeader.PostalCode = ShoppingCartVM.OrderHeader.ApplicationUser.PostalCode;
+
+            }
+            else { userId = "guest";
+                ShoppingCartVM = new()
+                {
+                    ShoppingCartList = _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == userId,
+                       includeProperties: "product")
+                       ,
+                    OrderHeader = new()
+                };
+
+            }
 
             foreach (var cart in ShoppingCartVM.ShoppingCartList)
             {
@@ -114,8 +150,18 @@ namespace ShopWeb.Areas.Customer.Controllers
         [ActionName("Summary")]
         public IActionResult SummaryPOST()
         {
+
+
+            var userId = "";
             var claimsIdentity = (ClaimsIdentity)User.Identity;
-            var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            if (claimsIdentity.IsAuthenticated)
+            {
+                userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            }
+            else { userId = "guest"; }
+
 
             ShoppingCartVM.ShoppingCartList = _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == userId,
                 includeProperties: "product");
