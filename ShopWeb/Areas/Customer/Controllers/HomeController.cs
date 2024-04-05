@@ -5,6 +5,7 @@ using ShopWeb.Models;
 using ShopWeb.Repository.IRepository;
 using System.Diagnostics;
 using System.Security.Claims;
+using System.Security.Principal;
 
 namespace ShopWeb.Areas.Customer.Controllers
 {
@@ -31,9 +32,13 @@ namespace ShopWeb.Areas.Customer.Controllers
         }
         public IActionResult Details(int productId)
         {
+
+            IEnumerable<Product> productList = _unitOfWork.Product.GetAll(includeProperties: "Category");
+
             ShoppingCart cart = new()
             {
                 product = _unitOfWork.Product.Get(u => u.Id == productId, includeProperties: "Category"),
+                products = (List<Product>)productList,
                 Count = 1,
                 ProductId = productId
             };
@@ -41,13 +46,23 @@ namespace ShopWeb.Areas.Customer.Controllers
             _unitOfWork.Save();
             return View(cart);
         }
+
         [HttpPost]
-        [Authorize]
+      
         public IActionResult Details(ShoppingCart shoppingCart)
 
         {
+            var userId = "";
             var claimsIdentity = (ClaimsIdentity)User.Identity;
-            var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            if (claimsIdentity.IsAuthenticated)
+            {
+              userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            }
+            else {  userId = "c5150bf2-5f3b-4e97-8344-ca3119606183"; }
+            
+            
             shoppingCart.ApplicationUserId = userId;
 
             var product = _unitOfWork.Product.Get(u => u.Id == shoppingCart.ProductId);
@@ -60,6 +75,7 @@ namespace ShopWeb.Areas.Customer.Controllers
             }
             if (shoppingCart.Count <= 0)
             {
+                
                 TempData["error"] = "you cannot add " + shoppingCart.Count + " items to the cart";
                 return RedirectToAction(nameof(Index));
             }

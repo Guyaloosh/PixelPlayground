@@ -109,7 +109,7 @@ namespace ShopWeb.Migrations
                     table.ForeignKey(
                         name: "FK_AspNetUserClaims_AspNetUsers_UserId",
                         column: x => x.UserId,
-                        principalTable: "AspNetUsers",
+                        principalTable: "AspNetUsers", 
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
