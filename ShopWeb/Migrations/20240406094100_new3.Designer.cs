@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ShopWeb.Data;
 
@@ -11,9 +12,11 @@ using ShopWeb.Data;
 namespace ShopWeb.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240406094100_new3")]
+    partial class new3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -546,7 +549,7 @@ namespace ShopWeb.Migrations
                             RealishDate = new DateTime(2020, 12, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Sold = 130,
                             Title = "Cyberpunk 2077",
-                            TrailerLink = "https://www.youtube.com/embed/8X2kIfS6fb8?si=c7vjcptvnbaR3yEl",
+                            TrailerLink = "https://www.youtube.com/embed/qIcTM8WXFjk",
                             onSale = false
                         },
                         new
@@ -565,7 +568,7 @@ namespace ShopWeb.Migrations
                             RealishDate = new DateTime(2013, 9, 17, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Sold = 140,
                             Title = "Grand Theft Auto V",
-                            TrailerLink = "https://www.youtube.com/embed/YrtCnL62pB8?si=LC33Inf9VEu4sg7g",
+                            TrailerLink = "",
                             onSale = false
                         },
                         new
@@ -584,7 +587,7 @@ namespace ShopWeb.Migrations
                             RealishDate = new DateTime(2017, 7, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Sold = 350,
                             Title = "Fortnite",
-                            TrailerLink = "https://www.youtube.com/embed/aOAiUwz7Zt8?si=GRX2wQqxku6wiuya",
+                            TrailerLink = "",
                             onSale = false
                         },
                         new
@@ -603,7 +606,7 @@ namespace ShopWeb.Migrations
                             RealishDate = new DateTime(2017, 12, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Sold = 70,
                             Title = "PlayerUnknown's Battlegrounds (PUBG)",
-                            TrailerLink = "https://www.youtube.com/embed/fDLAFIhfFy4?si=rdrhAcNkYvmuvBDJ",
+                            TrailerLink = "",
                             onSale = false
                         },
                         new
@@ -622,7 +625,7 @@ namespace ShopWeb.Migrations
                             RealishDate = new DateTime(2019, 10, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Sold = 30,
                             Title = "Call of Duty: Modern Warfare",
-                            TrailerLink = "https://www.youtube.com/embed/mHDEDDrGYvo?si=zYTrCR5jInGSiaRz",
+                            TrailerLink = "",
                             onSale = true
                         },
                         new
@@ -641,7 +644,7 @@ namespace ShopWeb.Migrations
                             RealishDate = new DateTime(2020, 3, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Sold = 80,
                             Title = "Call of Duty: Warzone",
-                            TrailerLink = "https://www.youtube.com/embed/APYIfiOCe2c?si=4bvuuc6ZA7eu90cO",
+                            TrailerLink = "",
                             onSale = false
                         },
                         new
@@ -660,7 +663,7 @@ namespace ShopWeb.Migrations
                             RealishDate = new DateTime(2019, 2, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Sold = 100,
                             Title = "Apex Legends",
-                            TrailerLink = "https://www.youtube.com/embed/M82iTOsGoF8?si=46dLNX6Y8PfWtcnr",
+                            TrailerLink = "",
                             onSale = false
                         },
                         new
@@ -679,7 +682,7 @@ namespace ShopWeb.Migrations
                             RealishDate = new DateTime(2016, 5, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Sold = 54,
                             Title = "Overwatch",
-                            TrailerLink = "https://www.youtube.com/embed/FqnKB22pOC0?si=E44DIWXucKSa_woK",
+                            TrailerLink = "",
                             onSale = false
                         },
                         new
@@ -698,7 +701,7 @@ namespace ShopWeb.Migrations
                             RealishDate = new DateTime(2011, 11, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Sold = 20,
                             Title = "Minecraft",
-                            TrailerLink = "https://www.youtube.com/embed/MmB9b5njVbA?si=0c5HqX3-DeRyi7cP",
+                            TrailerLink = "",
                             onSale = false
                         },
                         new
@@ -717,7 +720,7 @@ namespace ShopWeb.Migrations
                             RealishDate = new DateTime(2020, 6, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Sold = 10,
                             Title = "Valorant",
-                            TrailerLink = "https://www.youtube.com/embed/lWr6dhTcu-E?si=mPZorezukLLBiAaY",
+                            TrailerLink = "",
                             onSale = true
                         },
                         new
@@ -1002,7 +1005,7 @@ namespace ShopWeb.Migrations
                             RealishDate = new DateTime(2017, 3, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Sold = 23,
                             Title = "The Legend of Zelda: Breath of the Wild",
-                            TrailerLink = "https://www.youtube.com/embed/zw47_q9wbBE?si=-TU9bnoraR-Yo4Wr",
+                            TrailerLink = "",
                             onSale = false
                         },
                         new
@@ -1021,7 +1024,7 @@ namespace ShopWeb.Migrations
                             RealishDate = new DateTime(2019, 11, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Sold = 11,
                             Title = "Star Wars Jedi: Fallen Order",
-                            TrailerLink = "https://www.youtube.com/embed/xIl2z5wwjdA?si=T18obfPmbTJfDrjo",
+                            TrailerLink = "",
                             onSale = false
                         },
                         new
@@ -1040,7 +1043,7 @@ namespace ShopWeb.Migrations
                             RealishDate = new DateTime(2020, 3, 23, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Sold = 26,
                             Title = "Half-Life: Alyx",
-                            TrailerLink = "https://www.youtube.com/embed/O2W0N3uKXmo?si=3qtGARO6eVaNaAZz",
+                            TrailerLink = "",
                             onSale = false
                         },
                         new
@@ -1059,7 +1062,7 @@ namespace ShopWeb.Migrations
                             RealishDate = new DateTime(2019, 10, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Sold = 52,
                             Title = "BeatSaber",
-                            TrailerLink = "https://www.youtube.com/embed/vL39Sg2AqWg?si=DC21JB3nWvac595V",
+                            TrailerLink = "",
                             onSale = false
                         },
                         new
@@ -1078,7 +1081,7 @@ namespace ShopWeb.Migrations
                             RealishDate = new DateTime(2026, 9, 17, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Sold = 0,
                             Title = "Grand Theft Auto VI",
-                            TrailerLink = "https://www.youtube.com/embed/QdBZY2fkU-0?si=WNVNre8pOwqgsat0",
+                            TrailerLink = "",
                             onSale = false
                         });
                 });

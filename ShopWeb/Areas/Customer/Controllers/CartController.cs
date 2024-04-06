@@ -250,10 +250,19 @@ namespace ShopWeb.Areas.Customer.Controllers
 
         public IActionResult OrderConfirmation(int id)
         {
-			var claimsIdentity = (ClaimsIdentity)User.Identity;
-			var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
 
-			ShoppingCartVM = new()
+            var userId = "";
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+
+            if (claimsIdentity.IsAuthenticated)
+            {
+                userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            }
+            else { userId = "c5150bf2-5f3b-4e97-8344-ca3119606183"; }
+
+
+            ShoppingCartVM = new()
 			{
 				ShoppingCartList = _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == userId,
 	            includeProperties: "product")
@@ -304,10 +313,19 @@ namespace ShopWeb.Areas.Customer.Controllers
 
         public IActionResult PayPalConfirmation(int id)
         {
-			var claimsIdentity = (ClaimsIdentity)User.Identity;
-			var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
 
-			ShoppingCartVM = new()
+            var userId = "";
+            var claimsIdentity = (ClaimsIdentity)User.Identity;
+
+            if (claimsIdentity.IsAuthenticated)
+            {
+                userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            }
+            else { userId = "c5150bf2-5f3b-4e97-8344-ca3119606183"; }
+
+
+            ShoppingCartVM = new()
 			{
 				ShoppingCartList = _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == userId,
 				includeProperties: "product")

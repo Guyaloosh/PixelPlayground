@@ -1,6 +1,9 @@
 ﻿@model ShoppingCart
+
+<link ref="sylesheets" herf="wwwroot/css/Details.css" />
+
 <form method="post">
-    <div class="card shadow border-0 mt-4">
+    <div class="">
         <div class="card-header bg-secondary bg-gradient text-light py-4">
             <div class="row">
                 <div class="col-12 text-center">
@@ -30,6 +33,7 @@
                         <div class="row ps-2">
                             <h6 class="text-dark text-opacity-50 ">Made by : @Model.product.Maker</h6>
                         </div>
+
                         <div class="row ps-2">
                             <div class="p-1 col-3 col-lg-2 bg-white text-warning fw-bold">
                                 <div>Price</div>
@@ -40,6 +44,13 @@
                             </h6>
                         </div>
                         <div class="row text-center ps-2">
+
+                            @if (Model.product.TrailerLink != "")
+                            {
+
+                                <iframe src="@Model.product.TrailerLink" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                
+                            }
                             <div class="p-1 col-3 col-lg-2 bg-white border-bottom">
                                 <div class="text-dark text-opacity-50 fw-semibold">Quantity</div>
                             </div>
