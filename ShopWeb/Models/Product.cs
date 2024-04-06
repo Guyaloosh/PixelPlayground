@@ -51,6 +51,7 @@ namespace ShopWeb.Models
         [ValidateNever]
         
         public string? ImageUrl { get; set; }
+        public string? TrailerLink { get; set; }
 
         public int Position {  get; set; }
 
