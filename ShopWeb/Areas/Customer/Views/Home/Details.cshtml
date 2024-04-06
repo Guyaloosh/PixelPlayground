@@ -53,17 +53,21 @@
 
 
                             <div class="btn-group details_add_to_cart_btns" role="group">
-                                <a class="count_btn">
+                                <a class="count_btn" id="plusBtn">
                                     <i class="bi bi-plus"></i>
                                 </a>
 
                                 <input type="number" asp-for="Count" value="0" class="form-control text-end" id="countInput" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" />
-                                
-                                <a class="count_btn">
+
+                            <a class="count_btn" id="minusBtn">
                                     <i class="bi bi-dash"></i>
                                 </a>
 
+                            <form method="post" asp-controller="Cart" asp-action="AddToCart">
+                                <input type="hidden" name="productId" value="@Model.ProductId" />
+                                <input type="hidden" name="quantity" asp-for="Count" />
                                 <button type="submit" class="btn btn-primary">Add to Cart</button>
+                            </form>
                             </div>
 
                     </div>
@@ -80,13 +84,33 @@
                 </div>
             </div>
         </div>
-        <div class="related_prod_title">Related products:</div>
+
+        @{
+            int count2 = 0;
+            foreach (var product in Model.products)
+            {
+                if (@Model.product.Category.Name == product.Category.Name && @Model.product.Id != product.Id)
+                {
+                    count2++;
+                }
+            }
+            if (count2 != 0)
+            {
+                <div class="related_prod_title">Related products:</div>
+            }
+
+        }
+       
         <div class="col-md-12">
             <div class="main">
                 <div class="row pb-3" id="productList">
                     
-                    @foreach (var product in Model.products)
-                    {
+                    @{
+                        int count = 0;
+                    foreach (var product in Model.products)
+                        {
+                            if (count < 4)
+                            {
                         if (@Model.product.Category.Name == product.Category.Name && @Model.product.Id != product.Id){
                         <div class="col-lg-3 col-md-6 col-sm-12 product pb-4" data-category-name="@product.Category.Name" data-price="@product.Price" data-onsale="@product.onSale" data-date="@product.RealishDate">
                             <div class="row justify-content-between">
@@ -185,10 +209,31 @@
                                 </div>
                             </div>
                         </div>
+                                    count++;
                         }
-                    }
+                            }
+                            else
+                            {
+                                // Break the loop if 4 products have been displayed
+                                break;
+                            }
+                    }}
                 </div>
             </div>
         </div>
     </div>
+    <script>
+        document.getElementById('plusBtn').addEventListener('click', function () {
+            var countInput = document.getElementById('countInput');
+            countInput.value = parseInt(countInput.value) + 1;
+        });
+
+        document.getElementById('minusBtn').addEventListener('click', function () {
+            var countInput = document.getElementById('countInput');
+            var count = parseInt(countInput.value);
+            if (count > 0) {
+                countInput.value = count - 1;
+            }
+        });
+    </script>
 </form>

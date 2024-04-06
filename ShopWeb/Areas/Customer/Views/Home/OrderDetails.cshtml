@@ -15,8 +15,9 @@
 
 <body>
 
-    <div>
-        <h3>Order Details</h3>
+    <h3 style="text-align: center; color: #fff; font-weight: 600;">Order Details</h3>
+        <div class="my_orders_table">
+
         <table class="table">
             <thead>
                 <tr>
@@ -40,8 +41,8 @@
         </table>
     </div>
 
-    <div>
-        <h3>Order Summary</h3>
+    <div class="order_details_summary">
+        <h3 class="fw-bold">Order Summary</h3>
         <p><strong>Address:</strong> @Model.OrderHeader.StreetAddress, @Model.OrderHeader.City, @Model.OrderHeader.State, @Model.OrderHeader.PostalCode</p>
         <p><strong>Total Price:</strong> $@Model.OrderHeader.OrderTotal</p>
     </div>
