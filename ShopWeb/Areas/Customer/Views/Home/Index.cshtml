@@ -199,7 +199,7 @@
                 confirmButtonColor: "#3085d6",
                 cancelButtonText: "undo",
                 cancelButtonColor: "#d25",
-                confirmButtonText: "ok!!"
+                confirmButtonText: "ok"
             }).then((result) => {
                 if (result.isConfirmed) {
 
@@ -293,7 +293,7 @@
                     isClicked = ""; // Unset the clicked button
                     fetchSortedProducts("")
                 } else {
-                    // resetButtonStyles(); // Reset button styles
+                    resetButtonStyles(); // Reset button styles
                     document.getElementById("sortBySold").classList.add("filter_btn_active");
                     isClicked = "sortBySold"; // Update the clicked button
                 }
