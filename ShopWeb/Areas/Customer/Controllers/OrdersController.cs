@@ -1,15 +1,17 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using ShopWeb.Models; // Update this to your actual models namespace
-using ShopWeb.Models.ViewModels; // Ensure this matches the namespace of your ViewModel
+using ShopWeb.Models; 
+using ShopWeb.Models.ViewModels; 
 using ShopWeb.Repository.IRepository;
 using System.Linq;
 using System.Security.Claims;
+
+
 namespace ShopWeb.Areas.Customer.Controllers
 {
     [Area("Customer")]
-    [Authorize] // Ensures only authenticated users can access the methods
+    [Authorize] // Ensures only authenticated users
     public class OrdersController : Controller
     {
         private readonly ILogger<OrdersController> _logger;
@@ -21,16 +23,16 @@ namespace ShopWeb.Areas.Customer.Controllers
             _unitOfWork = unitOfWork;
         }
 
-        // GET: Customer/Orders
+     
         public IActionResult Index()
         {
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var orders = _unitOfWork.OrderHeader.GetAll(o => o.ApplicationUserId == userId, includeProperties: "ApplicationUser");
 
-            // Specifying the full path to the MyOrders view located in the Home folder
+            //full path to the MyOrders view located in the Home folder
             return View("~/Areas/Customer/Views/Home/MyOrders.cshtml", orders);
         }
-        // GET: Customer/Orders/Details/5
+      
         public IActionResult Details(int? id)
         {
             if (id == null)
@@ -56,10 +58,10 @@ namespace ShopWeb.Areas.Customer.Controllers
                 OrderDetails = orderDetails.ToList()
             };
 
-            // Specify the full path to the OrderDetails view
+            // path to the OrderDetails view
             return View("~/Areas/Customer/Views/Home/OrderDetails.cshtml", viewModel);
         }
 
-        // Additional actions (Create, Edit, Delete) can be implemented here as needed.
+   
     }
 }

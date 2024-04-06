@@ -33,7 +33,7 @@ namespace ShopWeb.Areas.Customer.Controllers
                 userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
 
             }
-            else { userId = "c5150bf2-5f3b-4e97-8344-ca3119606183"; }
+            else { userId = "5a5e2d8d-7912-4d6d-9bc3-206e5f5dfde8"; }
 
             ShoppingCartVM = new()
             {
@@ -47,8 +47,7 @@ namespace ShopWeb.Areas.Customer.Controllers
             foreach (var cart in ShoppingCartVM.ShoppingCartList)
             {
                 cart.Price = GetPriceBasedOnQuantity(cart);
-                ShoppingCartVM.OrderHeader.OrderTotal += (cart.Price * cart.Count);
-                //cart.product.tempQuantity = cart.product.Quantity;
+                ShoppingCartVM.OrderHeader.OrderTotal += (cart.Price * cart.Count); 
             }
 
             return View(ShoppingCartVM);
@@ -57,8 +56,6 @@ namespace ShopWeb.Areas.Customer.Controllers
         [HttpPost]
         public IActionResult AddToCart(int productId, int quantity)
         {
-
-
             var userId = "";
             var claimsIdentity = (ClaimsIdentity)User.Identity;
 
@@ -68,7 +65,7 @@ namespace ShopWeb.Areas.Customer.Controllers
 
             }
             else { 
-                userId = "c5150bf2-5f3b-4e97-8344-ca3119606183";
+                userId = "5a5e2d8d-7912-4d6d-9bc3-206e5f5dfde8";
                 
             }
             // Check if the product already exists in the user's cart
@@ -94,14 +91,13 @@ namespace ShopWeb.Areas.Customer.Controllers
             }
 
             _unitOfWork.Save();
-
-            return RedirectToAction("Index", "Cart"); // Redirect to cart page
+            // Redirect to cart page
+            return RedirectToAction("Index", "Cart"); 
         }
 
 
         public IActionResult Summary()
-        {
-
+        { 
             var userId = "";
             var claimsIdentity = (ClaimsIdentity)User.Identity;
 
@@ -127,7 +123,7 @@ namespace ShopWeb.Areas.Customer.Controllers
                 ShoppingCartVM.OrderHeader.PostalCode = ShoppingCartVM.OrderHeader.ApplicationUser.PostalCode;
 
             }
-            else { userId = "c5150bf2-5f3b-4e97-8344-ca3119606183";
+            else { userId = "5a5e2d8d-7912-4d6d-9bc3-206e5f5dfde8";
                 ShoppingCartVM = new()
                 {
                     ShoppingCartList = _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == userId,
@@ -150,8 +146,6 @@ namespace ShopWeb.Areas.Customer.Controllers
         [ActionName("Summary")]
         public IActionResult SummaryPOST()
         {
-
-
             var userId = "";
             var claimsIdentity = (ClaimsIdentity)User.Identity;
 
@@ -160,7 +154,7 @@ namespace ShopWeb.Areas.Customer.Controllers
                 userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
 
             }
-            else { userId = "c5150bf2-5f3b-4e97-8344-ca3119606183"; }
+            else { userId = "5a5e2d8d-7912-4d6d-9bc3-206e5f5dfde8"; }
 
 
             ShoppingCartVM.ShoppingCartList = _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == userId,
@@ -203,7 +197,7 @@ namespace ShopWeb.Areas.Customer.Controllers
                 _unitOfWork.Save();
             }
 
-            //put here your local host when you run the website.
+            //local host
             var domain = "https://localhost:7034/";
 
             var options = new Stripe.Checkout.SessionCreateOptions
@@ -220,7 +214,7 @@ namespace ShopWeb.Areas.Customer.Controllers
                 {
                     PriceData = new SessionLineItemPriceDataOptions
                     {
-                        UnitAmount = (long)(item.Price * 100), //20.50 => 2050
+                        UnitAmount = (long)(item.Price * 100), 
                         Currency = "usd",
                         ProductData = new SessionLineItemPriceDataProductDataOptions
                         {
@@ -232,7 +226,7 @@ namespace ShopWeb.Areas.Customer.Controllers
 
                 options.LineItems.Add(sessionLineItem);
             }
-            //
+            
             var service = new Stripe.Checkout.SessionService();
             Session session = service.Create(options);
 
@@ -240,17 +234,10 @@ namespace ShopWeb.Areas.Customer.Controllers
             _unitOfWork.Save();
             Response.Headers.Add("Location", session.Url);
             return new StatusCodeResult(303);
-
-            //finish here the if.
-
-
-            //pass the order id to the orderConifrmation action.
-            return RedirectToAction(nameof(OrderConfirmation), new { id = ShoppingCartVM.OrderHeader.Id });
         }
 
         public IActionResult OrderConfirmation(int id)
         {
-
             var userId = "";
             var claimsIdentity = (ClaimsIdentity)User.Identity;
 
@@ -259,7 +246,7 @@ namespace ShopWeb.Areas.Customer.Controllers
                 userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
 
             }
-            else { userId = "c5150bf2-5f3b-4e97-8344-ca3119606183"; }
+            else { userId = "5a5e2d8d-7912-4d6d-9bc3-206e5f5dfde8"; }
 
 
             ShoppingCartVM = new()
@@ -288,15 +275,11 @@ namespace ShopWeb.Areas.Customer.Controllers
                     }
                 }
 
-
             //payment was successeful - remove the cart from data base
             List<ShoppingCart> shoppingCarts = _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId ==
             orderHeader.ApplicationUserId).ToList();
 
-           
-
             //update the quantity in the database.
-
             ShoppingCartVM.ShoppingCartList = _unitOfWork.ShoppingCart.GetAll(u => u.ApplicationUserId == userId,
                 includeProperties: "product");
 
@@ -313,7 +296,6 @@ namespace ShopWeb.Areas.Customer.Controllers
 
         public IActionResult PayPalConfirmation(int id)
         {
-
             var userId = "";
             var claimsIdentity = (ClaimsIdentity)User.Identity;
 
@@ -322,7 +304,7 @@ namespace ShopWeb.Areas.Customer.Controllers
                 userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
 
             }
-            else { userId = "c5150bf2-5f3b-4e97-8344-ca3119606183"; }
+            else { userId = "5a5e2d8d-7912-4d6d-9bc3-206e5f5dfde8"; }
 
 
             ShoppingCartVM = new()
@@ -353,8 +335,6 @@ namespace ShopWeb.Areas.Customer.Controllers
 			ShoppingCartVM.OrderHeader.OrderDate = System.DateTime.Now;
 			ShoppingCartVM.OrderHeader.ApplicationUserId = userId;
 
-			
-            //
 			_unitOfWork.OrderHeader.Add(ShoppingCartVM.OrderHeader);
 			_unitOfWork.Save();
 

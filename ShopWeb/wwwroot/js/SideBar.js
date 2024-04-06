@@ -1,6 +1,6 @@
 ﻿
     $(document).ready(function () {
-            // Function to fetch sorted products using AJAX
+            // fetch sorted products using AJAX
             function fetchSortedProducts(sortType) {
                 $.ajax({
                     url: '@Url.Action("SortProducts", "Home")',
@@ -14,7 +14,7 @@
                     }
                 });
             }
-            var isClicked = ""; // Variable to track which button is clicked
+            var isClicked = ""; // track is clicked
 
             $("#sortByPriceHigh").click(function () {
                 // Sort products by price (high to low)

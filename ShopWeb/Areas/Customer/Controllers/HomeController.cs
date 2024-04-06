@@ -60,7 +60,7 @@ namespace ShopWeb.Areas.Customer.Controllers
               userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
 
             }
-            else {  userId = "c5150bf2-5f3b-4e97-8344-ca3119606183"; }
+            else {  userId = "5a5e2d8d-7912-4d6d-9bc3-206e5f5dfde8"; }
             
             
             shoppingCart.ApplicationUserId = userId;
@@ -69,19 +69,16 @@ namespace ShopWeb.Areas.Customer.Controllers
 
             if (product == null)
             {
-                // Product not found, handle this situation (e.g., display an error)
-
+                //handle Product not found
                 return RedirectToAction(nameof(Index));
             }
             if (shoppingCart.Count <= 0)
             {
-                
                 TempData["error"] = "you cannot add " + shoppingCart.Count + " items to the cart";
                 return RedirectToAction(nameof(Index));
             }
-            // Check if there is enough quantity available
             if (product.Quantity < shoppingCart.Count)
-            {
+            {// Check if there is enough quantity available
                 TempData["error"] = "There is Not enough from this product please try later";
                 return RedirectToAction(nameof(Index));
             }
@@ -145,7 +142,6 @@ namespace ShopWeb.Areas.Customer.Controllers
                 filteredProducts = filteredProducts.Where(p => p.Price <= maxPrice.Value);
             }
 
-            // Assuming "_ProductListPartial" is your partial view to display the product list.
             return PartialView("_ProductListPartial", filteredProducts);
         }
         [HttpGet]
@@ -181,7 +177,7 @@ namespace ShopWeb.Areas.Customer.Controllers
                     break;
 
                 default:
-                    // Default sorting if sortType is not recognized
+                    // Default sort by position
                     sortedProducts = _unitOfWork.Product.GetAll(includeProperties: "Category")
                     .OrderBy(p => p.Position);
                     break;

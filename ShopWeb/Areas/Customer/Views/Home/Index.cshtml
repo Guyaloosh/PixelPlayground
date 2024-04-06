@@ -189,7 +189,7 @@
 </div>
 @section Scripts {
     <script>
-
+        //script
         function addToWishList(title) {
             Swal.fire({
                 title: title + " has been added to wish list!",
@@ -207,10 +207,9 @@
             })
         }
 
-
-        //NEED TO GO TO JS FILE
+    
         $(document).ready(function () {
-            // Function to fetch sorted products using AJAX
+            // using AJAX
             function fetchSortedProducts(sortType) {
                 $.ajax({
                     url: '@Url.Action("SortProducts", "Home")',
@@ -231,12 +230,12 @@
                 fetchSortedProducts("PriceHighToLow");
                 if (isClicked === "sortByPriceHigh") {
                     resetButtonStyles();// Reset button styles if already clicked
-                    isClicked = ""; // Unset the clicked button
+                    isClicked = ""; 
                     fetchSortedProducts("")
                 } else {
                     resetButtonStyles();// Reset button styles
                     document.getElementById("sortByPriceHigh").classList.add("filter_btn_active");
-                    isClicked = "sortByPriceHigh"; // Update the clicked button
+                    isClicked = "sortByPriceHigh"; 
 
                 }
             });
@@ -246,13 +245,12 @@
                 fetchSortedProducts("PriceLowToHigh");
                 if (isClicked === "sortByPriceLow") {
                     resetButtonStyles(); // Reset button styles if already clicked
-                    isClicked = ""; // Unset the clicked button
+                    isClicked = ""; 
                     fetchSortedProducts("")
                 } else {
                     resetButtonStyles(); // Reset button styles
                     document.getElementById("sortByPriceLow").classList.add("filter_btn_active");
-                    isClicked = "sortByPriceLow"; // Update the clicked button
-
+                    isClicked = "sortByPriceLow"; 
                 }
             });
 
@@ -261,12 +259,12 @@
                 fetchSortedProducts("Popularity");
                 if (isClicked === "sortByPopularity") {
                     resetButtonStyles(); // Reset button styles if already clicked
-                    isClicked = ""; // Unset the clicked button
+                    isClicked = ""; 
                     fetchSortedProducts("")
                 } else {
                     resetButtonStyles(); // Reset button styles
                     document.getElementById("sortByPopularity").classList.add("filter_btn_active");
-                    isClicked = "sortByPopularity"; // Update the clicked button
+                    isClicked = "sortByPopularity";
                 }
             });
 
@@ -276,12 +274,12 @@
                 fetchSortedProducts("Category");
                 if (isClicked === "sortByCategory") {
                     resetButtonStyles(); // Reset button styles if already clicked
-                    isClicked = ""; // Unset the clicked button
+                    isClicked = ""; 
                     fetchSortedProducts("")
                 } else {
                     resetButtonStyles(); // Reset button styles
                     document.getElementById("sortByCategory").classList.add("filter_btn_active");
-                    isClicked = "sortByCategory"; // Update the clicked button
+                    isClicked = "sortByCategory"; 
                 }
             });
 
@@ -290,12 +288,12 @@
                 fetchSortedProducts("MostSold");
                 if (isClicked === "sortBySold") {
                     resetButtonStyles(); // Reset button styles if already clicked
-                    isClicked = ""; // Unset the clicked button
+                    isClicked = ""; 
                     fetchSortedProducts("")
                 } else {
                     resetButtonStyles(); // Reset button styles
                     document.getElementById("sortBySold").classList.add("filter_btn_active");
-                    isClicked = "sortBySold"; // Update the clicked button
+                    isClicked = "sortBySold";
                 }
             });
 
@@ -330,8 +328,7 @@
 
                 isMostSoldClicked = $(this).is(":checked");
                 filterProducts();
-                // Sort products by popularity if checkbox is checked
-
+       
             });
 
 
@@ -347,6 +344,7 @@
 
                 // Get search text
                 var searchText = $("#searchInput").val().toLowerCase();
+
                 // Collect selected categories
                 var selectedCategories = $(".categoryCheckbox:checked").map(function () {
                     return $(this).val().toLowerCase();
@@ -360,17 +358,14 @@
                     var title = product.find(".card-title").text().toLowerCase();
                     var category = product.data('category-name').toLowerCase();
                     var price = parseFloat(product.data('price'));
-
-                    //
                     var isonsale = product.data('onsale');
-
                     var dateString = $(this).data('date');
                     var releaseDate;
 
                     if (dateString) {
-                        // Attempt to create a Date object
+                        //create a Date object
                         releaseDate = new Date(dateString);
-                        // Check if the Date object is valid
+                        // Check valid
                         if (isNaN(releaseDate.getTime())) {
                             var parts = dateString.split(/[\/ :]/);
                             releaseDate = new Date(parts[2], parts[1] - 1, parts[0], parts[3], parts[4], parts[5]);
@@ -406,34 +401,22 @@
 
             }
 
-            // Bind keyup event to search input for live search filtering
+            // Bind input keys
             $("#searchInput").on("keyup", filterProducts);
-            // Bind change event to category checkboxes to filter products on selection
+            
             $(".categoryCheckbox").on("change", filterProducts);
 
             $("#startDate, #endDate").on("change", filterProducts);
 
             $("#mymaxRange").on("input", function () {
-                // Update displayed range value
                 $("#maxrangeValue").text($(this).val());
-                // Reapply filters
                 filterProducts();
             });
             $("#myminRange").on("input", function () {
-                // Update displayed range value
                 $("#minrangeValue").text($(this).val());
-                // Reapply filters
                 filterProducts();
             });
-
-
-
-            // Optional: bind click event to an apply filter button if you want to apply filters only on button click
-            //$("#applyFilter").click(filterProducts);
         });
-
-
-
     </script>
 }
 
