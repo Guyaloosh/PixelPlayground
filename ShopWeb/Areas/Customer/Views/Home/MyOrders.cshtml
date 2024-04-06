@@ -1,0 +1,38 @@
+﻿    @model IEnumerable<ShopWeb.Models.OrderHeader>
+
+    @{
+        ViewData["Title"] = "My Orders";
+    }
+
+    <h2>@ViewData["Title"]</h2>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>Date</th>
+                <th>Shipping Date</th>
+                <th>Arrival Date</th>
+                <th>Total</th>
+                <th>Status</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var order in Model)
+            {
+                <tr>
+                    <td>@order.Id</td>
+                    <td>@order.OrderDate.ToString("dd/MM/yyyy")</td>
+                    <td>@order.OrderDate.AddDays(7).ToString("dd/MM/yyyy")</td>
+                    <td>@order.OrderDate.AddDays(14).ToString("dd/MM/yyyy")</td> <!-- Calculate arrival date as one week from order date -->
+                    <td>$@order.OrderTotal</td>
+                    <td>@order.OrderStatus</td>
+                    <td>
+                        <a asp-controller="Orders" asp-action="Details" asp-route-id="@order.Id">Details</a>
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>

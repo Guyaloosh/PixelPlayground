@@ -1,91 +1,194 @@
 ﻿@model ShoppingCart
-<form method="post">
-    <head>
 
-    </head>
-    <input hidden asp-formaction="productId" />
-    <div class="card shadow border-0 mt-4">
-        <div class="card-header bg-secondary bg-gradient text-light py-4">
+<link ref="sylesheets" herf="wwwroot/css/site.css" />
+
+<form method="post">
+    <div class="details_main">
+        <div class="row">
+            <div class="col-12">
+                <a asp-action="Index" class="back_to_home">
+                    <small>Back to home</small>
+                </a>
+            </div>
+        </div>
+        <div class="card-header details_header_title">
             <div class="row">
-                <div class="col-12 text-center">
-                    <h3 class="text-white text-uppercase">@Model.product.Title</h3>
-                    <p class="text-white-50 fw-semibold mb-0">by @Model.product.Maker</p>
+                <div class="col-12">
+                    <h3 class="text-white text-uppercase  fw-bold">@Model.product.Title</h3>
+                    <p class="text-white">by @Model.product.Maker</p>
                 </div>
             </div>
         </div>
         <div class="card-body">
             <div class="py-3">
                 <div class="row">
-                    <div class="col-6 col-md-2 offset-lg-1 pb-1">
-                        <a asp-action="Index" class="btn btn-outline-primary bg-gradient mb-5 fw-semibold btn-sm">
-                            <small>Back to home</small>
-                        </a>
+                    <div class="col-6">
+                        <img src="@Model.product.ImageUrl" class="details_main_img" />
                     </div>
-                </div>
-                <div class="mx-auto">
-                    <div class="col-12 col-md-6 offset-lg-1 pb-1 mx-auto">
-                        <img src="@Model.product.ImageUrl" width="50%" class="rounded mx-auto" />
-                        <p class="text-secondary lh-sm my-3 mx-auto">@Model.product.Description</p>
-                    </div>
-                    <div class="row pl-2 my-3">
-                        
-                    </div>
-                </div>
-                <div class="row">
-                <div class="col-12 col-lg-6 offset-lg-1">
-                    <div class="row ps-2">
-                            <h6 class="text-dark text-opacity-50 ">Made by : @Model.product.Maker</h6>
-                    </div>
-                    <div class="row ps-2">
-                        <div class="p-1 col-3 col-lg-2 bg-white text-warning fw-bold">
-                            <div>Price</div>
-                        </div>
-                        <h6 class="text-dark text-opacity-50  pb-2">
-                                @Model.product.Price.ToString("c")
-                            <span class="text-decoration-line-through"></span>
-                        </h6>
-                    </div>
-                    <div class="row text-center ps-2">
-                        <div class="p-1 col-3 col-lg-2 bg-white border-bottom">
-                            <div class="text-dark text-opacity-50 fw-semibold">Quantity</div>
-                        </div>
+                    <div class="col-6 details_desc">
+                        <p>
+                            @Model.product.Description
+                             <br/>
+                            number of people Showed interest in this product : @Model.product.Popularity
+                        </p>
+
+                        <br/>
+                        <p class="details_price">
+                            <b>Price:</b> @Model.product.Price.ToString("c")
+                        </p>
+                        <br/>
+                        <br/>
                             @if (Model.product.Quantity == 0)
                             {
-                                <h6 class="text-dark text-opacity-50  pb-2">
-                                    OUT OF STOCK!
-                                    <span class="text-decoration-line-through"></span>
+                                <h6 class="out_of_stock">        
+                                    Out of Stock!
                                 </h6>
-
                             }
                             else
                             {
-                                <h6 class="text-dark text-opacity-50  pb-2">
-                                    @Model.product.Quantity
-                                    <span class="text-decoration-line-through"></span>
+                                <h6 class="in_stock">
+                                In Stock: <span>@Model.product.Quantity</span>
                                 </h6>
                             }
-                          
-                    </div>
-                    
-                    <div class="row pl-2 mb-3">
-                        <div class="col-md-4">
-                            <div class="input-group mb-3">
-                                    <span class="input-group-text bg-primary text-white border-0 fw-semibold"  asp-for="Count">Count</span>
-                                    <input type="number" asp-for="Count" value="0" class="form-control text-end" id="countInput" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" />
+
+
+                            <div class="btn-group details_add_to_cart_btns" role="group">
+                                <a class="count_btn">
+                                    <i class="bi bi-plus"></i>
+                                </a>
+
+                                <input type="number" asp-for="Count" value="0" class="form-control text-end" id="countInput" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" />
+                                
+                                <a class="count_btn">
+                                    <i class="bi bi-dash"></i>
+                                </a>
+
+                                <button type="submit" class="btn btn-primary">Add to Cart</button>
                             </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12 col-md-6 pb-1">
-                                <button type="submit" class="btn btn-primary bg-gradient  w-100 py-2 text-uppercase fw-semibold">Add to Cart</button>
-                        </div>
+
                     </div>
                 </div>
+                <div class="row trailer_box">
+                    <div class="col-12">
+                            @if (Model.product.TrailerLink != "")
+                            {
+
+                                <iframe src="@Model.product.TrailerLink" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                
+                            }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="related_prod_title">Related products:</div>
+        <div class="col-md-12">
+            <div class="main">
+                <div class="row pb-3" id="productList">
+                    
+                    @foreach (var product in Model.products)
+                    {
+                        if (@Model.product.Category.Name == product.Category.Name && @Model.product.Id != product.Id){
+                        <div class="col-lg-3 col-md-6 col-sm-12 product pb-4" data-category-name="@product.Category.Name" data-price="@product.Price" data-onsale="@product.onSale" data-date="@product.RealishDate">
+                            <div class="row justify-content-between">
+                                <div class="col-12">
+                                    <div class="card game_card">
+                                        @if (product.Quantity == 0 && product.RealishDate > DateTime.Now)
+                                        {
+                                            <span class="comingsoon_badge"> Coming soon! </span>
+
+                                        }
+                                        else if (product.Quantity == 0)
+                                        {
+                                            <span class="outofstock_badge"> Out of Stock! </span>
+                                        }
+
+
+                                        @if (product.onSale && product.Quantity == 0)
+                                        {
+                                            <span class="outofstock_badge"> Out of Stock! </span>
+
+                                        }
+                                        else if (product.onSale)
+                                        {
+                                            <span class="sale_badge"> Sale! </span>
+
+                                        }
+
+
+                                        <img src="@product.ImageUrl" alt="@product.Title" class="mx-auto game_card_img" />
+                                        <div class="game_card_meta">
+                                            <div class="mt-2 pl-1">
+                                                <p class="card-title card_game_title">@product.Title</p>
+                                                <p class="card-title card_game_maker">@product.Maker</p>
+                                                <p class="card_game_category_date">@product.Category.Name | @product.RealishDate.Month/@product.RealishDate.Year</p>
+
+                                            </div>
+
+                                            <div class="pl-1">
+
+
+                                                @if (product.PublishPrice > product.Price)
+                                                {
+                                                    <p class="game_card_price_sale">
+                                                        Price: <del>@product.PublishPrice.ToString("c")</del>
+                                                        <br />
+                                                        <span>NOW Only! @product.Price.ToString("c")</span>
+                                                    </p>
+                                                }
+                                                else
+                                                {
+                                                    <p class="game_card_price">Price: @product.PublishPrice.ToString("c")</p>
+                                                }
+                                            </div>
+                                        </div>
+
+
+
+                                        @if (product.RealishDate > DateTime.Now)
+                                        {
+                                            <div class="game_card_btns">
+                                                <button onclick="addToWishList('@product.Title')" class="btn btn-danger form-control">
+                                                    Notify when in stock
+                                                </button>
+                                            </div>
+
+                                        }
+                                        else
+                                        {
+                                            @if (product.Quantity == 0)
+                                            {
+                                                <div class="d-flex game_card_btns">
+                                                    <button onclick="addToWishList('@product.Title')" class="btn btn-danger" style="font-size:11px;">
+                                                        Notify restock
+                                                    </button>
+                                                    <a id="detailsBtn" asp-action="Details" asp-route-productId="@product.Id" class="btn btn-primary bg-gradient border-0" style="font-size:11px;">
+                                                        Show More Details
+                                                    </a>
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="d-flex game_card_btns">
+                                                    <form method="post" asp-controller="Cart" asp-action="AddToCart">
+                                                        <input type="hidden" name="productId" value="@product.Id" />
+                                                        <input type="hidden" name="quantity" value="1" />
+                                                        <button type="submit" class="btn btn-success">Add to Cart</button>
+                                                    </form>
+                                                    <a asp-action="Details" asp-route-productId="@product.Id" class="btn btn-primary bg-gradient border-0" style="font-size:11px;">
+                                                        Show More Details
+                                                    </a>
+                                                </div>
+                                            }
+                                            
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        }
+                    }
                 </div>
             </div>
         </div>
     </div>
-    
 </form>
-
-

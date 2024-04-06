@@ -31,7 +31,7 @@
 									<label>Name</label>
 								</div>
 								<div class="col-9">
-									<input asp-for="OrderHeader.Name" class="form-control" />
+									<input asp-for="OrderHeader.Name" class="form-control" required />
 									<span asp-validation-for="OrderHeader.Name" class="text-danger"></span>
 								</div>
 							</div>
@@ -40,7 +40,7 @@
 									<label>Phone</label>
 								</div>
 								<div class="col-9">
-									<input asp-for="OrderHeader.PhoneNumber" class="form-control" />
+									<input asp-for="OrderHeader.PhoneNumber" class="form-control" required />
 									<span asp-validation-for="OrderHeader.PhoneNumber" class="text-danger"></span>
 								</div>
 							</div>
@@ -49,7 +49,7 @@
 									<label>Street Address</label>
 								</div>
 								<div class="col-9">
-									<input asp-for="OrderHeader.StreetAddress" class="form-control" />
+									<input asp-for="OrderHeader.StreetAddress" class="form-control" required />
 									<span asp-validation-for="OrderHeader.StreetAddress" class="text-danger"></span>
 								</div>
 							</div>
@@ -58,7 +58,7 @@
 									<label>City</label>
 								</div>
 								<div class="col-9">
-									<input asp-for="OrderHeader.City" class="form-control" />
+									<input asp-for="OrderHeader.City" class="form-control" required />
 									<span asp-validation-for="OrderHeader.City" class="text-danger"></span>
 								</div>
 							</div>
@@ -67,7 +67,7 @@
 									<label>State</label>
 								</div>
 								<div class="col-9">
-									<input asp-for="OrderHeader.State" class="form-control" />
+									<input asp-for="OrderHeader.State" class="form-control" required />
 									<span asp-validation-for="OrderHeader.State" class="text-danger"></span>
 								</div>
 							</div>
@@ -76,7 +76,7 @@
 									<label>Postal Code</label>
 								</div>
 								<div class="col-9">
-									<input asp-for="OrderHeader.PostalCode" class="form-control" />
+									<input asp-for="OrderHeader.PostalCode" class="form-control" required />
 									<span asp-validation-for="OrderHeader.PostalCode" class="text-danger"></span>
 								</div>
 							</div>
@@ -101,6 +101,10 @@
 									<small class="text-info">Total (IL SHEKEL)</small>
 									<strong class="text-info">@Model.OrderHeader.OrderTotal.ToString("c")</strong>
 								</li>
+								<br />
+								<br />
+								<div id="paypal-btn" typeof="submit" value="Place order">
+								</div>
 							</ul>
 						</div>
 					</div>
@@ -121,4 +125,45 @@
 			</div>
 		</div>
 	</div>
+	<script src="https://www.paypalobjects.com/api/checkout.js"></script>
+
+	<script>
+		let _total = @Html.Raw(Model.OrderHeader.OrderTotal);
+		paypal.Button.render({
+			//Configure environment
+			env: 'sandbox',
+			client: {
+				sandbox: 'AUTvnAXyTBrAPKYWKMQQ18Lz6fne2EnROx0vkxeSRJzo3EHlFNk67UA-aMQfZXTOI65RkaKPZWL3UCan'
+			},
+			//Customize button
+			locale: 'en_US',
+			style: {
+				size: 'medium',
+				color: 'gold',
+				shape: 'pill'
+			},
+			commit: true,
+			//Set up a payment
+			payment: function (data, actions) {
+				return actions.payment.create({
+					transactions: [{
+						amount: {
+							total: _total,
+							currency: 'USD'
+						}
+					}]
+				});
+			},
+			//Execute the payment
+			onAuthorize: function (data, actions) {
+				return actions.payment.execute().then(function () {
+					var url = '@Url.Action("OrderConfirmation", "Cart", new { })';
+					window.location.href = url;
+				});
+			}
+		}, '#paypal-btn')
+	</script>
+
 </form>
+
+

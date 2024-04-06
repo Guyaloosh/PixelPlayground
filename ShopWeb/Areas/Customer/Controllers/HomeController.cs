@@ -5,6 +5,7 @@ using ShopWeb.Models;
 using ShopWeb.Repository.IRepository;
 using System.Diagnostics;
 using System.Security.Claims;
+using System.Security.Principal;
 
 namespace ShopWeb.Areas.Customer.Controllers
 {
@@ -14,7 +15,7 @@ namespace ShopWeb.Areas.Customer.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly IUnitOfWork _unitOfWork;
 
-        public HomeController(ILogger<HomeController> logger,IUnitOfWork unitOfWork)
+        public HomeController(ILogger<HomeController> logger, IUnitOfWork unitOfWork)
         {
             _logger = logger;
             _unitOfWork = unitOfWork;
@@ -31,25 +32,41 @@ namespace ShopWeb.Areas.Customer.Controllers
         }
         public IActionResult Details(int productId)
         {
+
+            IEnumerable<Product> productList = _unitOfWork.Product.GetAll(includeProperties: "Category");
+
             ShoppingCart cart = new()
             {
                 product = _unitOfWork.Product.Get(u => u.Id == productId, includeProperties: "Category"),
+                products = (List<Product>)productList,
                 Count = 1,
                 ProductId = productId
             };
+            cart.product.Popularity++;
+            _unitOfWork.Save();
             return View(cart);
         }
+
         [HttpPost]
-        [Authorize]
+      
         public IActionResult Details(ShoppingCart shoppingCart)
 
         {
+            var userId = "";
             var claimsIdentity = (ClaimsIdentity)User.Identity;
-            var userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            if (claimsIdentity.IsAuthenticated)
+            {
+              userId = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+            }
+            else {  userId = "c5150bf2-5f3b-4e97-8344-ca3119606183"; }
+            
+            
             shoppingCart.ApplicationUserId = userId;
 
             var product = _unitOfWork.Product.Get(u => u.Id == shoppingCart.ProductId);
-           
+
             if (product == null)
             {
                 // Product not found, handle this situation (e.g., display an error)
@@ -58,7 +75,8 @@ namespace ShopWeb.Areas.Customer.Controllers
             }
             if (shoppingCart.Count <= 0)
             {
-                TempData["error"] = "you cannot add "+ shoppingCart.Count + " items to the cart";
+                
+                TempData["error"] = "you cannot add " + shoppingCart.Count + " items to the cart";
                 return RedirectToAction(nameof(Index));
             }
             // Check if there is enough quantity available
@@ -67,12 +85,17 @@ namespace ShopWeb.Areas.Customer.Controllers
                 TempData["error"] = "There is Not enough from this product please try later";
                 return RedirectToAction(nameof(Index));
             }
+            if (shoppingCart.Count == 0)
+            {
+                TempData["error"] = "you cant add 0 items to the cart";
+                return RedirectToAction(nameof(Index));
+            }
 
             ShoppingCart cartFromDb = _unitOfWork.ShoppingCart.Get(u => u.ApplicationUserId == userId &&
             u.ProductId == shoppingCart.ProductId);
 
             if (cartFromDb != null)
-            { 
+            {
                 //shoppingCart Exists.
                 cartFromDb.Count += shoppingCart.Count;
                 _unitOfWork.ShoppingCart.Update(cartFromDb);
@@ -81,7 +104,7 @@ namespace ShopWeb.Areas.Customer.Controllers
             {
                 _unitOfWork.ShoppingCart.Add(shoppingCart);
             }
-            
+
             _unitOfWork.Save();
 
             TempData["success"] = "product added to the cart successfully";
@@ -137,7 +160,7 @@ namespace ShopWeb.Areas.Customer.Controllers
                     break;
                 case "Popularity":
                     sortedProducts = _unitOfWork.Product.GetAll(includeProperties: "Category")
-                        .OrderBy(p => p.Popularity);
+                        .OrderByDescending(p => p.Popularity);
                     break;
                 case "onsale":
                     sortedProducts = _unitOfWork.Product.GetAll(includeProperties: "Category")

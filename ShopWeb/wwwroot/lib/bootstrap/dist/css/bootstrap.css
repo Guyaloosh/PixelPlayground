@@ -236,8 +236,8 @@ hr {
 
 h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1 {
     margin-top: 0;
-    margin-bottom: 0.5rem;
-    font-weight: 400;
+    margin-bottom: 0.25rem;
+    font-weight: 300;
     line-height: 1.2;
     color: var(--bs-heading-color);
 }
@@ -292,7 +292,7 @@ h6, .h6 {
 
 p {
     margin-top: 0;
-    margin-bottom: 1rem;
+    margin-bottom: 0.25rem;
 }
 
 abbr[title] {
@@ -4914,7 +4914,7 @@ textarea.form-control-lg {
 .card {
     --bs-card-spacer-y: 1rem;
     --bs-card-spacer-x: 1rem;
-    --bs-card-title-spacer-y: 0.5rem;
+    --bs-card-title-spacer-y: 0.25rem;
     --bs-card-title-color:;
     --bs-card-subtitle-color:;
     /* --bs-card-border-width: var(--bs-border-width);
