@@ -260,13 +260,67 @@ namespace ShopWeb.Migrations
                         {
                             Id = 2,
                             DisplayOrder = 2,
-                            Name = "SciFi"
+                            Name = "Racing"
                         },
                         new
                         {
                             Id = 3,
                             DisplayOrder = 3,
+                            Name = "Adventure"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            DisplayOrder = 4,
+                            Name = "Strategy"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            DisplayOrder = 5,
+                            Name = "Family"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            DisplayOrder = 6,
+                            Name = "Music"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            DisplayOrder = 7,
+                            Name = "FPS"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            DisplayOrder = 8,
+                            Name = "Multiplayer"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            DisplayOrder = 9,
+                            Name = "OpenWorld"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            DisplayOrder = 10,
+                            Name = "Puzzle"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            DisplayOrder = 11,
                             Name = "History"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            DisplayOrder = 12,
+                            Name = "Horror"
                         });
                 });
 
@@ -351,6 +405,9 @@ namespace ShopWeb.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("SessionId")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("ShippingDate")
                         .HasColumnType("datetime2");
 
@@ -394,15 +451,39 @@ namespace ShopWeb.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("MinAge")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Popularity")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Position")
+                        .HasColumnType("int");
+
                     b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("PublishPrice")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("RealishDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Sold")
+                        .HasColumnType("int");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TrailerLink")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("onSale")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -415,34 +496,590 @@ namespace ShopWeb.Migrations
                         {
                             Id = 1,
                             CategoryId = 1,
-                            Description = "Great Game",
-                            ImageUrl = "",
-                            Maker = "Electronic Arts",
-                            Price = 50m,
-                            Quantity = 0,
-                            Title = "Apex"
+                            Description = "Action RPG set in a fantasy world.",
+                            ImageUrl = "/Images/DefGameImages/1.jpg",
+                            Maker = "CD Projekt Red",
+                            MinAge = 17,
+                            Popularity = 95,
+                            Position = 1,
+                            Price = 29.99m,
+                            PublishPrice = 49.99m,
+                            Quantity = 80,
+                            RealishDate = new DateTime(2015, 5, 19, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Sold = 152,
+                            Title = "The Witcher 3: Wild Hunt",
+                            TrailerLink = "https://www.youtube.com/embed/c0i88t0Kacs?si=jvyjf80bCnuQkfCO",
+                            onSale = true
                         },
                         new
                         {
                             Id = 2,
-                            CategoryId = 2,
-                            Description = "ok Game",
-                            ImageUrl = "",
-                            Maker = "Nexon",
-                            Price = 20m,
-                            Quantity = 0,
-                            Title = "MapleStory"
+                            CategoryId = 9,
+                            Description = "Open-world action-adventure game.",
+                            ImageUrl = "/Images/DefGameImages/2.jpg",
+                            Maker = "Rockstar Games",
+                            MinAge = 17,
+                            Popularity = 96,
+                            Position = 2,
+                            Price = 39.99m,
+                            PublishPrice = 59.99m,
+                            Quantity = 45,
+                            RealishDate = new DateTime(2018, 10, 26, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Sold = 287,
+                            Title = "Red Dead Redemption 2",
+                            TrailerLink = "https://www.youtube.com/embed/gmA6MrX81z4?si=kO4xwXyxHm-jFkYc",
+                            onSale = true
                         },
                         new
                         {
                             Id = 3,
-                            CategoryId = 3,
-                            Description = "Amazing Game",
-                            ImageUrl = "",
+                            CategoryId = 1,
+                            Description = "Open-world action RPG set in a dystopian future.",
+                            ImageUrl = "/Images/DefGameImages/3.jpg",
+                            Maker = "CD Projekt Red",
+                            MinAge = 18,
+                            Popularity = 90,
+                            Position = 3,
+                            Price = 49.99m,
+                            PublishPrice = 59.99m,
+                            Quantity = 34,
+                            RealishDate = new DateTime(2020, 12, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Sold = 130,
+                            Title = "Cyberpunk 2077",
+                            TrailerLink = "https://www.youtube.com/embed/8X2kIfS6fb8?si=c7vjcptvnbaR3yEl",
+                            onSale = false
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CategoryId = 1,
+                            Description = "Action-adventure game set in a fictional version of Southern California.",
+                            ImageUrl = "/Images/DefGameImages/4.jpg",
+                            Maker = "Rockstar Games",
+                            MinAge = 18,
+                            Popularity = 97,
+                            Position = 4,
+                            Price = 29.99m,
+                            PublishPrice = 59.99m,
+                            Quantity = 25,
+                            RealishDate = new DateTime(2013, 9, 17, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Sold = 140,
+                            Title = "Grand Theft Auto V",
+                            TrailerLink = "https://www.youtube.com/embed/YrtCnL62pB8?si=LC33Inf9VEu4sg7g",
+                            onSale = false
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CategoryId = 8,
+                            Description = "Battle Royale game with building mechanics.",
+                            ImageUrl = "/Images/DefGameImages/5.jpg",
+                            Maker = "Epic Games",
+                            MinAge = 13,
+                            Popularity = 98,
+                            Position = 5,
+                            Price = 19.99m,
+                            PublishPrice = 0m,
+                            Quantity = 75,
+                            RealishDate = new DateTime(2017, 7, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Sold = 350,
+                            Title = "Fortnite",
+                            TrailerLink = "https://www.youtube.com/embed/aOAiUwz7Zt8?si=GRX2wQqxku6wiuya",
+                            onSale = false
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CategoryId = 8,
+                            Description = "Multiplayer online battle royale game.",
+                            ImageUrl = "/Images/DefGameImages/6.jpg",
+                            Maker = "PUBG Corporation",
+                            MinAge = 16,
+                            Popularity = 92,
+                            Position = 6,
+                            Price = 29.99m,
+                            PublishPrice = 39.99m,
+                            Quantity = 35,
+                            RealishDate = new DateTime(2017, 12, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Sold = 70,
+                            Title = "PlayerUnknown's Battlegrounds (PUBG)",
+                            TrailerLink = "https://www.youtube.com/embed/fDLAFIhfFy4?si=rdrhAcNkYvmuvBDJ",
+                            onSale = false
+                        },
+                        new
+                        {
+                            Id = 7,
+                            CategoryId = 7,
+                            Description = "First-person shooter video game set in the modern world.",
+                            ImageUrl = "/Images/DefGameImages/7.jpg",
+                            Maker = "Activision",
+                            MinAge = 17,
+                            Popularity = 90,
+                            Position = 7,
+                            Price = 59.99m,
+                            PublishPrice = 59.99m,
+                            Quantity = 42,
+                            RealishDate = new DateTime(2019, 10, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Sold = 30,
+                            Title = "Call of Duty: Modern Warfare",
+                            TrailerLink = "https://www.youtube.com/embed/mHDEDDrGYvo?si=zYTrCR5jInGSiaRz",
+                            onSale = true
+                        },
+                        new
+                        {
+                            Id = 8,
+                            CategoryId = 8,
+                            Description = "Battle Royale game mode within the Call of Duty: Modern Warfare universe.",
+                            ImageUrl = "/Images/DefGameImages/8.jpg",
+                            Maker = "Activision",
+                            MinAge = 17,
+                            Popularity = 92,
+                            Position = 8,
+                            Price = 19.99m,
+                            PublishPrice = 29.99m,
+                            Quantity = 13,
+                            RealishDate = new DateTime(2020, 3, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Sold = 80,
+                            Title = "Call of Duty: Warzone",
+                            TrailerLink = "https://www.youtube.com/embed/APYIfiOCe2c?si=4bvuuc6ZA7eu90cO",
+                            onSale = false
+                        },
+                        new
+                        {
+                            Id = 9,
+                            CategoryId = 7,
+                            Description = "Free-to-play battle royale game set in the Titanfall universe.",
+                            ImageUrl = "/Images/DefGameImages/9.jpg",
+                            Maker = "Respawn Entertainment",
+                            MinAge = 13,
+                            Popularity = 95,
+                            Position = 9,
+                            Price = 19.99m,
+                            PublishPrice = 29.99m,
+                            Quantity = 28,
+                            RealishDate = new DateTime(2019, 2, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Sold = 100,
+                            Title = "Apex Legends",
+                            TrailerLink = "https://www.youtube.com/embed/M82iTOsGoF8?si=46dLNX6Y8PfWtcnr",
+                            onSale = false
+                        },
+                        new
+                        {
+                            Id = 10,
+                            CategoryId = 4,
+                            Description = "Team-based multiplayer first-person shooter game.",
+                            ImageUrl = "/Images/DefGameImages/10.jpg",
+                            Maker = "Blizzard Entertainment",
+                            MinAge = 13,
+                            Popularity = 92,
+                            Position = 10,
+                            Price = 39.99m,
+                            PublishPrice = 59.99m,
+                            Quantity = 35,
+                            RealishDate = new DateTime(2016, 5, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Sold = 54,
+                            Title = "Overwatch",
+                            TrailerLink = "https://www.youtube.com/embed/FqnKB22pOC0?si=E44DIWXucKSa_woK",
+                            onSale = false
+                        },
+                        new
+                        {
+                            Id = 11,
+                            CategoryId = 9,
+                            Description = "Sandbox video game where players build with various cubes in a 3D procedurally generated world.",
+                            ImageUrl = "/Images/DefGameImages/11.jpg",
+                            Maker = "Mojang Studios",
+                            MinAge = 10,
+                            Popularity = 96,
+                            Position = 11,
+                            Price = 26.95m,
+                            PublishPrice = 26.95m,
+                            Quantity = 85,
+                            RealishDate = new DateTime(2011, 11, 18, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Sold = 20,
+                            Title = "Minecraft",
+                            TrailerLink = "https://www.youtube.com/embed/MmB9b5njVbA?si=0c5HqX3-DeRyi7cP",
+                            onSale = false
+                        },
+                        new
+                        {
+                            Id = 12,
+                            CategoryId = 7,
+                            Description = "Free-to-play multiplayer tactical first-person shooter.",
+                            ImageUrl = "/Images/DefGameImages/12.jpg",
                             Maker = "Riot Games",
-                            Price = 70m,
+                            MinAge = 13,
+                            Popularity = 93,
+                            Position = 12,
+                            Price = 0m,
+                            PublishPrice = 39.99m,
+                            Quantity = 15,
+                            RealishDate = new DateTime(2020, 6, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Sold = 10,
+                            Title = "Valorant",
+                            TrailerLink = "https://www.youtube.com/embed/lWr6dhTcu-E?si=mPZorezukLLBiAaY",
+                            onSale = true
+                        },
+                        new
+                        {
+                            Id = 13,
+                            CategoryId = 5,
+                            Description = "Online multiplayer social deduction game.",
+                            ImageUrl = "/Images/DefGameImages/13.jpg",
+                            Maker = "InnerSloth",
+                            MinAge = 10,
+                            Popularity = 97,
+                            Position = 13,
+                            Price = 4.99m,
+                            PublishPrice = 4.99m,
+                            Quantity = 15,
+                            RealishDate = new DateTime(2018, 6, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Sold = 50,
+                            Title = "Among Us",
+                            TrailerLink = "",
+                            onSale = false
+                        },
+                        new
+                        {
+                            Id = 14,
+                            CategoryId = 5,
+                            Description = "Multiplayer party game with up to 60 players online.",
+                            ImageUrl = "/Images/DefGameImages/14.jpg",
+                            Maker = "Mediatonic",
+                            MinAge = 10,
+                            Popularity = 95,
+                            Position = 14,
+                            Price = 19.99m,
+                            PublishPrice = 19.99m,
+                            Quantity = 25,
+                            RealishDate = new DateTime(2020, 8, 4, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Sold = 200,
+                            Title = "Fall Guys: Ultimate Knockout",
+                            TrailerLink = "",
+                            onSale = false
+                        },
+                        new
+                        {
+                            Id = 15,
+                            CategoryId = 1,
+                            Description = "Action role-playing game set in the fictional province of Skyrim.",
+                            ImageUrl = "/Images/DefGameImages/15.jpg",
+                            Maker = "Bethesda Game Studios",
+                            MinAge = 17,
+                            Popularity = 97,
+                            Position = 15,
+                            Price = 19.99m,
+                            PublishPrice = 39.99m,
+                            Quantity = 34,
+                            RealishDate = new DateTime(2011, 11, 11, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Sold = 30,
+                            Title = "The Elder Scrolls V: Skyrim",
+                            TrailerLink = "",
+                            onSale = false
+                        },
+                        new
+                        {
+                            Id = 16,
+                            CategoryId = 2,
+                            Description = "Vehicular soccer video game.",
+                            ImageUrl = "/Images/DefGameImages/16.jpg",
+                            Maker = "Psyonix",
+                            MinAge = 3,
+                            Popularity = 93,
+                            Position = 16,
+                            Price = 19.99m,
+                            PublishPrice = 19.99m,
+                            Quantity = 82,
+                            RealishDate = new DateTime(2015, 7, 7, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Sold = 75,
+                            Title = "Rocket League",
+                            TrailerLink = "",
+                            onSale = false
+                        },
+                        new
+                        {
+                            Id = 17,
+                            CategoryId = 9,
+                            Description = "Action role-playing video game set in ancient Greece.",
+                            ImageUrl = "/Images/DefGameImages/17.jpg",
+                            Maker = "Ubisoft",
+                            MinAge = 17,
+                            Popularity = 91,
+                            Position = 17,
+                            Price = 19.99m,
+                            PublishPrice = 59.99m,
+                            Quantity = 43,
+                            RealishDate = new DateTime(2018, 10, 5, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Sold = 10,
+                            Title = "Assassin's Creed Odyssey",
+                            TrailerLink = "",
+                            onSale = true
+                        },
+                        new
+                        {
+                            Id = 18,
+                            CategoryId = 12,
+                            Description = "First-person shooter video game developed by id Software.",
+                            ImageUrl = "/Images/DefGameImages/18.jpg",
+                            Maker = "Bethesda Softworks",
+                            MinAge = 17,
+                            Popularity = 94,
+                            Position = 18,
+                            Price = 29.99m,
+                            PublishPrice = 59.99m,
+                            Quantity = 35,
+                            RealishDate = new DateTime(2020, 3, 20, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Sold = 30,
+                            Title = "Doom Eternal",
+                            TrailerLink = "",
+                            onSale = false
+                        },
+                        new
+                        {
+                            Id = 19,
+                            CategoryId = 8,
+                            Description = "Action role-playing game set in an open world environment.",
+                            ImageUrl = "/Images/DefGameImages/19.jpg",
+                            Maker = "Capcom",
+                            MinAge = 16,
+                            Popularity = 90,
+                            Position = 19,
+                            Price = 39.99m,
+                            PublishPrice = 59.99m,
+                            Quantity = 70,
+                            RealishDate = new DateTime(2018, 8, 9, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Sold = 16,
+                            Title = "Monster Hunter: World",
+                            TrailerLink = "",
+                            onSale = false
+                        },
+                        new
+                        {
+                            Id = 20,
+                            CategoryId = 1,
+                            Description = "Tactical shooter video game developed by Ubisoft Montreal.",
+                            ImageUrl = "/Images/DefGameImages/20.jpg",
+                            Maker = "Ubisoft",
+                            MinAge = 18,
+                            Popularity = 95,
+                            Position = 20,
+                            Price = 19.99m,
+                            PublishPrice = 39.99m,
+                            Quantity = 15,
+                            RealishDate = new DateTime(2015, 12, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Sold = 65,
+                            Title = "Tom Clancy's Rainbow Six Siege",
+                            TrailerLink = "",
+                            onSale = false
+                        },
+                        new
+                        {
+                            Id = 21,
+                            CategoryId = 8,
+                            Description = "Action role-playing game set in an open world environment.",
+                            ImageUrl = "/Images/DefGameImages/21.jpg",
+                            Maker = "Square Enix",
+                            MinAge = 16,
+                            Popularity = 93,
+                            Position = 21,
+                            Price = 19.99m,
+                            PublishPrice = 59.99m,
+                            Quantity = 50,
+                            RealishDate = new DateTime(2016, 11, 29, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Sold = 90,
+                            Title = "Final Fantasy XV",
+                            TrailerLink = "",
+                            onSale = false
+                        },
+                        new
+                        {
+                            Id = 22,
+                            CategoryId = 3,
+                            Description = "Action game developed by Kojima Productions.",
+                            ImageUrl = "/Images/DefGameImages/22.jpg",
+                            Maker = "Sony Interactive Entertainment",
+                            MinAge = 18,
+                            Popularity = 91,
+                            Position = 22,
+                            Price = 29.99m,
+                            PublishPrice = 59.99m,
+                            Quantity = 42,
+                            RealishDate = new DateTime(2019, 11, 8, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Sold = 60,
+                            Title = "Death Stranding",
+                            TrailerLink = "",
+                            onSale = false
+                        },
+                        new
+                        {
+                            Id = 23,
+                            CategoryId = 12,
+                            Description = "Survival horror video game developed by Capcom.",
+                            ImageUrl = "/Images/DefGameImages/23.jpg",
+                            Maker = "Capcom",
+                            MinAge = 18,
+                            Popularity = 90,
+                            Position = 23,
+                            Price = 19.99m,
+                            PublishPrice = 59.99m,
+                            Quantity = 30,
+                            RealishDate = new DateTime(2017, 1, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Sold = 82,
+                            Title = "Resident Evil 7: Biohazard",
+                            TrailerLink = "",
+                            onSale = false
+                        },
+                        new
+                        {
+                            Id = 24,
+                            CategoryId = 1,
+                            Description = "Action-adventure video game developed by FromSoftware.",
+                            ImageUrl = "/Images/DefGameImages/24.jpg",
+                            Maker = "Activision",
+                            MinAge = 18,
+                            Popularity = 94,
+                            Position = 24,
+                            Price = 29.99m,
+                            PublishPrice = 59.99m,
+                            Quantity = 27,
+                            RealishDate = new DateTime(2019, 3, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Sold = 50,
+                            Title = "Sekiro: Shadows Die Twice",
+                            TrailerLink = "",
+                            onSale = true
+                        },
+                        new
+                        {
+                            Id = 25,
+                            CategoryId = 10,
+                            Description = "Action-adventure video game developed by Remedy Entertainment.",
+                            ImageUrl = "/Images/DefGameImages/25.jpg",
+                            Maker = "505 Games",
+                            MinAge = 17,
+                            Popularity = 91,
+                            Position = 25,
+                            Price = 29.99m,
+                            PublishPrice = 59.99m,
+                            Quantity = 50,
+                            RealishDate = new DateTime(2019, 8, 27, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Sold = 20,
+                            Title = "Control",
+                            TrailerLink = "",
+                            onSale = true
+                        },
+                        new
+                        {
+                            Id = 26,
+                            CategoryId = 5,
+                            Description = "Open-world action role-playing game.",
+                            ImageUrl = "/Images/DefGameImages/26.jpg",
+                            Maker = "miHoYo",
+                            MinAge = 9,
+                            Popularity = 95,
+                            Position = 26,
+                            Price = 0m,
+                            PublishPrice = 0m,
+                            Quantity = 13,
+                            RealishDate = new DateTime(2020, 9, 28, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Sold = 54,
+                            Title = "Genshin Impact",
+                            TrailerLink = "",
+                            onSale = false
+                        },
+                        new
+                        {
+                            Id = 27,
+                            CategoryId = 3,
+                            Description = "Action-adventure game developed and published by Nintendo.",
+                            ImageUrl = "/Images/DefGameImages/27.jpg",
+                            Maker = "Nintendo",
+                            MinAge = 10,
+                            Popularity = 98,
+                            Position = 27,
+                            Price = 59.99m,
+                            PublishPrice = 59.99m,
+                            Quantity = 43,
+                            RealishDate = new DateTime(2017, 3, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Sold = 23,
+                            Title = "The Legend of Zelda: Breath of the Wild",
+                            TrailerLink = "https://www.youtube.com/embed/zw47_q9wbBE?si=-TU9bnoraR-Yo4Wr",
+                            onSale = false
+                        },
+                        new
+                        {
+                            Id = 28,
+                            CategoryId = 3,
+                            Description = "Action-adventure game developed by Respawn Entertainment.",
+                            ImageUrl = "/Images/DefGameImages/28.jpg",
+                            Maker = "Electronic Arts",
+                            MinAge = 16,
+                            Popularity = 94,
+                            Position = 28,
+                            Price = 29.99m,
+                            PublishPrice = 59.99m,
+                            Quantity = 25,
+                            RealishDate = new DateTime(2019, 11, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Sold = 11,
+                            Title = "Star Wars Jedi: Fallen Order",
+                            TrailerLink = "https://www.youtube.com/embed/xIl2z5wwjdA?si=T18obfPmbTJfDrjo",
+                            onSale = false
+                        },
+                        new
+                        {
+                            Id = 29,
+                            CategoryId = 1,
+                            Description = "Virtual reality first-person shooter game developed and published by Valve.",
+                            ImageUrl = "/Images/DefGameImages/29.jpg",
+                            Maker = "Valve",
+                            MinAge = 16,
+                            Popularity = 95,
+                            Position = 29,
+                            Price = 59.99m,
+                            PublishPrice = 59.99m,
+                            Quantity = 30,
+                            RealishDate = new DateTime(2020, 3, 23, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Sold = 26,
+                            Title = "Half-Life: Alyx",
+                            TrailerLink = "https://www.youtube.com/embed/O2W0N3uKXmo?si=3qtGARO6eVaNaAZz",
+                            onSale = false
+                        },
+                        new
+                        {
+                            Id = 30,
+                            CategoryId = 6,
+                            Description = "Dance with your swords! VR special!",
+                            ImageUrl = "/Images/DefGameImages/30.jpg",
+                            Maker = "VRworld",
+                            MinAge = 18,
+                            Popularity = 93,
+                            Position = 30,
+                            Price = 39.99m,
+                            PublishPrice = 49.99m,
+                            Quantity = 56,
+                            RealishDate = new DateTime(2019, 10, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Sold = 52,
+                            Title = "BeatSaber",
+                            TrailerLink = "https://www.youtube.com/embed/vL39Sg2AqWg?si=DC21JB3nWvac595V",
+                            onSale = false
+                        },
+                        new
+                        {
+                            Id = 31,
+                            CategoryId = 1,
+                            Description = "Action-adventure game ,More details SOON!.",
+                            ImageUrl = "/Images/DefGameImages/31.jpg",
+                            Maker = "Rockstar Games",
+                            MinAge = 18,
+                            Popularity = 20000,
+                            Position = 31,
+                            Price = 300m,
+                            PublishPrice = 300m,
                             Quantity = 0,
-                            Title = "LeugeOfLeguent"
+                            RealishDate = new DateTime(2026, 9, 17, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Sold = 0,
+                            Title = "Grand Theft Auto VI",
+                            TrailerLink = "https://www.youtube.com/embed/QdBZY2fkU-0?si=WNVNre8pOwqgsat0",
+                            onSale = false
                         });
                 });
 
@@ -480,8 +1117,9 @@ namespace ShopWeb.Migrations
                     b.Property<string>("City")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Name")
-                        .HasColumnType("int");
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PostalCode")
                         .HasColumnType("nvarchar(max)");

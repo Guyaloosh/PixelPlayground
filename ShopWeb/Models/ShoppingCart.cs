@@ -6,6 +6,8 @@ namespace ShopWeb.Models
 {
     public class ShoppingCart
     {
+
+        public List<Product> products;
         public int Id { get; set; }
         public int ProductId { get; set; }
         [ForeignKey("ProductId")]

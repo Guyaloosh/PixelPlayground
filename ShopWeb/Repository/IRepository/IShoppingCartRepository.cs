@@ -1,4 +1,5 @@
 ﻿using ShopWeb.Models;
+using System.Linq.Expressions;
 
 namespace ShopWeb.Repository.IRepository
 {
@@ -7,4 +8,5 @@ namespace ShopWeb.Repository.IRepository
         void Update(ShoppingCart Obj);
         
     }
+
 }

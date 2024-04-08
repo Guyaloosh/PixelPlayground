@@ -1,0 +1,50 @@
+﻿@model ShopWeb.Models.ViewModels.OrderViewModel
+
+@{
+    ViewData["Title"] = "Order Details";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+   
+</head>
+
+<body>
+
+    <h3 style="text-align: center; color: #fff; font-weight: 600;">Order Details</h3>
+        <div class="my_orders_table">
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Order Detail ID</th>
+                    <th>Product ID</th>
+                    <th>Count</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.OrderDetails)
+                {
+                    <tr>
+                        <td>@item.Id</td>
+                        <td>@item.ProductId</td>
+                        <td>@item.Count</td>
+                        <td>@item.Price</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <div class="order_details_summary">
+        <h3 class="fw-bold">Order Summary</h3>
+        <p><strong>Address:</strong> @Model.OrderHeader.StreetAddress, @Model.OrderHeader.City, @Model.OrderHeader.State, @Model.OrderHeader.PostalCode</p>
+        <p><strong>Total Price:</strong> $@Model.OrderHeader.OrderTotal</p>
+    </div>
+</body>
+</html>

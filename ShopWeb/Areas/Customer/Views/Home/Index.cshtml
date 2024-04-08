@@ -1,33 +1,422 @@
 ﻿@model IEnumerable<Product>
 
-<div class="row pb-3">
-    @foreach (var product in Model)
-    {
-        <div class="col-lg-3 col-md-6 col-sm-12">
-            <!-- Adjusted column classes -->
-            <div class="row p-2">
-                <div class="col-12 p-1">
-                    <div class="card border-0 p-3 shadow border-top border-5 rounded" style="height: 400px;">
-                        <img src="@product.ImageUrl" class="card-img-top rounded" style="height: 200px;" />
-                        <div class="card-body" style="height: 200px;">
-                            <div class="pl-1">
-                                <p class="card-title h5 text-dark opacity-75  text-center">@product.Title</p>
-                                <p class="card-title text-warning text-center">by <b>@product.Maker</b></p>
+@{
+    var sorterdProducts = Model.OrderBy(p => p.Position);
+}
+
+
+
+<img src="~/Images/mainindexwallpaper.jpg" alt="GamingWallpaper" class="mx-auto banner_main_img" style="width: 100%;position:relative;margin-top:-2px; ;height: 220px; object-fit:cover" />
+<div class="d-flex mt-[-12] p-2 mx-2 mt-4 main_area">
+    <div class="card mb-12 sidebar_menu">
+        <div class="card-body" ;>
+            <!-- Search bar -->
+            <div class="mb-3">
+                <input type="text" class="form-control" id="searchInput" placeholder="Search products">
+            </div>
+            <!-- Category filter -->
+            <h5>Categories</h5>
+            @foreach (var category in ViewBag.Categories)
+            {
+                <div class="form-check">
+                    <input class="form-check-input categoryCheckbox" type="checkbox" value="@category.Name" id="category-@category.Id">
+                    <label class="form-check-label" for="category-@category.Id">
+                        @category.Name
+                    </label>
+                </div>
+            }
+            <hr>
+
+            <!-- Date range filter -->
+            <h5>Date Range</h5>
+            <div class="mb-3">
+                <label for="startMonthYear">Start Month/Year</label>
+                <input type="month" class="form-control" id="startDate" placeholder="Start Month/Year" value="2010-01">
+            </div>
+            <div class="mb-3">
+                <label for="endMonthYear">End Month/Year</label>
+                <input type="month" class="form-control" id="endDate" placeholder="End Month/Year" value="2028-01">
+            </div>
+
+
+
+
+            <!-- Price range slider -->
+            <div class="slidecontainer">
+                <label for="myRange">Max price: <span id="maxrangeValue">250</span></label>
+                <input type="range" min="0" max="250" value="250" class="slider" id="mymaxRange">
+            </div>
+            <div class="slidecontainer">
+                <label for="myRange">Min Price: <span id="minrangeValue">0</span></label>
+                <input type="range" min="0" max="250" value="0" class="slider" id="myminRange">
+            </div>
+
+            <!-- on sale filter -->
+            <div class="form-check">
+                <input class="form-check-input onSaleCheckbox" type="checkbox" value="" id="onSaleCheckbox">
+                <label class="form-check-label" for="onSaleCheckbox">
+                    ON SALE
+                </label>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="container .d-inline-flex">
+        <!-- Product List -->
+        <!-- Sort Bar -->
+        <div class="col-sm-12">
+            <div class="btn-group float-right" role="group">
+                <button id="sortByPriceHigh" type="button" class="btn filter_btn">Price High to Low</button>
+                <button id="sortByPriceLow" type="button" class="btn filter_btn">Price Low to High</button>
+                <button id="sortByPopularity" type="button" class="btn filter_btn">Popularity</button>
+                <button id="sortBySold" type="button" class="btn filter_btn">Best Sellers</button>
+                <button id="sortByCategory" type="button" class="btn filter_btn">Category</button>
+
+            </div>
+        </div>
+        <div class="row">
+
+            <div class="col-md-12">
+                <div class="main">
+                    <div class="row pb-3" id="productList">
+                        @foreach (var product in Model)
+                        {
+
+                            <div class="col-lg-3 col-md-6 col-sm-12 product pb-4" data-category-name="@product.Category.Name" data-price="@product.Price" data-onsale="@product.onSale" data-date="@product.RealishDate">
+                                <div class="row justify-content-between">
+                                    <div class="col-12">
+                                        <div class="card game_card">
+                                            @if (product.Quantity == 0 && product.RealishDate > DateTime.Now)
+                                            {
+                                                <span class="comingsoon_badge"> Coming soon! </span>
+
+                                            }
+                                            else if (product.Quantity == 0)
+                                            {
+                                                <span class="outofstock_badge"> Out of Stock! </span>
+                                            }
+
+
+                                            @if (product.onSale && product.Quantity == 0)
+                                            {
+                                                <span class="outofstock_badge"> Out of Stock! </span>
+
+                                            }
+                                            else if (product.onSale)
+                                            {
+                                                <span class="sale_badge"> Sale! </span>
+
+                                            }
+
+
+                                            <img src="@product.ImageUrl" alt="@product.Title" class="mx-auto game_card_img" />
+                                            <div class="game_card_meta">
+                                                <div class="mt-2 pl-1">
+                                                    <p class="card-title card_game_title">@product.Title</p>
+                                                    <p class="card-title card_game_maker">@product.Maker</p>
+                                                    <p class="card_game_category_date">@product.Category.Name | @product.RealishDate.Month/@product.RealishDate.Year</p>
+
+                                                </div>
+
+                                                <div class="pl-1">
+
+
+                                                    @if (product.PublishPrice > product.Price)
+                                                    {
+                                                        <p class="game_card_price_sale">
+                                                            Price: <del>@product.PublishPrice.ToString("c")</del>
+                                                            <br />
+                                                            <span>NOW Only! @product.Price.ToString("c")</span>
+                                                        </p>
+                                                    }
+                                                    else
+                                                    {
+                                                        <p class="game_card_price">Price: @product.PublishPrice.ToString("c")</p>
+                                                    }
+                                                </div>
+                                            </div>
+
+
+
+                                            @if (product.RealishDate > DateTime.Now)
+                                            {
+                                                <div class="game_card_btns">
+                                                    <button onclick="addToWishList('@product.Title')" class="btn btn-danger form-control">
+                                                        Notify when in stock
+                                                    </button>
+                                                </div>
+
+                                            }
+                                            else
+                                            {
+                                                @if (product.Quantity == 0)
+                                                {
+                                                    <div class="d-flex game_card_btns">
+                                                        <button onclick="addToWishList('@product.Title')" class="btn btn-danger" style="font-size:11px;">
+                                                            Notify restock
+                                                        </button>
+                                                        <a id="detailsBtn" asp-action="Details" asp-route-productId="@product.Id" class="btn btn-primary bg-gradient border-0" style="font-size:11px;">
+                                                            Show More Details
+                                                        </a>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="d-flex game_card_btns">
+                                                        <form method="post" asp-controller="Cart" asp-action="AddToCart">
+                                                            <input type="hidden" name="productId" value="@product.Id" />
+                                                            <input type="hidden" name="quantity" value="1" />
+                                                            <button type="submit" class="btn btn-success">Add to Cart</button>
+                                                        </form>
+                                                        <a asp-action="Details" asp-route-productId="@product.Id" class="btn btn-primary bg-gradient border-0" style="font-size:11px;">
+                                                            Show More Details
+                                                        </a>
+                                                    </div>
+                                                }
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="pl-1">
-                                <p class="text-dark h5 text-dark opacity-75 text-center">As low as: <span>@product.Price.ToString("c")</span></p>
-                            </div>
-                        </div>
-                        <div>
-                            <a asp-action="Details"
-                            asp-route-productId="@product.Id"
-                            class="btn btn-primary bg-gradient border-0 form-control">
-                                Details
-                            </a>
-                        </div>
+                        }
                     </div>
                 </div>
             </div>
         </div>
-    }
+    </div>
 </div>
+@section Scripts {
+    <script>
+        //script
+        function addToWishList(title) {
+            Swal.fire({
+                title: title + " has been added to wish list!",
+                text: "well contact you as soon as it is available",
+
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonText: "undo",
+                cancelButtonColor: "#d25",
+                confirmButtonText: "ok"
+            }).then((result) => {
+                if (result.isConfirmed) {
+
+                };
+            })
+        }
+
+    
+        $(document).ready(function () {
+            // using AJAX
+            function fetchSortedProducts(sortType) {
+                $.ajax({
+                    url: '@Url.Action("SortProducts", "Home")',
+                    type: 'GET',
+                    data: { sortType: sortType },
+                    success: function (result) {
+                        $('#productList').html(result);
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(xhr.responseText);
+                    }
+                });
+            }
+            var isClicked = ""; // Variable to track which button is clicked
+
+            $("#sortByPriceHigh").click(function () {
+                // Sort products by price (high to low)
+                fetchSortedProducts("PriceHighToLow");
+                if (isClicked === "sortByPriceHigh") {
+                    resetButtonStyles();// Reset button styles if already clicked
+                    isClicked = ""; 
+                    fetchSortedProducts("")
+                } else {
+                    resetButtonStyles();// Reset button styles
+                    document.getElementById("sortByPriceHigh").classList.add("filter_btn_active");
+                    isClicked = "sortByPriceHigh"; 
+
+                }
+            });
+
+            $("#sortByPriceLow").click(function () {
+                // Sort products by price (low to high)
+                fetchSortedProducts("PriceLowToHigh");
+                if (isClicked === "sortByPriceLow") {
+                    resetButtonStyles(); // Reset button styles if already clicked
+                    isClicked = ""; 
+                    fetchSortedProducts("")
+                } else {
+                    resetButtonStyles(); // Reset button styles
+                    document.getElementById("sortByPriceLow").classList.add("filter_btn_active");
+                    isClicked = "sortByPriceLow"; 
+                }
+            });
+
+            $("#sortByPopularity").click(function () {
+                // Sort products by Popularity
+                fetchSortedProducts("Popularity");
+                if (isClicked === "sortByPopularity") {
+                    resetButtonStyles(); // Reset button styles if already clicked
+                    isClicked = ""; 
+                    fetchSortedProducts("")
+                } else {
+                    resetButtonStyles(); // Reset button styles
+                    document.getElementById("sortByPopularity").classList.add("filter_btn_active");
+                    isClicked = "sortByPopularity";
+                }
+            });
+
+
+            $("#sortByCategory").click(function () {
+                // Sort products by Popularity
+                fetchSortedProducts("Category");
+                if (isClicked === "sortByCategory") {
+                    resetButtonStyles(); // Reset button styles if already clicked
+                    isClicked = ""; 
+                    fetchSortedProducts("")
+                } else {
+                    resetButtonStyles(); // Reset button styles
+                    document.getElementById("sortByCategory").classList.add("filter_btn_active");
+                    isClicked = "sortByCategory"; 
+                }
+            });
+
+            $("#sortBySold").click(function () {
+                // Sort products by Popularity
+                fetchSortedProducts("MostSold");
+                if (isClicked === "sortBySold") {
+                    resetButtonStyles(); // Reset button styles if already clicked
+                    isClicked = ""; 
+                    fetchSortedProducts("")
+                } else {
+                    resetButtonStyles(); // Reset button styles
+                    document.getElementById("sortBySold").classList.add("filter_btn_active");
+                    isClicked = "sortBySold";
+                }
+            });
+
+
+            function resetButtonStyles() {
+                // Reset button styles for all buttons
+
+                document.getElementById("sortByPriceHigh").classList.remove("filter_btn_active");
+                document.getElementById("sortByPriceLow").classList.remove("filter_btn_active");
+                document.getElementById("sortByPopularity").classList.remove("filter_btn_active");
+                document.getElementById("sortByCategory").classList.remove("filter_btn_active");
+                document.getElementById("sortBySold").classList.remove("filter_btn_active");
+
+                $("#searchInput").val("");
+                $("#onSaleCheckbox").prop("checked", false);
+                $(".categoryCheckbox:checked").prop("checked", false);
+
+                $("#mymaxRange").val(1000);
+                $("#maxrangeValue").text('250');
+                $("#myminRange").val(0);
+                $("#minrangeValue").text('0');
+
+                document.getElementById("startDate").value = "2010-01";
+                document.getElementById("endDate").value = "2028-01";
+
+            }
+
+            var isMostSoldClicked = false;
+
+            $("#onSaleCheckbox").click(function () {
+                // Check if the checkbox is checked
+
+                isMostSoldClicked = $(this).is(":checked");
+                filterProducts();
+       
+            });
+
+
+            // Function to filter products based on search text, selected categories, and price range
+            function filterProducts() {
+
+                var startDate = new Date($("#startDate").val());
+                var endDate = new Date($("#endDate").val());
+
+                // Get the selected price range value
+                var selectedmaxPrice = parseFloat($("#mymaxRange").val());
+                var selectedminPrice = parseFloat($("#myminRange").val());
+
+                // Get search text
+                var searchText = $("#searchInput").val().toLowerCase();
+
+                // Collect selected categories
+                var selectedCategories = $(".categoryCheckbox:checked").map(function () {
+                    return $(this).val().toLowerCase();
+                }).get();
+
+
+
+                // Iterate over each product and show/hide based on matching criteria
+                $(".product").each(function () {
+                    var product = $(this);
+                    var title = product.find(".card-title").text().toLowerCase();
+                    var category = product.data('category-name').toLowerCase();
+                    var price = parseFloat(product.data('price'));
+                    var isonsale = product.data('onsale');
+                    var dateString = $(this).data('date');
+                    var releaseDate;
+
+                    if (dateString) {
+                        //create a Date object
+                        releaseDate = new Date(dateString);
+                        // Check valid
+                        if (isNaN(releaseDate.getTime())) {
+                            var parts = dateString.split(/[\/ :]/);
+                            releaseDate = new Date(parts[2], parts[1] - 1, parts[0], parts[3], parts[4], parts[5]);
+                            // Handle the invalid date here
+                        }
+                    }
+
+                    var isDateMatch = releaseDate >= startDate && releaseDate <= endDate;
+                    var isCategoryMatch = selectedCategories.length === 0 || selectedCategories.includes(category);
+                    var isTitleMatch = title.includes(searchText);
+                    var isPriceMatch = (price >= selectedminPrice && price <= selectedmaxPrice);
+
+
+                    // Show product if it matches all criteria
+                    if (!isMostSoldClicked) {
+                        if (isCategoryMatch && isTitleMatch && isPriceMatch && isDateMatch) {
+                            product.show();
+                        }
+                        else {
+                            product.hide();
+                        }
+                    } else {
+                        console.log("else");
+                        if (isCategoryMatch && isTitleMatch && isPriceMatch && isonsale != 'False' && isDateMatch) {
+                            console.log("if");
+                            product.show();
+                        } else {
+                            product.hide();
+                        }
+
+                    }
+                });
+
+            }
+
+            // Bind input keys
+            $("#searchInput").on("keyup", filterProducts);
+            
+            $(".categoryCheckbox").on("change", filterProducts);
+
+            $("#startDate, #endDate").on("change", filterProducts);
+
+            $("#mymaxRange").on("input", function () {
+                $("#maxrangeValue").text($(this).val());
+                filterProducts();
+            });
+            $("#myminRange").on("input", function () {
+                $("#minrangeValue").text($(this).val());
+                filterProducts();
+            });
+        });
+    </script>
+}
+
