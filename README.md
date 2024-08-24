@@ -14,3 +14,7 @@ Backend: ASP.NET Core, Entity Framework
 Frontend: HTML, CSS, JavaScript
 Database: SQL Server
 Architecture: MVC (Model-View-Controller)
+
+
+![image](https://github.com/user-attachments/assets/8f1dbc26-6e21-49ac-9099-03d31b60f8c0)
+
