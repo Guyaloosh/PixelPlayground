@@ -1,5 +1,6 @@
 # PixelPlayground
-Ecommerce shop for game console 
+
+PixelPlayground is an eCommerce shop for game consoles, built using the MVC (Model-View-Controller) architecture. This project utilizes C# for backend operations and HTML for the frontend.
 
 Features
 
@@ -12,4 +13,4 @@ Technology Stack
 Backend: ASP.NET Core, Entity Framework
 Frontend: HTML, CSS, JavaScript
 Database: SQL Server
-
+Architecture: MVC (Model-View-Controller)
