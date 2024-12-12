@@ -1,0 +1,102 @@
+﻿@model IEnumerable<ShopWeb.Models.Product>
+
+@foreach (var product in Model)
+{
+
+    <div class="col-lg-3 col-md-6 col-sm-12 product pb-4" data-category-name="@product.Category.Name" data-price="@product.Price" data-onsale="@product.onSale" data-date="@product.RealishDate">
+        <div class="row justify-content-between">
+            <div class="col-12">
+                <div class="card game_card">
+                    @if (product.Quantity == 0 && product.RealishDate > DateTime.Now)
+                    {
+                        <span class="comingsoon_badge"> Coming soon! </span>
+
+                    }
+                    else if (product.Quantity == 0)
+                    {
+                        <span class="outofstock_badge"> Out of Stock! </span>
+                    }
+
+
+                    @if (product.onSale && product.Quantity == 0)
+                    {
+                        <span class="outofstock_badge"> Out of Stock! </span>
+
+                    }
+                    else if (product.onSale)
+                    {
+                        <span class="sale_badge"> Sale! </span>
+
+                    }
+
+
+                    <img src="@product.ImageUrl" alt="@product.Title" class="mx-auto game_card_img" />
+                    <div class="game_card_meta">
+                        <div class="mt-2 pl-1">
+                            <p class="card-title card_game_title">@product.Title</p>
+                            <p class="card-title card_game_maker">@product.Maker</p>
+                            <p class="card_game_category_date">@product.Category.Name | @product.RealishDate.Month/@product.RealishDate.Year</p>
+
+                        </div>
+
+                        <div class="pl-1">
+
+
+                            @if (product.PublishPrice > product.Price)
+                            {
+                                <p class="game_card_price_sale">
+                                    Price: <del>@product.PublishPrice.ToString("c")</del>
+                                    <br />
+                                    <span>NOW Only! @product.Price.ToString("c")</span>
+                                </p>
+                            }
+                            else
+                            {
+                                <p class="game_card_price">Price: @product.PublishPrice.ToString("c")</p>
+                            }
+                        </div>
+                    </div>
+
+
+
+                    @if (product.RealishDate > DateTime.Now)
+                    {
+                        <div class="game_card_btns">
+                            <button onclick="addToWishList('@product.Title')" class="btn btn-danger form-control">
+                                Notify when in stock
+                            </button>
+                        </div>
+
+                    }
+                    else
+                    {
+                        @if (product.Quantity == 0)
+                        {
+                            <div class="d-flex game_card_btns">
+                                <button onclick="addToWishList('@product.Title')" class="btn btn-danger" style="font-size:11px;">
+                                    Notify restock
+                                </button>
+                                <a id="detailsBtn" asp-action="Details" asp-route-productId="@product.Id" class="btn btn-primary bg-gradient border-0" style="font-size:11px;">
+                                    Show More Details
+                                </a>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="d-flex game_card_btns">
+                                <form method="post" asp-controller="Cart" asp-action="AddToCart">
+                                    <input type="hidden" name="productId" value="@product.Id" />
+                                    <input type="hidden" name="quantity" value="1" />
+                                    <button type="submit" class="btn btn-success">Add to Cart</button>
+                                </form>
+                                <a asp-action="Details" asp-route-productId="@product.Id" class="btn btn-primary bg-gradient border-0" style="font-size:11px;">
+                                    Show More Details
+                                </a>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+}
